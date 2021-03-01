@@ -1,0 +1,14 @@
+{
+  "invalid_parameter": "Invalid parameter",
+  "existed": " Existed",
+  "not_found": " Not Found",
+  "unauthorized": "Unauthorized",
+  "internal_server_error": "Internal server error",
+  "forbidden": "Forbidden",
+
+  "user": "user",
+  "name": "name",
+  "description": "description",
+  "user.id": "user ID",
+  "exists_doc_children": "Cannot delete this category! Exists child document."
+}

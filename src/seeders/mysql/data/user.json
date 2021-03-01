@@ -1,0 +1,5 @@
+[
+  {"id": 1, "username": "ramenhoang", "password_hash": "$2b$05$0fKICtrg4L9foQ3pbhWmQOuCqxCfRUjA9UA7J1L1X.Uoj.Ss5FsZ.", "name": "Nguyễn Hoàng Anh",  "phone": "0123456789", "email": "ramen@gmail.com", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 2, "username": "lieule99", "password_hash": "$2b$05$0fKICtrg4L9foQ3pbhWmQOuCqxCfRUjA9UA7J1L1X.Uoj.Ss5FsZ.", "name": "Lê Thị Liễu","phone": "0123456789", "email": "lieule@gmail.com", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 3, "username": "quangluu99", "password_hash": "$2b$05$0fKICtrg4L9foQ3pbhWmQOuCqxCfRUjA9UA7J1L1X.Uoj.Ss5FsZ.", "name": "Võ Quang Lưu","phone": "0123456789", "email": "quangluu@gmail.com", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"}
+]

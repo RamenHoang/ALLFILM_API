@@ -1,0 +1,32 @@
+version: "3"
+
+services: 
+  masterdb: 
+    image: mysql:5.7.22
+    ports: 
+     - 4407:3306
+    environment: 
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpassword
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_main
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    networks:
+      - default
+
+  redis:
+    image: "redis:6.0.9-alpine"
+    command: redis-server
+    ports:
+      - 6379:6379
+    volumes:
+      - ./docker/redis/redis-data:/data
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - default
+
+networks: 
+  default:

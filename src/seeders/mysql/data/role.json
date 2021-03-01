@@ -1,0 +1,14 @@
+[
+  {"id": 1, "name": "admin", "permition": "r", "entity": "user", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 2, "name": "admin", "permition": "w", "entity": "user", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 3, "name": "admin", "permition": "r", "entity": "film", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 4, "name": "admin", "permition": "w", "entity": "film", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 5, "name": "admin", "permition": "r", "entity": "schedule", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 6, "name": "admin", "permition": "w", "entity": "schedule", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 7, "name": "admin", "permition": "r", "entity": "promotion", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 8, "name": "admin", "permition": "w", "entity": "promotion", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 9, "name": "admin", "permition": "r", "entity": "food_drink", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 10, "name": "admin", "permition": "w", "entity": "food_drink", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 11, "name": "seller", "permition": "", "entity": "", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"},
+  {"id": 12, "name": "client", "permition": "", "entity": "", "createdAt": "2021-02-08 06:21:20", "updatedAt": "2021-02-08 06:21:20"}
+]
