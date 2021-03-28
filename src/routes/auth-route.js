@@ -1,31 +1,15 @@
-const express = require('express');
-const validate = require('../validations/validate');
-const { AuthValidation } = require('../validations');
+const express = require("express");
+const validate = require("../validations/validate");
+const { AuthValidation } = require("../validations");
+const authController = require("../controllers/auth.controller");
+const route = express.Router();
 
-function addRoutes(router, middleware, controllers) {
-  router.post(
-    '/login',
-    validate([AuthValidation.validateLogin]),
-    controllers.auth.login
-  );
+route.post(
+  "/login",
+  validate([AuthValidation.validateLogin]),
+  authController.login
+);
 
-  // router.post(
-  //   '/auth/:social_type/auth-redirect',
-  //   validate([
-  //     AuthValidator.generateAuthLink,
-  //   ]),
-  //   controllers.auth.generateAuthLink
-  // );
-}
+// route.post("/register",authController.register);
 
-function apiRouter(middleware, controllers) {
-  const router = new express.Router();
-
-  addRoutes(router, middleware, controllers);
-
-  return router;
-}
-
-module.exports = (app, middleware, controllers) => {
-  app.use('/api/v1/', apiRouter(middleware, controllers));
-};
+module.exports = route;
