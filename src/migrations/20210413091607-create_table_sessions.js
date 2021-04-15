@@ -29,7 +29,7 @@ module.exports = {
     booked_seats: {
       type: Sequelize.STRING,
       allowNull: false,
-      default: ''
+      defaultValue: ''
     },
     room_id: {
       type: Sequelize.INTEGER,
@@ -38,6 +38,15 @@ module.exports = {
     film_id: {
       type: Sequelize.INTEGER,
       allowNull: false
+    },
+    created_at: {
+      allowNull: false,
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.NOW
+    },
+    updated_at: {
+      allowNull: false,
+      type: Sequelize.DATE
     }
   }),
 

@@ -13,6 +13,15 @@ module.exports = {
     price: {
       type: Sequelize.INTEGER,
       allowNull: false
+    },
+    created_at: {
+      allowNull: false,
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.NOW
+    },
+    updated_at: {
+      allowNull: false,
+      type: Sequelize.DATE
     }
   }),
 

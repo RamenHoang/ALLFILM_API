@@ -3,7 +3,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => Promise.all([
     queryInterface.addColumn('users', 'fullname', {
       allowNull: true,
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(12),
       after: 'phone'
     }),
     queryInterface.addColumn('users', 'register_verifying_token', {
