@@ -4,12 +4,12 @@ const winston = require('winston');
 const async = require('async');
 
 const app = express();
+const bodyParser = require('body-parser');
 const routes = require('./src/routes');
 const { masterDB } = require('./src/database');
-const middleware = require('./src/middlewares');
+// const middleware = require('./src/middlewares');
 const errorHandler = require('./src/middlewares/error-handler');
 const setupWinston = require('./winston-setup');
-var bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

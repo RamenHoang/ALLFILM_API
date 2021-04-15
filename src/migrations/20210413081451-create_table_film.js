@@ -12,7 +12,7 @@ module.exports = {
     },
     publish_date: {
       type: Sequelize.DATEONLY,
-      default: Sequelize.NOW,
+      defaultValue: Sequelize.NOW,
       allowNull: false
     },
     trailer: {
@@ -37,11 +37,20 @@ module.exports = {
     },
     rating: {
       type: Sequelize.DOUBLE,
-      default: 0.0
+      defaultValue: 0.0
     },
     rating_turn: {
       type: Sequelize.INTEGER,
-      default: 0
+      defaultValue: 0
+    },
+    created_at: {
+      allowNull: false,
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.NOW
+    },
+    updated_at: {
+      allowNull: false,
+      type: Sequelize.DATE
     }
   }),
 

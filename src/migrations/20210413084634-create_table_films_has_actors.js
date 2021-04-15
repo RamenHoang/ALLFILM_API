@@ -5,7 +5,7 @@ module.exports = {
       primaryKey: true,
       allowNull: false
     },
-    film_type_id: {
+    actor_id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       allowNull: false

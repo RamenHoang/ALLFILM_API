@@ -1,11 +1,12 @@
-const express = require("express");
-const validate = require("../validations/validate");
-const { AuthValidation } = require("../validations");
-const authController = require("../controllers/auth.controller");
+const express = require('express');
+const validate = require('../validations/validate');
+const { AuthValidation } = require('../validations');
+const authController = require('../controllers/auth.controller');
+
 const route = express.Router();
 
 route.post(
-  "/login",
+  '/login',
   validate([AuthValidation.validateLogin]),
   authController.login
 );
