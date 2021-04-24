@@ -1,7 +1,8 @@
 {
   "invalid_parameter": "Invalid parameter",
-  "existed": " Existed",
-  "not_found": " Not Found",
+  "existed": "Existed",
+  "not_found": "Not Found",
+  "bad_request": "Bad Request",
   "unauthorized": "Unauthorized",
   "internal_server_error": "Internal server error",
   "forbidden": "Forbidden",
@@ -10,5 +11,12 @@
   "name": "name",
   "description": "description",
   "user.id": "user ID",
-  "exists_doc_children": "Cannot delete this category! Exists child document."
+  "exists_doc_children": "Cannot delete this category! Exists child document.",
+
+  "successful_register": "Congratulate! Your account has registered. Please check your email to active your account.",
+  "active_account_subject": "[ALLFILM] Activate your account",
+  "allfilm_welcome": "Welcome to ALLFILM",
+  "click_to_active_account": "Please click here to active your account: ",
+  "account": "Account",
+  "account_activated": "Your account is activated"
 }

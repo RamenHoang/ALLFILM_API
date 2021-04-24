@@ -1,9 +1,11 @@
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 const { User, Role } = require('../models');
 const { REGEX } = require('../constants');
 const { NotFoundError } = require('../errors');
 const jwtHelper = require('../helpers/jwt.helper');
+const { saltRound } = require('../config/app');
 
 const AuthService = module.exports;
 
@@ -60,4 +62,39 @@ AuthService.login = async(username, password) => {
     access_token: jwtHelper.generateAccessToken(payload),
     refresh_token: jwtHelper.generateRefreshToken(payload)
   };
+};
+
+AuthService.register = async(registerItem) => {
+  const passwordHash = await bcrypt.hash(registerItem.password, saltRound);
+  const verifyingToken = uuid.v4();
+  const newUserItem = {
+    ..._.pick(registerItem, ['name', 'username', 'fullname', 'phone', 'email']),
+    passwordHash,
+    registerVerifyingToken: verifyingToken
+  };
+
+  const newUser = await User.create(newUserItem);
+
+  return newUser
+    && newUser.registerVerifyingToken === verifyingToken
+    && newUser.email === registerItem.email
+    ? { verifyingToken, email: registerItem.email } : null;
+};
+
+AuthService.activateAccount = async(token) => {
+  const inactivatedAccount = await User.findOne({
+    where: {
+      registerVerifyingToken: token
+    }
+  });
+
+  if (!inactivatedAccount) {
+    return false;
+  }
+
+  inactivatedAccount.update({
+    registerVerifyingToken: null
+  });
+
+  return true;
 };

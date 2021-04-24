@@ -14,7 +14,9 @@ function route(app) {
   // Top middlewares
   router.use(cors());
 
-  app.use('/auth', authRoute);
+  router.use('/auth/', authRoute);
+
+  app.use('/api/v1/', router);
   winston.info('Routes added');
 }
 
