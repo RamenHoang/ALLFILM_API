@@ -162,3 +162,7 @@ playbooks/*.retry
 
 # Log
 logs
+
+#lock file
+package-lock.json
+yarn.lock

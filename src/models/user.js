@@ -9,9 +9,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     username: DataTypes.STRING,
     passwordHash: DataTypes.STRING,
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    registerVerifyingToken: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    email: DataTypes.STRING,
+    fullname: DataTypes.STRING
   }, {
-    tablename: 'user',
+    tablename: 'users',
     underscored: true
   });
 
