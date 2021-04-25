@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Vũ Ngọc Đăng",
+    "date_of_birth": "1974-01-01",
+    "description": "Được đánh giá là một trong số đạo diễn trẻ có độ “hot” nhất định với công chúng, Vũ Ngọc Đãng luôn khiến khán giả phải quan tâm đến các “sản phẩm” của mình. Giải thưởng Đạo diễn xuất sắc nhất dành cho bộ phim Hotboy nổi loạn và câu chuyện về thằng Cười, cô gái điếm và con vịt trong Liên hoan phim VN lần thứ 17 vừa qua tại Phú Yên là phần thưởng xứng đáng dành cho những thể nghiệm đầy tính sáng tạo của anh.",
+    "images": "",
+    "nation": "Việt Nam",
+    "created_at": "2021-04-25 17:14:00",
+    "updated_at": "2021-04-25 17:14:00"
+  },
+  {
+    "id": 2,
+    "name": "Lý Hải",
+    "date_of_birth": "1969-09-28",
+    "description": "",
+    "images": "",
+    "nation": "Việt Nam",
+    "created_at": "2021-04-25 17:14:00",
+    "updated_at": "2021-04-25 17:14:00"
+  },
+  {
+    "id": 3,
+    "name": "Nagaoka Chika",
+    "date_of_birth": "1970-01-01",
+    "description": "",
+    "images": "",
+    "nation": "Nhật Bản",
+    "created_at": "2021-04-25 17:14:00",
+    "updated_at": "2021-04-25 17:14:00"
+  },
+  {
+    "id": 4,
+    "name": "Joe Carnahan",
+    "date_of_birth": "1970-01-01",
+    "description": "",
+    "images": "",
+    "nation": "Mỹ",
+    "created_at": "2021-04-25 17:14:00",
+    "updated_at": "2021-04-25 17:14:00"
+  },
+  {
+    "id": 5,
+    "name": "Choi Jae Hoon",
+    "date_of_birth": "1970-01-01",
+    "description": "",
+    "images": "",
+    "nation": "Hàn Quốc",
+    "created_at": "2021-04-25 17:14:00",
+    "updated_at": "2021-04-25 17:14:00"
+  },
+  {
+    "id": 6,
+    "name": "Studio 100 Media",
+    "date_of_birth": "1970-01-01",
+    "description": "",
+    "images": "",
+    "nation": "",
+    "created_at": "2021-04-25 17:14:00",
+    "updated_at": "2021-04-25 17:14:00"
+  },
+  {
+    "id": 7,
+    "name": "Simon McQuoid",
+    "date_of_birth": "1970-01-01",
+    "description": "",
+    "images": "",
+    "nation": "Mỹ",
+    "created_at": "2021-04-25 17:14:00",
+    "updated_at": "2021-04-25 17:14:00"
+  },
+  {
+    "id": 8,
+    "name": "Lee Yong Joo",
+    "date_of_birth": "1970-01-01",
+    "description": "",
+    "images": "",
+    "nation": "Hàn Quốc",
+    "created_at": "2021-04-25 17:14:00",
+    "updated_at": "2021-04-25 17:14:00"
+  },
+  {
+    "id": 9,
+    "name": "Adam Wingard",
+    "date_of_birth": "1970-01-01",
+    "description": "",
+    "images": "",
+    "nation": "Mỹ",
+    "created_at": "2021-04-25 17:14:00",
+    "updated_at": "2021-04-25 17:14:00"
+  }
+]
