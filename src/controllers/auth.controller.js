@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const { authService, mailService } = require('../services');
-const { ok, error } = require('../helpers/response.helper');
+const { ok } = require('../helpers/response.helper');
 const { BadRequestError } = require('../errors');
 const appConfig = require('../config/app');
 
