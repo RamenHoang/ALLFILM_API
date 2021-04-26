@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { Film } = require('../models');
+const { Film, Actor, Director } = require('../models');
 
 const FilmService = module.exports;
 
@@ -27,4 +27,16 @@ FilmService.list = (queryOption) => {
   };
 
   return Film.findAll(option);
+};
+
+FilmService.getById = async(id) => {
+  const option = {
+    where: { id },
+    include: [
+      { model: Actor, attributes: ['id', 'name'], through: { attributes: [] } },
+      { model: Director, attributes: ['id', 'name'] }
+    ]
+  };
+
+  return Film.findOne(option);
 };
