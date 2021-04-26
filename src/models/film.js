@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     name: DataTypes.STRING,
+    subName: DataTypes.STRING,
     publishDate: DataTypes.DATEONLY,
     trailer: DataTypes.STRING,
     poster: DataTypes.STRING,

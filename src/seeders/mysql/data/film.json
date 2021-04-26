@@ -2,6 +2,7 @@
   {
     "id": 1,
     "name": "Seobok",
+    "sub_name": "Người nhân bản",
     "publish_date": "2021-04-15",
     "trailer": "https://youtu.be/URStJ9pzG-4",
     "poster": "https://www.galaxycine.vn/media/2021/3/22/seobok-1200x1800_1616398755466.jpg",
@@ -16,6 +17,7 @@
   {
     "id": 2,
     "name": "Mortal Kombat",
+    "sub_name": "Cuộc chiến sinh tử",
     "publish_date": "2021-04-09",
     "trailer": "https://youtu.be/Eru0ZDdfcvw",
     "poster": "https://www.galaxycine.vn/media/2021/4/1/1200wx1800h_1617262451402.jpg",
@@ -30,6 +32,7 @@
   {
     "id": 3,
     "name": "Lật mặt: 48h",
+    "sub_name": "",
     "publish_date": "2021-04-14",
     "trailer": "https://youtu.be/jox0zmGyHLU",
     "poster": "https://www.galaxycine.vn/media/2021/3/4/300-lat-mat_1614842112584.jpg",
@@ -44,6 +47,7 @@
   {
     "id": 4,
     "name": "Detective Conan: The Scarlet Bullet",
+    "sub_name": "Thám tử Conan: Viên đạn đỏ",
     "publish_date": "2021-04-21",
     "trailer": "https://youtu.be/qZQJiyqBZHg",
     "poster": "https://www.galaxycine.vn/media/2021/4/9/1200wx1800h_1617956777762.jpg",
@@ -58,6 +62,7 @@
   {
     "id": 5,
     "name": "Godzilla vs Kong",
+    "sub_name": "Godzilla đại chiến Kong",
     "publish_date": "2021-03-25",
     "trailer": "https://youtu.be/AcfvncjOGS8",
     "poster": "https://www.galaxycine.vn/media/2021/2/26/godzilla-vs-kong-poster_1614327851876.jpg",
@@ -72,6 +77,7 @@
   {
     "id": 6,
     "name": "Bố già",
+    "sub_name": "",
     "publish_date": "2021-03-05",
     "trailer": "https://youtu.be/g8_DQqqTabk",
     "poster": "https://www.galaxycine.vn/media/2021/2/26/300x450_1614324959732.jpg",
@@ -86,6 +92,7 @@
   {
     "id": 7,
     "name": "Boss Level",
+    "sub_name": "Trùm cuối siêu đẳng",
     "publish_date": "2021-04-23",
     "trailer": "https://youtu.be/EhD4I3K_cf8",
     "poster": "https://www.galaxycine.vn/media/2021/4/20/poster-tcsd7_1618900854317.jpg",
@@ -100,6 +107,7 @@
   {
     "id": 8,
     "name": "THE HYPNOSIS",
+    "sub_name": "Con lắc tà thuật",
     "publish_date": "2021-04-21",
     "trailer": "https://youtu.be/kBFzWXOwGnM",
     "poster": "https://www.galaxycine.vn/media/2021/4/19/the-hypnosis-vie_1618816865411.jpg",
@@ -114,6 +122,7 @@
   {
     "id": 9,
     "name": "MAYA THE BEE 3: THE GOLDEN ORB",
+    "sub_name": "Ong phiêu lưu kí 3: Giải cứu công chúa",
     "publish_date": "2021-04-21",
     "trailer": "https://youtu.be/qjcNehxk67c",
     "poster": "https://www.galaxycine.vn/media/2021/4/14/1200wx1800h_1618386528434.jpg",
