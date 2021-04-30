@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 
   // eslint-disable-next-line no-unused-vars
   Director.associate = (models) => {
-    // associations can be defined here
+    Director.hasMany(models.Film);
   };
 
   return Director;
