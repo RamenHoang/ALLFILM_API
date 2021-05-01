@@ -72,13 +72,19 @@ const logAudit = (request, response, responseCode) => {
 };
 
 const successResponse = (req, res, data = {}, code) => {
-  logAudit(req, data);
+  try {
+    logAudit(req, data);
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
 
   return res.status(code)
     .send(data);
 };
 const errorResponse = (req, res, error = {}, code) => {
-  logAudit(req, error);
+  try {
+    logAudit(req, error);
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
 
   return res.status(code)
     .send({ error });

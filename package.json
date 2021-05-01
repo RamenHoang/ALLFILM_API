@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "nodemon --ignore tmp/ --inspect=0.0.0.0 app.local.js",
+    "start": "nodemon --ignore tmp/ --inspect=0.0.0.0 --stack-size=2048 app.local.js",
     "db:migrate": "npx sequelize-cli db:migrate",
     "db:reset": "npx sequelize-cli db:migrate:undo:all",
     "db:seed": "npx sequelize-cli db:seed:all",
