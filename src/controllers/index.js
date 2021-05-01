@@ -5,3 +5,4 @@ Controllers.auth = require('./auth.controller');
 Controllers.film = require('./film.controller');
 Controllers.actor = require('./actor.controller');
 Controllers.director = require('./director.controller');
+Controllers.user = require('./user.controller');

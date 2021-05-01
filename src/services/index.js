@@ -6,3 +6,4 @@ Service.mailService = require('./mail.service');
 Service.filmService = require('./film.service');
 Service.actorService = require('./actor.service');
 Service.directorService = require('./director.service');
+Service.userService = require('./user.service');
