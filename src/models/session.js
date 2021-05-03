@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     date: DataTypes.DATEONLY,
-    start_time: DataTypes.DATE,
-    end_time: DataTypes.DATE,
+    startTime: DataTypes.DATE,
+    endTime: DataTypes.DATE,
     price: DataTypes.INTEGER,
     emptySeats: DataTypes.STRING,
     bookedSeats: DataTypes.STRING,
@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     });
     Session.belongsTo(models.Room, {
       foreignKey: 'filmId'
+    });
+    Session.belongsTo(models.Cinema, {
+      foreignKey: 'cinemaId'
     });
   };
 
