@@ -11,6 +11,7 @@
     "director_id": 8,
     "rating": 8.6,
     "rating_turn": 54,
+    "duration": 120,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
   },
@@ -26,6 +27,7 @@
     "director_id": 7,
     "rating": 8.4,
     "rating_turn": 142,
+    "duration": 120,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
   },
@@ -41,6 +43,7 @@
     "director_id": 2,
     "rating": 8.5,
     "rating_turn": 662,
+    "duration": 120,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
   },
@@ -56,6 +59,7 @@
     "director_id": 3,
     "rating": 9.5,
     "rating_turn": 180,
+    "duration": 120,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
   },
@@ -71,6 +75,7 @@
     "director_id": 9,
     "rating": 9.0,
     "rating_turn": 671,
+    "duration": 120,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
   },
@@ -86,6 +91,7 @@
     "director_id": 1,
     "rating": 8.2,
     "rating_turn": 2143,
+    "duration": 120,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
   },
@@ -101,6 +107,7 @@
     "director_id": 9,
     "rating": 8.2,
     "rating_turn": 10,
+    "duration": 120,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
   },
@@ -116,6 +123,7 @@
     "director_id": 5,
     "rating": 7.8,
     "rating_turn": 15,
+    "duration": 120,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
   },
@@ -131,6 +139,7 @@
     "director_id": 6,
     "rating": 7.4,
     "rating_turn": 10,
+    "duration": 120,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
   }
