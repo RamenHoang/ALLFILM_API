@@ -9,6 +9,7 @@ const filmRoute = require('./film-route');
 const actorRoute = require('./actor-route');
 const directorRoute = require('./director-route');
 const userRoute = require('./user-route');
+const sessionRoute = require('./session-route');
 
 function route(app) {
   const router = express.Router();
@@ -23,6 +24,7 @@ function route(app) {
   router.use('/actor/', actorRoute);
   router.use('/director/', directorRoute);
   router.use('/user/', userRoute);
+  router.use('/session/', sessionRoute);
 
   app.use('/api/v1/', router);
 
