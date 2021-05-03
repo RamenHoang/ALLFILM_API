@@ -1,12 +1,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => Promise.all([
-    queryInterface.addColumn('sessions', 'cinema_id', {
+    queryInterface.addColumn('bookings_has_food_drinks', 'count', {
       allowNull: false,
       type: Sequelize.INTEGER,
-      after: 'end_time'
+      after: 'food_drink_id'
     })
   ]),
   down: (queryInterface) => Promise.all([
-    queryInterface.removeColumn('sessions', 'cinema_id')
+    queryInterface.removeColumn('bookings_has_food_drinks', 'count')
   ])
 };

@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false
+    },
+    count: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     tableName: 'bookings_has_food_drinks',
