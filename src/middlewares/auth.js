@@ -21,7 +21,7 @@ module.exports = async(req, res, next) => {
 
     const user = await User.findOne({
       where: { id },
-      attributes: ['id', 'username', 'name'],
+      attributes: ['id', 'username', 'name', 'email'],
       include: [
         Role
       ]

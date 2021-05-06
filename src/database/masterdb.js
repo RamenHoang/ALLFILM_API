@@ -14,6 +14,12 @@ const sequelize = new Sequelize(
       charset: 'utf8',
       collate: 'utf8_general_ci',
     },
+    dialectOptions: {
+      useUTC: false,
+      dateStrings: true,
+      typeCast: true
+    },
+    timezone: '+07:00'
   },
 );
 
