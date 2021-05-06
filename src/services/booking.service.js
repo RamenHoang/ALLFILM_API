@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const { NotFoundError } = require('../errors');
 const {
   Booking, BookFoodDrink, Session, Cinema, Room, Film
 } = require('../models');
@@ -47,4 +48,49 @@ BookingService.bookTicket = async(userId, bookingOption) => {
       }
     ]
   });
+};
+
+BookingService.checkout = async(userId, bookingId) => {
+  const checkoutStatus = await Booking.update({
+    checkedOutAt: Date.now()
+  }, {
+    where: {
+      id: bookingId,
+      userId
+    }
+  });
+
+  if (checkoutStatus[0]) {
+    return Booking.findByPk(bookingId, {
+      include: [
+        {
+          model: Session,
+          attributes: ['startTime'],
+          include: [
+            {
+              model: Cinema,
+              attributes: ['name', 'address']
+            },
+            {
+              model: Room,
+              attributes: ['name']
+            },
+            {
+              model: Film,
+              attributes: ['name', 'subName', 'poster']
+            }
+          ]
+        }
+      ]
+    });
+  }
+
+  throw new NotFoundError(
+    t('not_found'),
+    [{
+      field: 'booking',
+      type: 'any.not_found',
+      message: 'Booking is not exist'
+    }]
+  );
 };

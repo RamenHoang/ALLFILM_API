@@ -6,4 +6,6 @@ const auth = require('../middlewares/auth');
 
 route.post('', auth, booking.bookTicket);
 
+route.post('/checkout/:bookingId', auth, booking.checkoutTicket);
+
 module.exports = route;

@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { bookingService } = require('../services');
+const { bookingService, mailService } = require('../services');
 const { ok } = require('../helpers/response.helper');
 // const { NotFoundError, ValidationError } = require('../errors');
 
@@ -27,6 +27,22 @@ BookingController.bookTicket = async(req, res, next) => {
     });
 
     ok(req, res, ticket);
+  } catch (e) {
+    next(e);
+  }
+};
+
+BookingController.checkoutTicket = async(req, res, next) => {
+  try {
+    const userId = _.get(req, 'currentUser.id');
+    const userEmail = _.get(req, 'currentUser.email');
+    const bookingId = _.get(req.params, 'bookingId');
+
+    const checkedOutBookingInfo = await bookingService.checkout(userId, bookingId);
+
+    mailService.sendMailBookTicketSuccesfully(userEmail, checkedOutBookingInfo);
+
+    ok(req, res, { success: !!checkedOutBookingInfo });
   } catch (e) {
     next(e);
   }
