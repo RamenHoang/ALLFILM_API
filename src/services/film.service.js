@@ -1,5 +1,7 @@
 const { Op } = require('sequelize');
-const { Film, Actor, Director } = require('../models');
+const {
+  Film, Actor, Director, FilmType
+} = require('../models');
 
 const FilmService = module.exports;
 
@@ -34,7 +36,8 @@ FilmService.getById = async(id) => {
     where: { id },
     include: [
       { model: Actor, attributes: ['id', 'name'], through: { attributes: [] } },
-      { model: Director, attributes: ['id', 'name'] }
+      { model: Director, attributes: ['id', 'name'] },
+      { model: FilmType, attributes: ['id', 'name'], through: { attributes: [] } }
     ]
   };
 

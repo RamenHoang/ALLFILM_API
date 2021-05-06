@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     rating: DataTypes.DOUBLE,
     rating_turn: DataTypes.INTEGER,
-    directorId: DataTypes.INTEGER
+    directorId: DataTypes.INTEGER,
+    duration: DataTypes.INTEGER
   }, {
     tablename: 'films',
     underscored: true
