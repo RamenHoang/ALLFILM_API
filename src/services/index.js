@@ -8,3 +8,4 @@ Service.actorService = require('./actor.service');
 Service.directorService = require('./director.service');
 Service.userService = require('./user.service');
 Service.sessionService = require('./session.service');
+Service.bookingService = require('./booking.service');

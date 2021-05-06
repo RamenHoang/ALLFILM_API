@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     sessionId: DataTypes.INTEGER,
     sessionRoomId: DataTypes.INTEGER,
-    qrCode: DataTypes.STRING
+    qrCode: DataTypes.STRING,
+    checkedOutAt: DataTypes.DATE
   }, {
     tablename: 'bookings',
     underscored: true

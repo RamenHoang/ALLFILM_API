@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'filmId'
     });
     Session.belongsTo(models.Room, {
-      foreignKey: 'filmId'
+      foreignKey: 'roomId'
     });
     Session.belongsTo(models.Cinema, {
       foreignKey: 'cinemaId'
