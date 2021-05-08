@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const mailConfig = require('../config/mail');
+const appConfig = require('../config/app');
 const { NotFoundError } = require('../errors');
 
 const transport = nodemailer.createTransport({
@@ -33,6 +34,19 @@ MailService.sendMail = (to, subject = 'Hi there', html = '<h1>Hi there</h1>') =>
   return transport.sendMail(mailOptions);
 };
 
+MailService.sendMailActivateAccount = (toEmail, token) => {
+  const html = `
+        <h1>ALLFILM Cinema xin chào quý khách</h1>
+        <h2>Để xác minh đây là bạn, vui lòng nhấp link bên để <a href="http://${appConfig.url}/api/v1/auth/register/${token}">kích hoạt tài khoản</a></h2>
+      `;
+
+  MailService.sendMail(
+    toEmail,
+    'Kích hoạt tài khoản',
+    html
+  );
+};
+
 MailService.sendMailBookTicketSuccesfully = (toEmail, ticketInfo) => {
   const html = `
     <div style="width: 500px; max-width: 100%; margin: auto">
@@ -40,7 +54,7 @@ MailService.sendMailBookTicketSuccesfully = (toEmail, ticketInfo) => {
       <img style="width: 100%" src="${ticketInfo.Session.Film.poster}">
       <h2 style="width: 100%; text-align: center">${ticketInfo.Session.Film.subName}</h2>
       <h3 style="width: 100%; text-align: center">${ticketInfo.Session.Film.name}</h3>
-      <div style="width: 100%; text-align: center">Vé(${(() => ticketInfo.seats.split(',').length)()}) (Ghế ${ticketInfo.seats}) 
+      <div style="width: 100%; text-align: center">Vé(${(() => ticketInfo.seats.split(',').length)()}) (Ghế ${ticketInfo.seats})
       ${ticketInfo.Session.Room.name} Chi nhánh ${ticketInfo.Session.Cinema.name} - ${ticketInfo.Session.Cinema.address}</div>
       <br>
       <table style="width: 100%">

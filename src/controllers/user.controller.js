@@ -1,6 +1,9 @@
 const _ = require('lodash');
-const { ValidationError, NotFoundError } = require('../errors');
-const { userService } = require('../services');
+const {
+  ValidationError,
+  NotFoundError
+} = require('../errors');
+const { userService, bookingService } = require('../services');
 const { ok } = require('../helpers/response.helper');
 
 const UserController = module.exports;
@@ -39,6 +42,18 @@ UserController.getById = async(req, res, next) => {
   }
 };
 
+UserController.getProfile = async(req, res, next) => {
+  try {
+    const userId = _.get(req, 'currentUser.id');
+
+    const userProfile = await userService.getById(userId);
+
+    ok(req, res, userProfile);
+  } catch (e) {
+    next(e);
+  }
+};
+
 UserController.list = async(req, res, next) => {
   try {
     const q = _.get(req, 'query.q', '');
@@ -61,7 +76,7 @@ UserController.list = async(req, res, next) => {
 
 UserController.updateProfile = async(req, res, next) => {
   try {
-    const id = _.get(req, 'params.id');
+    const id = _.get(req, 'currentUser.id');
     const newProfile = _.get(req, 'body');
 
     if (_.isNil(id) || _.isNil(newProfile)) {
@@ -94,6 +109,19 @@ UserController.updateProfile = async(req, res, next) => {
   }
 };
 
+UserController.updatePassword = async(req, res, next) => {
+  try {
+    const userId = req.currentUser.id;
+    const { newPassword } = req.body;
+
+    const updatePasswordStatus = await userService.updatePassword(userId, newPassword);
+
+    ok(req, res, { success: updatePasswordStatus[0] === 1 });
+  } catch (e) {
+    next(e);
+  }
+};
+
 UserController.createUser = async(req, res, next) => {
   try {
     const userInfo = _.get(req, 'body.userInfo');
@@ -113,6 +141,19 @@ UserController.createUser = async(req, res, next) => {
     const newUser = await userService.createUser(userInfo, userRole);
 
     ok(req, res, newUser);
+  } catch (e) {
+    next(e);
+  }
+};
+
+UserController.listBooking = async(req, res, next) => {
+  try {
+    const userId = req.currentUser.id;
+    const { fromDate, toDate } = req.query;
+
+    const bookings = await bookingService.listByUserAndDate(userId, { fromDate, toDate });
+
+    ok(req, res, bookings);
   } catch (e) {
     next(e);
   }

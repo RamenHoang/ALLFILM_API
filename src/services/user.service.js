@@ -58,6 +58,18 @@ UserService.updateProfile = (id, profile) => User.update(profile, {
   where: { id }
 });
 
+UserService.updatePassword = async(userId, newPassword) => {
+  const newHashPassword = await bcrypt.hash(newPassword, saltRound);
+
+  return User.update({
+    passwordHash: newHashPassword
+  }, {
+    where: {
+      id: userId
+    }
+  });
+};
+
 UserService.createUser = async(userInfo, userRole) => {
   const passwordHash = await bcrypt.hash(userInfo.password, saltRound);
   let newUserId;

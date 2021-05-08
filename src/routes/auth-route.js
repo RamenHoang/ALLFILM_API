@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const express = require('express');
 const validate = require('../validations/validate');
 const { AuthValidation } = require('../validations');
@@ -21,7 +22,5 @@ route.post(
 );
 
 route.get('/register/:token', authController.activateAccount);
-
-// route.post("/register",authController.register);
 
 module.exports = route;

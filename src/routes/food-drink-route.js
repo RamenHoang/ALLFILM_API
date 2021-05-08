@@ -1,8 +1,8 @@
 const express = require('express');
 
 const route = express.Router();
-const { actor } = require('../controllers');
+const { foodDrink } = require('../controllers');
 
-route.get('/:id', actor.getById);
+route.get('', foodDrink.list);
 
 module.exports = route;

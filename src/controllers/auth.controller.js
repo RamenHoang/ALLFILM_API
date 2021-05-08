@@ -2,7 +2,6 @@ const _ = require('lodash');
 const { authService, mailService } = require('../services');
 const { ok } = require('../helpers/response.helper');
 const { BadRequestError } = require('../errors');
-const appConfig = require('../config/app');
 
 const AuthController = module.exports;
 
@@ -32,17 +31,7 @@ AuthController.register = async(req, res, next) => {
     const registerResult = await authService.register(registerItem);
 
     if (registerResult) {
-      // Send activation mail
-      const html = `
-        <h1>${t('allfilm_welcome')}</h1>
-        <h2>${t('click_to_active_account')} <a href="http://${appConfig.url}/api/v1/auth/register/${registerResult.verifyingToken}">Activation</a></h2>
-      `;
-
-      mailService.sendMail(
-        registerItem.email,
-        t('active_account_subject'),
-        html
-      );
+      mailService.sendMailActivateAccount(registerItem.email, registerResult.verifyingToken);
 
       ok(req, res, t('successful_register'));
     } else {
@@ -60,6 +49,8 @@ AuthController.activateAccount = async(req, res, next) => {
 
     if (activatingResult) {
       ok(req, res, t('successful_activation'));
+
+      return;
     }
 
     throw new BadRequestError(t('bad_request'), [{

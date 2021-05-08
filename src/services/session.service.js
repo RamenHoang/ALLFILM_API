@@ -38,3 +38,5 @@ SessionService.list = (queryOption) => {
 
   return Cinema.findAll(option);
 };
+
+SessionService.getById = (id) => Session.findByPk(id);
