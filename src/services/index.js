@@ -9,3 +9,4 @@ Service.directorService = require('./director.service');
 Service.userService = require('./user.service');
 Service.sessionService = require('./session.service');
 Service.bookingService = require('./booking.service');
+Service.foodDrinkService = require('./food-drink.service');

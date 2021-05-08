@@ -8,3 +8,4 @@ Controllers.director = require('./director.controller');
 Controllers.user = require('./user.controller');
 Controllers.session = require('./session.controller');
 Controllers.booking = require('./booking.controller');
+Controllers.foodDrink = require('./food-drink.controller');

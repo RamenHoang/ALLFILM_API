@@ -28,3 +28,15 @@ SessionController.list = async(req, res, next) => {
     next(e);
   }
 };
+
+SessionController.getById = async(req, res, next) => {
+  try {
+    const sessionId = req.params.id;
+
+    const sessionInfo = await sessionService.getById(sessionId);
+
+    ok(req, res, sessionInfo);
+  } catch (e) {
+    next(e);
+  }
+};

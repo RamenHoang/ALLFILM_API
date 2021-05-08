@@ -22,9 +22,10 @@ module.exports = async(req, res, next) => {
     const user = await User.findOne({
       where: { id },
       attributes: ['id', 'username', 'name', 'email'],
-      include: [
-        Role
-      ]
+      include: {
+        model: Role,
+        through: { attributes: [] }
+      }
     });
 
     if (_.isEmpty(user)) return next(new UnauthorizedError(t('unauthorized')));
