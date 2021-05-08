@@ -547,6 +547,21 @@ module.exports = {
         description: 'API liệt kê đồ ăn thức uống',
         responses: {}
       }
+    },
+    '/cinema': {
+      get: {
+        tags: [
+          'Cinema'
+        ],
+        produces: [
+          'application/json'
+        ],
+        consumes: [
+          'application/json'
+        ],
+        description: 'API liệt kê rạp phim',
+        responses: {}
+      }
     }
   },
   definitions: {
