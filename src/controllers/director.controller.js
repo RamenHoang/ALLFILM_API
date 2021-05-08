@@ -3,9 +3,9 @@ const { directorService } = require('../services');
 const { ok } = require('../helpers/response.helper');
 const { NotFoundError, ValidationError } = require('../errors');
 
-const DirectorService = module.exports;
+const DirectorController = module.exports;
 
-DirectorService.getById = async(req, res, next) => {
+DirectorController.getById = async(req, res, next) => {
   try {
     const id = _.get(req, 'params.id');
 
