@@ -1,7 +1,8 @@
 const _ = require('lodash');
 const {
   Cinema,
-  Session
+  Session,
+  Room
 } = require('../models');
 
 const SessionService = module.exports;
@@ -39,4 +40,9 @@ SessionService.list = (queryOption) => {
   return Cinema.findAll(option);
 };
 
-SessionService.getById = (id) => Session.findByPk(id);
+SessionService.getById = (id) => Session.findByPk(id, {
+  include: {
+    model: Room,
+    attributes: ['name', 'row', 'column']
+  }
+});
