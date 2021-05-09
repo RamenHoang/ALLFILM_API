@@ -35,4 +35,3 @@ AuthValidation.validateUniqueUsername = async(req) => {
     ? null
     : { field: 'user.username', type: 'any.existed', message: `${t('user.username')}${t('existed')}` };
 };
-
