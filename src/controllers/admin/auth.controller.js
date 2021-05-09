@@ -5,14 +5,15 @@ const { REGEX } = require('../../constants');
 const { User } = require('../../models');
 
 const AuthController = module.exports;
+const controller = 'admin';
 
+// eslint-disable-next-line consistent-return
 AuthController.login = async(req, res, next) => {
   try {
     let data = {};
     const errorData = {};
 
     if (req.method === 'POST') {
-      // TODO:
       const { username, password } = req.body;
 
       if (!username.match(REGEX.USERNAME_ONLY)) {
@@ -39,15 +40,37 @@ AuthController.login = async(req, res, next) => {
           if (!isMatchPassword) {
             errorData.password = 'Mật khẩu không chính xác';
           } else {
-            return res.render('admin/dashboard');
+            return res.redirect('/admin/dashboard');
           }
         }
       }
     }
 
-    res.render('admin/login', {
+    return res.render('admin/login', {
       page_title: 'Admin - Login',
       data,
+      errorData
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+AuthController.dashboard = async(req, res, next) => {
+  try {
+    const action = 'login';
+
+    res.set('content-type', 'text/html; charset=mycharset');
+    const data = {};
+    const LoginUser = {};
+    const errorData = {};
+
+    res.render('admin/dashboard', {
+      page_title: 'Admin - Dashboard',
+      data,
+      LoginUser,
+      controller,
+      action,
       errorData
     });
   } catch (e) {

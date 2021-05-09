@@ -6,33 +6,33 @@
 		<title>Dashboard - Ace Admin</title>
 
 		<meta name="description" content="overview &amp; stats" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> 
-		<link rel="stylesheet" href="<%=nodeSiteUrl%>/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="<%=nodeSiteUrl%>/font-awesome/4.5.0/css/font-awesome.min.css" /> 
-		<link rel="stylesheet" href="<%=nodeSiteUrl%>/css/fonts.googleapis.com.css" /> 
-		<link rel="stylesheet" href="<%=nodeSiteUrl%>/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" /> 
-		<link rel="stylesheet" href="<%=nodeSiteUrl%>/css/ace-skins.min.css" />
-		<link rel="stylesheet" href="<%=nodeSiteUrl%>/css/ace-rtl.min.css" />
-		<link rel="stylesheet" href="<%=nodeSiteUrl%>/css/custom.css" /> 
-		<script src="<%=nodeSiteUrl%>/js/jquery-2.1.4.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<link rel="stylesheet" href="/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="/css/fonts.googleapis.com.css" />
+		<link rel="stylesheet" href="/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="/css/custom.css" />
+		<script src="/js/jquery-2.1.4.min.js"></script>
 		<!-- ace settings handler -->
-		<script src="<%=nodeSiteUrl%>/js/ace-extra.min.js"></script>
-		<script src="<%=nodeSiteUrl%>/js/jquery-ui.custom.min.js"></script>
-		<!-- <script src="<%=nodeSiteUrl%>/js/jquery.ui.touch-punch.min.js"></script>
-		<script src="<%=nodeSiteUrl%>/js/jquery.easypiechart.min.js"></script>
-		<script src="<%=nodeSiteUrl%>/js/jquery.sparkline.index.min.js"></script>
-		<script src="<%=nodeSiteUrl%>/js/jquery.flot.min.js"></script>
-		<script src="<%=nodeSiteUrl%>/js/jquery.flot.pie.min.js"></script>
-		<script src="<%=nodeSiteUrl%>/js/jquery.flot.resize.min.js"></script>  -->
+		<script src="/js/ace-extra.min.js"></script>
+		<script src="/js/jquery-ui.custom.min.js"></script>
+		<!-- <script src="/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="/js/jquery.easypiechart.min.js"></script>
+		<script src="/js/jquery.sparkline.index.min.js"></script>
+		<script src="/js/jquery.flot.min.js"></script>
+		<script src="/js/jquery.flot.pie.min.js"></script>
+		<script src="/js/jquery.flot.resize.min.js"></script>  -->
 	</head>
 
 	<body class="no-skin">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
 				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
-					<span class="sr-only">Toggle sidebar</span> 
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span> 
+					<span class="sr-only">Toggle sidebar</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
 
@@ -40,7 +40,7 @@
 					<a href="index.html" class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
-							 <%=siteTitle%>
+								ALLFilms quản trị
 						</small>
 					</a>
 				</div>
@@ -51,7 +51,7 @@
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="ace-icon fa fa-tasks"></i>
 								<span class="badge badge-grey">4</span>
-							</a> 
+							</a>
 							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
 									<i class="ace-icon fa fa-check"></i>
@@ -207,8 +207,8 @@
 									<ul class="dropdown-menu dropdown-navbar">
 										<li>
 											<a href="#" class="clearfix">
-												<img src="<%=nodeSiteUrl%>/public/images/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
-												<span class="msg-body"> 
+												<img src="/public/images/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+												<span class="msg-body">
 													<span class="msg-title">
 														<span class="blue">Alex:</span>
 														Ciao sociis natoque penatibus et auctor ...
@@ -303,10 +303,10 @@
 
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="<%=nodeSiteUrl%>/images/avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
-									<small>Welcome,</small>
-									Jason
+									<small>Xin chào,</small>
+									Ramen
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -316,23 +316,23 @@
 								<li>
 									<a href="#">
 										<i class="ace-icon fa fa-cog"></i>
-										Settings
+										Cài đặt
 									</a>
 								</li>
 
 								<li>
 									<a href="profile.html">
 										<i class="ace-icon fa fa-user"></i>
-										Profile
+										Trang cá nhân
 									</a>
 								</li>
 
 								<li class="divider"></li>
 
 								<li>
-									<a href="<%=nodeAdminUrl%>/logout">
+									<a href="/admin/logout">
 										<i class="ace-icon fa fa-power-off"></i>
-										Logout
+										Đăng xuất
 									</a>
 								</li>
 							</ul>
@@ -349,6 +349,5 @@
 
 
 
-<%- include leftbar.ejs %> 
+<%- include leftbar.ejs %>
 
-            

@@ -14,7 +14,7 @@ function route(app) {
   router.use(cors());
 
   // Custom middlewares
-  router.use('/auth/', authRoute);
+  router.use('/', authRoute);
 
   app.use('/admin/', router);
 
