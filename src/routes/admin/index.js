@@ -4,7 +4,9 @@ const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
 
+const adminAuth = require('../../middlewares/admin-auth');
 const authRoute = require('./auth-route');
+const userRoute = require('./user-route');
 
 function route(app) {
   const router = express.Router();
@@ -15,6 +17,7 @@ function route(app) {
 
   // Custom middlewares
   router.use('/', authRoute);
+  router.use('/user/', adminAuth, userRoute);
 
   app.use('/admin/', router);
 

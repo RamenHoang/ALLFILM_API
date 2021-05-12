@@ -4,9 +4,14 @@ const winston = require('winston');
 const async = require('async');
 const path = require('path');
 const flash = require('express-flash-messages');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+
+const { accessTokenTTL, accessTokenSecret } = require('./src/config/oauth2');
 
 const app = express();
-const bodyParser = require('body-parser');
+
 const routes = require('./src/routes');
 const adminRoutes = require('./src/routes/admin');
 const { masterDB } = require('./src/database');
@@ -15,9 +20,18 @@ const setupWinston = require('./winston-setup');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(`${__dirname}/public`));
-app.use(flash());
 
+app.use(express.static(`${__dirname}/public`));
+app.use(session({
+  secret: accessTokenSecret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: accessTokenTTL
+  }
+}));
+app.use(flash());
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

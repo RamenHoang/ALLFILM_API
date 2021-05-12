@@ -76,7 +76,14 @@ BookingService.bookTicket = async(userId, bookingOption) => {
     });
   }
 
-  throw new ValidationError('Các ghế chuẩn bị đặt đã được đặt trước. Vui lòng chọn ghế khác');
+  throw new ValidationError(
+    t('validation_error'),
+    [{
+      field: 'seats',
+      type: 'any.duplicated',
+      message: 'Các ghế chuẩn bị đặt đã được đặt trước. Vui lòng chọn ghế khác'
+    }]
+  );
 };
 
 BookingService.checkout = async(userId, bookingId) => {
