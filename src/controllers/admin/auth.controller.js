@@ -2,16 +2,51 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
 const { REGEX } = require('../../constants');
-const { User } = require('../../models');
+const { User, Role } = require('../../models');
+const jwtHelper = require('../../helpers/jwt.helper');
+const cookieHepler = require('../../helpers/cookie.helper');
 
 const AuthController = module.exports;
 const controller = 'admin';
 
+function userIsAdmin(user) {
+  const { Roles } = user;
+
+  for (let i = 0; i < Roles.length; i++) {
+    if (Roles[i].name === 'admin') {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 // eslint-disable-next-line consistent-return
-AuthController.login = async(req, res, next) => {
+AuthController.login = async(req, res) => {
   try {
     let data = {};
     const errorData = {};
+
+    const { token } = cookieHepler.getData(req, 'token');
+
+    if (token) {
+      const { id } = jwtHelper.verifyAccessToken(token);
+
+      if (id) {
+        const user = await User.findOne({
+          where: { id },
+          attributes: [],
+          include: {
+            model: Role,
+            through: { attributes: [] }
+          }
+        });
+
+        if (userIsAdmin(user)) {
+          return res.redirect('/admin/dashboard');
+        }
+      }
+    }
 
     if (req.method === 'POST') {
       const { username, password } = req.body;
@@ -29,7 +64,15 @@ AuthController.login = async(req, res, next) => {
         const user = await User.findOne({
           where: {
             username
-          }
+          },
+          include: {
+            model: Role,
+            through: {
+              attributes: []
+            },
+            attributes: ['permition', 'entity']
+          },
+          attributes: ['id', 'passwordHash']
         });
 
         if (_.isNil(user)) {
@@ -40,6 +83,11 @@ AuthController.login = async(req, res, next) => {
           if (!isMatchPassword) {
             errorData.password = 'Mật khẩu không chính xác';
           } else {
+            const payload = _.pick(user, ['id', 'Roles']);
+            const accessToken = jwtHelper.generateAccessToken(payload);
+
+            cookieHepler.storeData(res, { token: accessToken });
+
             return res.redirect('/admin/dashboard');
           }
         }
@@ -52,7 +100,9 @@ AuthController.login = async(req, res, next) => {
       errorData
     });
   } catch (e) {
-    next(e);
+    cookieHepler.deleteData(res, 'token');
+
+    return res.redirect('/admin/dashboard');
   }
 };
 
@@ -60,15 +110,14 @@ AuthController.dashboard = async(req, res, next) => {
   try {
     const action = 'login';
 
-    res.set('content-type', 'text/html; charset=mycharset');
     const data = {};
-    const LoginUser = {};
+    const loginUser = req.currentUser;
     const errorData = {};
 
     res.render('admin/dashboard', {
       page_title: 'Admin - Dashboard',
       data,
-      LoginUser,
+      loginUser,
       controller,
       action,
       errorData

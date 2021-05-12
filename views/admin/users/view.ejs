@@ -1,0 +1,216 @@
+<%- include('../elements/header'); %>
+
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li><i class="ace-icon fa fa-tachometer"></i> <a
+                            href="admin/dashboard">Bảng điều khiển</a></li>
+                <li class="active"><a href="/admin/<%= controller ;%>/list"> Người dùng </a></li>
+                <li class="active">Chi tiết</li>
+            </ul><!-- /.breadcrumb -->
+
+            <div class="nav-search" id="nav-search">
+                <form class="form-search">
+                        <span class="input-icon">
+                            <input type="text" placeholder="Search ..." class="nav-search-input"
+                                   id="nav-search-input" autocomplete="off"/>
+                            <i class="ace-icon fa fa-search nav-search-icon"></i>
+                        </span>
+                </form>
+            </div><!-- /.nav-search -->
+        </div>
+
+        <div class="page-content">
+            <div class="ace-settings-container" id="ace-settings-container">
+                <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+                    <i class="ace-icon fa fa-cog bigger-130"></i>
+                </div>
+
+                <div class="ace-settings-box clearfix" id="ace-settings-box">
+                    <div class="pull-left width-50">
+                        <div class="ace-settings-item">
+                            <div class="pull-left">
+                                <select id="skin-colorpicker" class="hide">
+                                    <option data-skin="no-skin" value="#438EB9">#438EB9</option>
+                                    <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                                    <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                                    <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                                </select>
+                            </div>
+                            <span>&nbsp; Choose Skin</span>
+                        </div>
+
+                        <div class="ace-settings-item">
+                            <input type="checkbox" class="ace ace-checkbox-2 ace-save-state"
+                                   id="ace-settings-navbar" autocomplete="off"/>
+                            <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+                        </div>
+
+                        <div class="ace-settings-item">
+                            <input type="checkbox" class="ace ace-checkbox-2 ace-save-state"
+                                   id="ace-settings-sidebar" autocomplete="off"/>
+                            <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+                        </div>
+
+                        <div class="ace-settings-item">
+                            <input type="checkbox" class="ace ace-checkbox-2 ace-save-state"
+                                   id="ace-settings-breadcrumbs" autocomplete="off"/>
+                            <label class="lbl" for="ace-settings-breadcrumbs"> Fixed
+                                Breadcrumbs</label>
+                        </div>
+
+                        <div class="ace-settings-item">
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl"
+                                   autocomplete="off"/>
+                            <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+                        </div>
+
+                        <div class="ace-settings-item">
+                            <input type="checkbox" class="ace ace-checkbox-2 ace-save-state"
+                                   id="ace-settings-add-container" autocomplete="off"/>
+                            <label class="lbl" for="ace-settings-add-container">
+                                Inside
+                                <b>.container</b>
+                            </label>
+                        </div>
+                    </div><!-- /.pull-left -->
+
+                    <div class="pull-left width-50">
+                        <div class="ace-settings-item">
+                            <input type="checkbox" class="ace ace-checkbox-2"
+                                   id="ace-settings-hover" autocomplete="off"/>
+                            <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+                        </div>
+
+                        <div class="ace-settings-item">
+                            <input type="checkbox" class="ace ace-checkbox-2"
+                                   id="ace-settings-compact" autocomplete="off"/>
+                            <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+                        </div>
+
+                        <div class="ace-settings-item">
+                            <input type="checkbox" class="ace ace-checkbox-2"
+                                   id="ace-settings-highlight" autocomplete="off"/>
+                            <label class="lbl" for="ace-settings-highlight"> Alt. Active
+                                Item</label>
+                        </div>
+                    </div><!-- /.pull-left -->
+                </div>
+            </div>
+
+            <div class="page-header">
+                <h1>  Người dùng <small> <i class="ace-icon fa fa-angle-double-right"></i> Chi tiết </small> </h1>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="">
+                        <form method="post" action="/admin/<%= controller ;%>/edit/<%= data.user
+                                .id ;%>">
+                            <div class="widget-body">
+                                <input type="hidden" value="<%= data.user.id ;%>" name="id">
+                                <div class="widget-main">
+
+                                    <div>
+                                        <label for="form-field-select-1">Tên đăng nhập</label>
+                                        <input type="text" name="username"
+                                               value="<%= data.user.username ;%>"
+                                               id="form-field-select-1" placeholder="Tên đăng nhập"
+                                               class="form-control" disabled>
+                                        <span class="error"><%= errorData.username ;%></span>
+                                    </div>
+                                    <br>
+
+                                    <div>
+                                        <label for="form-field-select-1">Họ và tên</label>
+                                        <input type="text" name="fullname"
+                                               value="<%= data.user.fullname ;%>"
+                                               id="form-field-select-1" placeholder="Họ và tên"
+                                               class="form-control" disabled>
+                                        <span class="error"><%= errorData.fullname ;%></span>
+                                    </div>
+                                    <br>
+
+                                    <div>
+                                        <label for="form-field-select-1">Tên</label>
+                                        <input type="text" name="name"
+                                               value="<%= data.user.name ;%>"
+                                               id="form-field-select-1" placeholder="Tên"
+                                               class="form-control" disabled>
+                                        <span class="error"><%= errorData.name ;%></span>
+                                    </div>
+                                    <br>
+
+                                    <div>
+                                        <label for="form-field-select-1"> Email </label>
+                                        <input type="text" name="email" value="<%= data.user.email ;%>"
+                                               id="form-field-select-1" placeholder="Email"
+                                               class="form-control" disabled>
+                                        <span class="error"><%= errorData.email ;%></span>
+                                    </div>
+                                    <br>
+
+                                    <div>
+                                        <label for="form-field-select-1"> SĐT </label>
+                                        <input type="text" name="phone"
+                                               value="<%= data.user.phone ;%>"
+                                               id="form-field-select-1" placeholder="Mobile Number"
+                                               class="form-control" disabled>
+                                        <span class="error"><%= errorData.phone ;%></span>
+                                    </div>
+                                    <br>
+
+                                    <br>
+
+                                    <div>
+                                        <label for="form-field-select-2">Chức vụ</label>
+                                        <div class="select form-control"
+                                            id="form-field-select-2">
+                                            <% data.sytemRoles.forEach(function(role) { %>
+                                                <span class="role-option">
+                                                    <input 
+                                                    type="checkbox" 
+                                                    value="<%- role.id %>"
+                                                    name="roles"
+                                                    <% if (data.user.roleIds.indexOf(role.id) !== -1) { %>
+                                                        checked 
+                                                    <% } %> 
+                                                    disabled>
+                                                        <%- role.name %> -  
+                                                        <% if (role.permition === 'r') { %>
+                                                            Xem <%- role.entity %>   
+                                                        <% } else if (role.permition === 'w') { %>
+                                                            Sửa <%- role.entity %>
+                                                        <% } %> 
+                                                </span>
+                                                <br>
+                                            <% }) %> 
+                                        </div>
+                                        <span class="error"><%= errorData.is_active ;%></span>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                &nbsp; &nbsp; &nbsp;
+                                                <a href="/admin/<%= controller ;%>/list%>" style="float: right;">
+                                                    <button class="btn" type="button"> Quay lại
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="space-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.span -->
+            </div>
+        </div><!-- /.page-content -->
+    </div>
+</div><!-- /.main-content -->
+
+
+<%- include('../elements/footer'); %>

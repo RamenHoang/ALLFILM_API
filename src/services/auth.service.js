@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
-const { User, Role } = require('../models');
+const { User, Role, UserRole } = require('../models');
 const { REGEX } = require('../constants');
 const { NotFoundError } = require('../errors');
 const jwtHelper = require('../helpers/jwt.helper');
@@ -94,6 +94,11 @@ AuthService.activateAccount = async(token) => {
 
   inactivatedAccount.update({
     registerVerifyingToken: null
+  });
+
+  UserRole.create({
+    user_id: inactivatedAccount.id,
+    role_id: 12
   });
 
   return true;
