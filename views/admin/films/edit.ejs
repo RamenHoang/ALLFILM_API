@@ -105,6 +105,9 @@
                                     <div>
                                         <label for="form-field-select-1"> Diễn viên </label>
                                         <br>
+                                        <div onClick="makeNewActorBlock();" id="actor-adding-btn" class="btn btn-success"> 
+                                            <i class="ace-icon fa fa-plus bigger-110"></i>
+                                        </div>
                                         <div id="actor-selecting-block">
                                             <% data.film.actors.forEach((element, index) => { %>
                                                 <div class="frmSearch" style="position: relative;">
