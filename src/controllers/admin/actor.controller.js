@@ -2,47 +2,47 @@ const { Op } = require('sequelize');
 const _ = require('lodash');
 
 const {
-  Director
+  Actor
 } = require('../../models');
 
-const controller = 'directors';
-const VIEW_SHOW_PATH = 'admin/directors/view';
-const VIEW_EDIT_PATH = 'admin/directors/edit';
-const VIEW_ADD_PATH = 'admin/directors/add';
+const controller = 'actors';
+const VIEW_SHOW_PATH = 'admin/actors/view';
+const VIEW_EDIT_PATH = 'admin/actors/edit';
+const VIEW_ADD_PATH = 'admin/actors/add';
 
-const DirectorController = module.exports;
+const ActorController = module.exports;
 
-DirectorController.get = async(req, res) => {
-  const directorQueryName = req.query.name;
+ActorController.get = async(req, res) => {
+  const actorQueryName = req.query.name;
 
-  const directors = await Director.findAll({
+  const actors = await Actor.findAll({
     where: {
       name: {
-        [Op.like]: `%${directorQueryName}%`
+        [Op.like]: `%${actorQueryName}%`
       }
     },
     raw: true
   });
 
-  const idAndNameOfDirectors = _.map(
-    directors,
-    (director) => ({ id: director.id, name: director.name })
+  const idAndNameOfActors = _.map(
+    actors,
+    (actor) => ({ id: actor.id, name: actor.name })
   );
 
-  return res.status(200).json(idAndNameOfDirectors);
+  return res.status(200).json(idAndNameOfActors);
 };
 
-DirectorController.list = async(req, res) => {
+ActorController.list = async(req, res) => {
   const loginUser = req.currentUser;
-  const directors = await Director.findAll({
+  const actors = await Actor.findAll({
     raw: true
   });
 
   const action = 'list';
-  const data = directors;
+  const data = actors;
   const errorData = {};
 
-  res.render('admin/directors/list', {
+  res.render('admin/actors/list', {
     page_title: 'Admin - Dashboard',
     data,
     loginUser,
@@ -52,7 +52,7 @@ DirectorController.list = async(req, res) => {
   });
 };
 
-DirectorController.getById = async(req, res) => {
+ActorController.getById = async(req, res) => {
   try {
     const userid = req.params.id;
     const loginUser = req.currentUser;
@@ -75,7 +75,7 @@ DirectorController.getById = async(req, res) => {
     }
 
     if (viewPath !== VIEW_ADD_PATH) {
-      const user = await Director.findByPk(userid);
+      const user = await Actor.findByPk(userid);
 
       data.user = user;
     }
@@ -93,14 +93,14 @@ DirectorController.getById = async(req, res) => {
   }
 };
 
-DirectorController.updateById = async(req, res) => {
+ActorController.updateById = async(req, res) => {
   try {
     const userId = req.params.id;
     const {
       name, dateOfBirth, description, nation
     } = req.body;
 
-    await Director.update(
+    await Actor.update(
       {
         name, dateOfBirth, description, nation
       },
@@ -109,49 +109,49 @@ DirectorController.updateById = async(req, res) => {
       }
     );
 
-    req.flash('success', 'Đạo diễn được cập nhật thành công');
+    req.flash('success', 'Diễn viên được cập nhật thành công');
     res.redirect(`/admin/${controller}/list`);
   } catch (e) {
     console.error(e);
-    req.flash('error', 'Có lỗi xảy ra trong quá trình cập nhật Đạo diễn');
+    req.flash('error', 'Có lỗi xảy ra trong quá trình cập nhật Diễn viên');
     res.redirect(`/admin/${controller}/list`);
   }
 };
 
-DirectorController.deleteById = async(req, res) => {
+ActorController.deleteById = async(req, res) => {
   try {
     const userId = req.params.id;
 
-    await Director.destroy({
+    await Actor.destroy({
       where: { id: userId }
     });
 
-    req.flash('success', 'Đạo diễn được xóa thành công');
+    req.flash('success', 'Diễn viên được xóa thành công');
     res.redirect(`/admin/${controller}/list`);
   } catch (e) {
     console.error(e);
-    req.flash('error', 'Có lỗi xảy ra trong quá trình xóa Đạo diễn');
+    req.flash('error', 'Có lỗi xảy ra trong quá trình xóa Diễn viên');
     res.redirect(`/admin/${controller}/list`);
   }
 };
 
-DirectorController.createNew = async(req, res) => {
+ActorController.createNew = async(req, res) => {
   try {
     const {
       name, dateOfBirth, description, nation
     } = req.body;
 
-    await Director.create(
+    await Actor.create(
       {
         name, dateOfBirth, description, nation
       }
     );
 
-    req.flash('success', 'Đạo diễn được thêm thành công');
+    req.flash('success', 'Diễn viên được thêm thành công');
     res.redirect(`/admin/${controller}/list`);
   } catch (e) {
     console.error(e);
-    req.flash('error', 'Có lỗi xảy ra trong quá trình thêm Đạo diễn');
+    req.flash('error', 'Có lỗi xảy ra trong quá trình thêm Diễn viên');
     res.redirect(`/admin/${controller}/list`);
   }
 };

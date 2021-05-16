@@ -110,7 +110,7 @@
                                             <% data.film.actors.forEach(element => { %>
                                                 <div class="frmSearch">
                                                     <input class="director_id_input" type="hidden" value="<%- element.id %> " name="actorIds[]" disabled>
-                                                    <input type="text" class="search-box form-control" placeholder="Tên diễn viên" value="<%- element.name %> " disabled/>
+                                                    <input type="text" class="search-box actor form-control" placeholder="Tên diễn viên" value="<%- element.name %> " disabled/>
                                                     <div class="suggesstion-box"></div>
                                                 </div>
                                             <% }) %>
@@ -124,7 +124,7 @@
                                         <label for="form-field-select-1"> Đạo diễn </label>
                                         <div class="frmSearch">
                                             <input class="director_id_input" type="hidden" value="<%- data.film.director.id %>" name="directorId" disabled>
-                                            <input type="text" class="search-box form-control" value="<%- data.film.director.name %> " placeholder="Tên đạo diễn" disabled/>
+                                            <input type="text" class="search-box director form-control" value="<%- data.film.director.name %> " placeholder="Tên đạo diễn" disabled/>
                                             <div class="suggesstion-box"></div>
                                         </div>
 
@@ -137,7 +137,7 @@
                                     <div> 
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <a href="/admin/<%=controller%>/list%>"> <button class="btn" type="button"> Hủy </button></a>   
+                                                <a href="/admin/<%=controller%>/list%>" style="float: right;"> <button class="btn" type="button"> Hủy </button></a>   
                                             </div>   
                                         </div>   
                                         <div class="space-2"></div>  
