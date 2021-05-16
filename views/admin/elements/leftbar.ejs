@@ -60,6 +60,46 @@
             </ul>
         </li>
 
+        <li class="<%= controller == 'directors' ? 'open' : '' %>">
+            <a href="#" class="dropdown-toggle">
+                <i class=" menu-icon fa fa-list-alt"></i>
+                <span class="menu-text"> Đạo diễn </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="<%= controller == 'directors' && action == 'list' ? 'active' : '' %>">
+                    <a href="/admin/directors/list"> <i class="menu-icon fa fa-caret-right"></i> Tất cả </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="<%= controller == 'directors' && action == 'add' ? 'active' : '' %>">
+                    <a href="/admin/directors/add"> <i class="menu-icon fa fa-caret-right"></i> Thêm đạo diễn
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+
+        <li class="<%= controller == 'actors' ? 'open' : '' %>">
+            <a href="#" class="dropdown-toggle">
+                <i class=" menu-icon fa fa-list-alt"></i>
+                <span class="menu-text"> Diễn viên </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="<%= controller == 'actors' && action == 'list' ? 'active' : '' %>">
+                    <a href="/admin/actors/list"> <i class="menu-icon fa fa-caret-right"></i> Tất cả </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="<%= controller == 'actors' && action == 'add' ? 'active' : '' %>">
+                    <a href="/admin/actors/add"> <i class="menu-icon fa fa-caret-right"></i> Thêm Diễn viên
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+
         <li class="<%= controller == 'categories' ? 'open' : '' %>">
             <a href="#" class="dropdown-toggle">
                 <i class=" menu-icon fa fa-list-alt"></i>

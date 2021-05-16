@@ -112,7 +112,7 @@
                                             <% data.film.actors.forEach((element, index) => { %>
                                                 <div class="frmSearch" style="position: relative;">
                                                     <input class="director_id_input" type="hidden" value="<%- element.id %> " name="actorIds[]" >
-                                                    <input type="text" class="search-box form-control" placeholder="Tên diễn viên" value="<%- element.name %> " />
+                                                    <input type="text" class="search-box actor form-control" placeholder="Tên diễn viên" value="<%- element.name %> " />
                                                     <div class="suggesstion-box"></div>
                                                     <% if (index > 0) { %>
                                                         <div class="btn btn-danger actor-removing-btn" style="padding: 0; position: absolute; left: calc(100% + 5px); top: 50%; transform: translateY(-50%);"> 
@@ -131,7 +131,7 @@
                                         <label for="form-field-select-1"> Đạo diễn </label>
                                         <div class="frmSearch">
                                             <input class="director_id_input" type="hidden" value="<%- data.film.director.id %>" name="directorId" >
-                                            <input type="text" class="search-box form-control" value="<%- data.film.director.name %> " placeholder="Tên đạo diễn" />
+                                            <input type="text" class="search-box director form-control" value="<%- data.film.director.name %> " placeholder="Tên đạo diễn" />
                                             <div class="suggesstion-box"></div>
                                         </div>
 
@@ -171,7 +171,7 @@
         let htmlContent = `
         <div class="frmSearch" style="position: relative;">
             <input class="director_id_input" type="hidden" value="" name="actorIds[]">
-            <input type="text" class="search-box form-control" placeholder="Tên diễn viên" />
+            <input type="text" class="search-box actor form-control" placeholder="Tên diễn viên" />
             <div class="suggesstion-box"></div>
             <div class="btn btn-danger actor-removing-btn" style="padding: 0; position: absolute; left: calc(100% + 5px); top: 50%; transform: translateY(-50%);"> 
                 <i class="ace-icon fa fa-times bigger-110"></i>
@@ -203,38 +203,49 @@
         });
     }
 
+    function successHandler(directors) {
+        let suggestionOptionHtml = '<ul class="option-list">';
+
+        directors.forEach(director => {
+            suggestionOptionHtml += `
+                <li 
+                    class="option-item" 
+                    data-id="${director.id}" 
+                    data-name="${director.name}"
+                >
+                    ${director.name}
+                </li>
+            `;
+        });
+
+        suggestionOptionHtml += '</ul>';
+
+        console.log(suggestionOptionHtml);
+
+        $(this).siblings('.suggesstion-box').show();
+        $(this).siblings('.suggesstion-box').html(suggestionOptionHtml);
+        $(this).css("background", "#FFF");
+
+        bindClickForOptionItems();
+    }
+
     function bindKeyUpSearchBox() {
-        $(".search-box").unbind('keyup').bind('keyup', function () {
+        $(".search-box.director").unbind('keyup').bind('keyup', function () {
             const self = this;
             $.ajax({
                 type: 'GET',
                 url: '/admin/directors',
                 data: `name=${$(self).val()}`,
-                success: function (directors) {
-                    let suggestionOptionHtml = '<ul class="option-list">';
-
-                    directors.forEach(director => {
-                        suggestionOptionHtml += `
-                            <li 
-                                class="option-item" 
-                                data-id="${director.id}" 
-                                data-name="${director.name}"
-                            >
-                                ${director.name}
-                            </li>
-                        `;
-                    });
-
-                    suggestionOptionHtml += '</ul>';
-
-                    console.log($(self).siblings('.suggesstion-box'));
-
-                    $(self).siblings('.suggesstion-box').show();
-                    $(self).siblings('.suggesstion-box').html(suggestionOptionHtml);
-                    $(self).css("background", "#FFF");
-
-                    bindClickForOptionItems();
-                }
+                success: successHandler.bind(self)
+            });
+        });
+        $(".search-box.actor").unbind('keyup').bind('keyup', function () {
+            const self = this;
+            $.ajax({
+                type: 'GET',
+                url: '/admin/actors',
+                data: `name=${$(self).val()}`,
+                success: successHandler.bind(self)
             });
         });
     }
