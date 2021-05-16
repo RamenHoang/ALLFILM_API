@@ -1,0 +1,35 @@
+.suggesstion-box {
+  width: 100%;
+  position: relative;
+}
+
+.frmSearch {
+  margin: 2px 0px;
+  border-radius: 4px;
+}
+
+.option-list {
+  list-style: none;
+  bottom: 4rem;
+  right: 0;
+  padding: 0;
+  position: absolute;
+  margin: 0 !important;
+}
+
+.option-list li {
+  padding: 10px;
+  background: #f0f0f0;
+}
+
+.option-list li:hover {
+  background: #ece3d2;
+  cursor: pointer;
+}
+
+.search-box {
+  padding: 10px;
+  /* border: #a8d4b1 1px solid; */
+  border-radius: 4px;
+  width: 100%;
+}

@@ -33,7 +33,27 @@
                 </li>
                 <li class="<%= controller == 'user' && action == 'add' ? 'active' : '' %>">
                     <a href="/admin/user/add">
-                        <i class="menu-icon fa fa-caret-right"></i> Thêm
+                        <i class="menu-icon fa fa-caret-right"></i> Thêm người dùng
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+
+        <li class="<%= controller == 'films' ? 'open' : '' %>">
+            <a href="#" class="dropdown-toggle">
+                <i class=" menu-icon fa fa-list-alt"></i>
+                <span class="menu-text"> Phim </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="<%= controller == 'films' && action == 'list' ? 'active' : '' %>">
+                    <a href="/admin/films/list"> <i class="menu-icon fa fa-caret-right"></i> Tất cả </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="<%= controller == 'films' && action == 'add' ? 'active' : '' %>">
+                    <a href="/admin/films/add"> <i class="menu-icon fa fa-caret-right"></i> Thêm phim
                     </a>
                     <b class="arrow"></b>
                 </li>
@@ -56,27 +76,6 @@
                 <li class="<%= controller == 'categories' && action == 'add' ? 'active' : '' %>">
                     <a href="/Categories/add"> <i class="menu-icon fa fa-caret-right"></i> Add
                         Category </a>
-                    <b class="arrow"></b>
-                </li>
-            </ul>
-        </li>
-
-        <li class="<%= controller == 'Products' ? 'open' : '' %>">
-            <a href="#" class="dropdown-toggle">
-                <i class=" menu-icon fa fa-list-alt"></i>
-                <span class="menu-text"> Products </span>
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
-            <b class="arrow"></b>
-            <ul class="submenu">
-                <li class="<%= controller == 'Products' && action == 'list' ? 'active' : '' %>">
-                    <a href="/Products/list"> <i class="menu-icon fa fa-caret-right"></i> All
-                        Products </a>
-                    <b class="arrow"></b>
-                </li>
-                <li class="<%= controller == 'Products' && action == 'add' ? 'active' : '' %>">
-                    <a href="/Products/add"> <i class="menu-icon fa fa-caret-right"></i> Add Product
-                    </a>
                     <b class="arrow"></b>
                 </li>
             </ul>

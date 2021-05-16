@@ -1,0 +1,164 @@
+ 
+<%- include('../elements/header'); %> 
+
+<div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li> <i class="ace-icon fa fa-tachometer"></i> <a href="/admin/dashboard">Bảng điều khiển</a> </li>
+                        <li class="active"><a href="/admin/<%=controller%>/list"> Phim </a> </li>
+                        <li class="active">Chi tiết</li>
+                    </ul><!-- /.breadcrumb --> 
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+                        <span class="input-icon">
+                            <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                            <i class="ace-icon fa fa-search nav-search-icon"></i>
+                        </span>
+                    </form>
+                </div><!-- /.nav-search --> 
+            </div>
+
+            <div class="page-content">
+                  
+                <div class="page-header">
+                    <h1>  Phim <small>   <i class="ace-icon fa fa-angle-double-right"></i>   Chi tiết  </small> </h1> 
+                </div>    
+                <div class="row">  
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="">   
+                            <form method="post" action="/admin/<%=controller%>/edit/<%=data.film.id%>">
+                            <div class="widget-body">  
+                                <input type="hidden" value="<%=data.film.id%>" name="id"> 
+                                <div class="widget-main">  
+                                    <div>
+                                        <label for="form-field-select-1">Tên</label> 
+                                        <input type="text" name="name" value="<%=data.film.name%>" id="form-field-select-1" placeholder="Title" class="form-control" disabled>  
+                                        <span class="error"><%=errorData.name%></span> 
+                                    </div>  <br>  
+ 
+                                    <div>
+                                        <label for="form-field-select-1">Tên tiếng việt</label> 
+                                        <input type="text" class="form-control" name="subName" placeholder="Description" value="<%=data.film.subName%>"" disabled>
+                                        <span class="error"><%=errorData.subName%></span> 
+                                    </div>  <br>
+
+                                    <div>
+                                        <label for="form-field-select-1"> Ngày công chiếu </label> 
+                                        <input id="datepicker" type="text" name="publishDate" value="<%=data.film.publishDate%>" id="form-field-select-1" placeholder="Price" class="form-control" disabled>  
+                                        <span class="error"><%=errorData.publishDate%></span>   
+                                    </div>  <br>  
+                                    
+                                    <div>
+                                        <label for="form-field-select-1"> Trailer </label>
+                                        <input type="text" name="trailer" value="<%=data.film.trailer%>" id="form-field-select-1" placeholder="Discount (In %)" class="form-control" disabled>  
+                                        <span class="error"><%=errorData.trailer%></span>   
+                                    </div>  <br>  
+
+                                    <div>
+                                        <label for="form-field-select-1"> Poster </label>
+                                        <input type="text" name="poster" value="<%=data.film.poster%>" id="form-field-select-1" placeholder="Display Price" class="form-control" disabled>  
+                                        <span class="error"><%=errorData.poster%></span>   
+                                    </div>  <br>   
+                                    
+                                    <div>
+                                        <label for="form-field-select-1"> Quốc gia </label> 
+                                        <input type="text" name="nation" value="<%=data.film.nation%>" id="form-field-select-1" placeholder="Display Price" class="form-control" disabled>  
+                                        <span class="error"><%=errorData.nation%></span>   
+                                    </div>  <br>   
+   
+                                    <div>
+                                        <label for="form-field-select-1"> Mô tả </label> 
+                                        <textarea rows="5" name="description" id="form-field-select-1" placeholder="Display Price" class="form-control" disabled><%=data.film.description.trim()%></textarea>
+                                        <span class="error"><%=errorData.description%></span>   
+                                    </div>  <br>
+
+                                    <div>
+                                        <label for="form-field-select-1"> Thời lượng (phút)</label> 
+                                        <input type="text" name="duration" value="<%=data.film.duration%>" id="form-field-select-1" placeholder="Display Price" class="form-control" disabled>  
+                                        <span class="error"><%=errorData.duration%></span>   
+                                    </div>  <br>
+                                    
+                                    <div>
+                                        <label for="form-field-select-2">Thể loại</label>
+                                        <div class="select form-control"
+                                            id="form-field-select-2">
+                                            <% data.filmTypes.forEach(function(type) { %>
+                                                <span class="role-option">
+                                                    <input 
+                                                    type="checkbox" 
+                                                    value="<%- type.id %>"
+                                                    name="filmTypes[]"
+                                                    <% if (Array.isArray(data.film.types) && data.film.types.indexOf(type.id) !== -1) { %>
+                                                        checked 
+                                                    <% } %> 
+                                                    disabled
+                                                    >
+                                                        <%- type.name %>
+                                                </span>
+                                                <br>
+                                            <% }) %> 
+                                        </div>
+                                        <span class="error"><%= errorData.filmTypes ;%></span>
+                                    </div><br>
+
+                                    <div>
+                                        <label for="form-field-select-1"> Diễn viên </label>
+                                        <br>
+                                        <div id="actor-selecting-block">
+                                            <% data.film.actors.forEach(element => { %>
+                                                <div class="frmSearch">
+                                                    <input class="director_id_input" type="hidden" value="<%- element.id %> " name="actorIds[]" disabled>
+                                                    <input type="text" class="search-box form-control" placeholder="Tên diễn viên" value="<%- element.name %> " disabled/>
+                                                    <div class="suggesstion-box"></div>
+                                                </div>
+                                            <% }) %>
+                                        </div>
+                                        <span class="error">
+                                            <%=errorData.director_id%>
+                                        </span>
+                                    </div> <br>
+
+                                    <div>
+                                        <label for="form-field-select-1"> Đạo diễn </label>
+                                        <div class="frmSearch">
+                                            <input class="director_id_input" type="hidden" value="<%- data.film.director.id %>" name="directorId" disabled>
+                                            <input type="text" class="search-box form-control" value="<%- data.film.director.name %> " placeholder="Tên đạo diễn" disabled/>
+                                            <div class="suggesstion-box"></div>
+                                        </div>
+
+                                        <span class="error">
+                                            <%=errorData.director_id%>
+                                        </span>
+                                    </div> <br>
+
+                                    <br>     
+                                    <div> 
+                                        <div class="row">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                <a href="/admin/<%=controller%>/list%>"> <button class="btn" type="button"> Hủy </button></a>   
+                                            </div>   
+                                        </div>   
+                                        <div class="space-2"></div>  
+                                    </div>    
+                                </div>
+                            </div>
+                            </form> 
+                        </div>
+                    </div><!-- /.span --> 
+                </div>  
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+
+<%- include('../elements/footer'); %> 
+
+<script src="/js/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+    jQuery(function($) {
+        $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+    })
+</script>

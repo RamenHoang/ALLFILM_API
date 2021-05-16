@@ -1,0 +1,265 @@
+<%- include('../elements/header'); %>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li> <i class="ace-icon fa fa-tachometer"></i> <a href="/admin/dashboard">Bảng điều khiển</a> </li>
+                    <li class="active"><a href="/admin/<%=controller%>/list"> Phim </a> </li>
+                    <li class="active">Thêm mới</li>
+                </ul><!-- /.breadcrumb -->
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+                        <span class="input-icon">
+                            <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input"
+                                autocomplete="off" />
+                            <i class="ace-icon fa fa-search nav-search-icon"></i>
+                        </span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+
+                <div class="page-header">
+                    <h1> Phim <small> <i class="ace-icon fa fa-angle-double-right"></i> Thêm mới </small> </h1>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="">
+                            <form method="post" action="/admin/<%=controller%>/add/<%=data.film.id%>">
+                                <div class="widget-body">
+                                    <input type="hidden" value="<%=data.film.id%>" name="id">
+                                    <div class="widget-main">
+                                        <div>
+                                            <label for="form-field-select-1">Tên</label>
+                                            <input type="text" name="name" id="form-field-select-1"
+                                                placeholder="Avenger" class="form-control">
+                                            <span class="error">
+                                                <%=errorData.name%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-1">Tên tiếng việt</label>
+                                            <input type="text" class="form-control" name="subName"
+                                                placeholder="Biệt đội báo thù">
+                                            <span class="error">
+                                                <%=errorData.subName%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-1"> Ngày công chiếu </label>
+                                            <input id="datepicker" type="text" name="publishDate"
+                                                id="form-field-select-1" placeholder="2021-05-05" class="form-control">
+                                            <span class="error">
+                                                <%=errorData.publishDate%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-1"> Trailer </label>
+                                            <input type="text" name="trailer" id="form-field-select-1"
+                                                placeholder="Link tới trailer" class="form-control">
+                                            <span class="error">
+                                                <%=errorData.trailer%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-1"> Poster </label>
+                                            <input type="text" name="poster" id="form-field-select-1"
+                                                placeholder="Link tới poster" class="form-control">
+                                            <span class="error">
+                                                <%=errorData.poster%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-1"> Quốc gia </label>
+                                            <input type="text" name="nation" id="form-field-select-1"
+                                                placeholder="Việt nam" class="form-control">
+                                            <span class="error">
+                                                <%=errorData.nation%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-1"> Mô tả </label>
+                                            <textarea rows="5" name="description" id="form-field-select-1"
+                                                placeholder="Mô tả về phim" class="form-control"></textarea>
+                                            <span class="error">
+                                                <%=errorData.description%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-1"> Thời lượng (phút)</label>
+                                            <input type="text" name="duration" id="form-field-select-1"
+                                                placeholder="120" class="form-control">
+                                            <span class="error">
+                                                <%=errorData.duration%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-2">Thể loại</label>
+                                            <div class="select form-control" id="form-field-select-2">
+                                                <% data.filmTypes.forEach(function(type) { %>
+                                                    <span class="role-option">
+                                                        <input type="checkbox" value="<%- type.id %>"
+                                                            name="filmTypes[]">
+                                                        <%- type.name %>
+                                                    </span>
+                                                    <br>
+                                                    <% }) %>
+                                            </div>
+                                            <span class="error">
+                                                <%= errorData.filmTypes ;%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-1"> Diễn viên </label>
+                                            <br>
+                                            <div onClick="makeNewActorBlock();" id="actor-adding-btn" class="btn btn-success"> 
+                                                <i class="ace-icon fa fa-plus bigger-110"></i>
+                                            </div>
+                                            <div id="actor-selecting-block">
+                                                <div class="frmSearch">
+                                                    <input class="director_id_input" type="hidden" value="" name="actorIds[]">
+                                                    <input type="text" class="search-box form-control" placeholder="Tên diễn viên" />
+                                                    <div class="suggesstion-box"></div>
+                                                </div>
+                                            </div>
+                                            <span class="error">
+                                                <%=errorData.director_id%>
+                                            </span>
+                                        </div> <br>
+
+                                        <div>
+                                            <label for="form-field-select-1"> Đạo diễn </label>
+                                            <div class="frmSearch">
+                                                <input class="director_id_input" type="hidden" value="" name="directorId">
+                                                <input type="text" class="search-box form-control" placeholder="Tên đạo diễn" />
+                                                <div class="suggesstion-box"></div>
+                                            </div>
+
+                                            <span class="error">
+                                                <%=errorData.director_id%>
+                                            </span>
+                                        </div> <br>
+
+                                        <br>
+                                        <br>
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button class="btn btn-info" type="submit"> <i
+                                                            class="ace-icon fa fa-check bigger-110"></i> Xác nhận
+                                                    </button>
+                                                    &nbsp; &nbsp; &nbsp;
+                                                    <a href="/admin/<%=controller%>/list%>"> <button class="btn"
+                                                            type="button"> Hủy </button></a>
+                                                </div>
+                                            </div>
+                                            <div class="space-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- /.span -->
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+
+    <%- include('../elements/footer'); %>
+
+<script src="/js/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+    function makeNewActorBlock() {
+        let htmlContent = `
+        <div class="frmSearch" style="position: relative;">
+            <input class="director_id_input" type="hidden" value="" name="actorIds[]">
+            <input type="text" class="search-box form-control" placeholder="Tên diễn viên" />
+            <div class="suggesstion-box"></div>
+            <div class="btn btn-danger actor-removing-btn" style="padding: 0; position: absolute; left: calc(100% + 5px); top: 50%; transform: translateY(-50%);"> 
+                <i class="ace-icon fa fa-times bigger-110"></i>
+            </div>
+        </div>
+        `;
+
+        $('#actor-selecting-block').append($(htmlContent));
+
+        bindKeyUpSearchBox();
+        bindClickRemovingActorBlock();
+    }
+
+    function bindClickForOptionItems() {
+        $(".option-item").unbind('click').bind('click', function() {
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+            const suggesstionBox = $(this).closest('.suggesstion-box');
+
+            suggesstionBox.siblings('.director_id_input').val(id);
+            suggesstionBox.siblings('.search-box').val(name);
+            suggesstionBox.hide();
+        });
+    }
+
+    function bindClickRemovingActorBlock() {
+        $('.actor-removing-btn').unbind('click').bind('click', function() {
+            $(this).parent().remove();
+        });
+    }
+
+    function bindKeyUpSearchBox() {
+        $(".search-box").unbind('keyup').bind('keyup', function () {
+            const self = this;
+            $.ajax({
+                type: 'GET',
+                url: '/admin/directors',
+                data: `name=${$(self).val()}`,
+                success: function (directors) {
+                    let suggestionOptionHtml = '<ul class="option-list">';
+
+                    directors.forEach(director => {
+                        suggestionOptionHtml += `
+                            <li 
+                                class="option-item" 
+                                data-id="${director.id}" 
+                                data-name="${director.name}"
+                            >
+                                ${director.name}
+                            </li>
+                        `;
+                    });
+
+                    suggestionOptionHtml += '</ul>';
+
+                    console.log($(self).siblings('.suggesstion-box'));
+
+                    $(self).siblings('.suggesstion-box').show();
+                    $(self).siblings('.suggesstion-box').html(suggestionOptionHtml);
+                    $(self).css("background", "#FFF");
+
+                    bindClickForOptionItems();
+                }
+            });
+        });
+    }
+
+    jQuery(function ($) {
+        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+
+        bindKeyUpSearchBox();
+
+        bindClickForOptionItems();
+    })
+</script>
