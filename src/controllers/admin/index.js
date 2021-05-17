@@ -6,3 +6,4 @@ Controllers.film = require('./film.controller');
 Controllers.director = require('./director.controller');
 Controllers.actor = require('./actor.controller');
 Controllers.fooddrink = require('./fooddink.controller');
+Controllers.cinema = require('./cinema.controller');
