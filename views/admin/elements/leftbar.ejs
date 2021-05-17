@@ -100,6 +100,26 @@
             </ul>
         </li>
 
+        <li class="<%= controller == 'fooddrinks' ? 'open' : '' %>">
+            <a href="#" class="dropdown-toggle">
+                <i class=" menu-icon fa fa-list-alt"></i>
+                <span class="menu-text"> Bắp nước </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="<%= controller == 'fooddrinks' && action == 'list' ? 'active' : '' %>">
+                    <a href="/admin/fooddrinks/list"> <i class="menu-icon fa fa-caret-right"></i> Tất cả </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="<%= controller == 'fooddrinks' && action == 'add' ? 'active' : '' %>">
+                    <a href="/admin/fooddrinks/add"> <i class="menu-icon fa fa-caret-right"></i> Thêm bắp nước
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+
         <li class="<%= controller == 'categories' ? 'open' : '' %>">
             <a href="#" class="dropdown-toggle">
                 <i class=" menu-icon fa fa-list-alt"></i>
