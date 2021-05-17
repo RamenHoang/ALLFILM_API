@@ -1,0 +1,73 @@
+ 
+<%- include('../elements/header'); %> 
+
+<div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li> <i class="ace-icon fa fa-tachometer"></i> <a href="/admin/dashboard">Bảng điều khiển</a> </li>
+                        <li class="active"><a href="/admin/<%=controller%>/list"> Rạp chiếu </a> </li>
+                        <li class="active">Chỉnh sửa</li>
+                    </ul><!-- /.breadcrumb --> 
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+                        <span class="input-icon">
+                            <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                            <i class="ace-icon fa fa-search nav-search-icon"></i>
+                        </span>
+                    </form>
+                </div><!-- /.nav-search --> 
+            </div>
+
+            <div class="page-content">
+
+                <div class="page-header">
+                    <h1>  Rạp chiếu <small>   <i class="ace-icon fa fa-angle-double-right"></i>   Chỉnh sửa  </small> </h1> 
+                </div>    
+                <div class="row">  
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="">   
+                            <form method="post" action="/admin/<%=controller%>/edit/<%=data.id%>">
+                                <div class="widget-body">  
+                                    <input type="hidden" value="<%=data.id%>" name="id"> 
+                                    <div class="widget-main">  
+                                        <div>
+                                            <label for="form-field-select-1">Tên</label> 
+                                            <input type="text" name="name" value="<%=data.name%>" id="form-field-select-1" placeholder="Mặt trời" class="form-control">  
+                                            <span class="error"><%=errorData.name%></span> 
+                                        </div>  <br>  
+    
+                                        <div>
+                                            <label for="form-field-select-1">Địa chỉ</label> 
+                                            <input type="text" class="form-control" name="address" placeholder="Đà nẵng" value="<%=data.address%>">
+                                            <span class="error"><%=errorData.address%></span> 
+                                        </div>  <br>
+
+                                        <br>     
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button class="btn btn-info" type="submit"> 
+                                                        <i class="ace-icon fa fa-check bigger-110"></i> Xác nhận
+                                                    </button>
+                                                    &nbsp; &nbsp; &nbsp;
+                                                    <a href="/admin/<%=controller%>/list%>"> 
+                                                        <button class="btn" type="button"> Hủy </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="space-2"></div>
+                                        </div>   
+                                    </div>
+                                </div>                 
+                            </form> 
+                        </div>
+                    </div><!-- /.span --> 
+                </div>  
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+
+<%- include('../elements/footer'); %> 
