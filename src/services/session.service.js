@@ -43,6 +43,6 @@ SessionService.list = (queryOption) => {
 SessionService.getById = (id) => Session.findByPk(id, {
   include: {
     model: Room,
-    attributes: ['name', 'row', 'column']
+    attributes: ['name', 'row', ['col', 'column']]
   }
 });

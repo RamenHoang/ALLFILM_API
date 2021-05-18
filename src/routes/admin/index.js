@@ -11,6 +11,7 @@ const directorRoute = require('./director-route');
 const actorRoute = require('./actor-route');
 const foodDrinkRoute = require('./fooddrinks-route');
 const cinemaRoute = require('./cinema-route');
+const roomRoute = require('./room-route');
 
 function route(app) {
   const router = express.Router();
@@ -27,6 +28,7 @@ function route(app) {
   router.use('/actors/', adminAuth, actorRoute);
   router.use('/fooddrinks/', adminAuth, foodDrinkRoute);
   router.use('/cinemas/', adminAuth, cinemaRoute);
+  router.use('/rooms/', adminAuth, roomRoute);
 
   app.use('/admin/', router);
 

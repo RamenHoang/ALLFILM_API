@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: DataTypes.STRING,
     row: DataTypes.INTEGER,
-    coloumn: DataTypes.INTEGER,
+    col: DataTypes.INTEGER,
     cinemaId: DataTypes.INTEGER
   }, {
     tablename: 'rooms',
