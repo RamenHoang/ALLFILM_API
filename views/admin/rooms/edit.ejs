@@ -1,0 +1,149 @@
+ 
+<%- include('../elements/header'); %> 
+
+<div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li> <i class="ace-icon fa fa-tachometer"></i> <a href="/admin/dashboard">Bảng điều khiển</a> </li>
+                        <li class="active"><a href="/admin/<%=controller%>/list"> Phòng chiếu </a> </li>
+                        <li class="active">Chỉnh sửa</li>
+                    </ul><!-- /.breadcrumb --> 
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+                        <span class="input-icon">
+                            <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                            <i class="ace-icon fa fa-search nav-search-icon"></i>
+                        </span>
+                    </form>
+                </div><!-- /.nav-search --> 
+            </div>
+
+            <div class="page-content">
+
+                <div class="page-header">
+                    <h1>  Phòng chiếu <small>   <i class="ace-icon fa fa-angle-double-right"></i>   Chỉnh sửa  </small> </h1> 
+                </div>    
+                <div class="row">  
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="">   
+                            <form method="post" action="/admin/<%=controller%>/edit/<%=data.room.id%>">
+                                <div class="widget-body">  
+                                    <input type="hidden" value="<%=data.room.id%>" name="id"> 
+                                    <div class="widget-main">  
+                                        <div>
+                                            <label for="form-field-select-1">Tên</label> 
+                                            <input type="text" name="name" value="<%=data.room.name%>" id="form-field-select-1" placeholder="Mặt trời" class="form-control" readonly>  
+                                            <span class="error"><%=errorData.name%></span> 
+                                        </div>  <br>  
+    
+                                        <div>
+                                            <label for="form-field-select-1">Số hàng</label> 
+                                            <input type="text" class="form-control" name="row" placeholder="12" value="<%=data.room.row%>" >
+                                            <span class="error"><%=errorData.row%></span> 
+                                        </div>  <br>
+
+                                        <div>
+                                            <label for="form-field-select-1">Số cột</label> 
+                                            <input type="text" class="form-control" name="column" placeholder="10" value="<%=data.room.column%>" >
+                                            <span class="error"><%=errorData.column%></span> 
+                                        </div>  <br>
+
+                                        <div>
+                                            <label for="form-field-select-1"> Rạp chiếu </label>
+                                            <div class="frmSearch">
+                                                <input class="director_id_input" type="hidden" value="<%- data.room.cinema.id %>" name="cinemaId" >
+                                                <input type="text" class="search-box director form-control" value="<%- data.room.cinema.name %> " placeholder="Mặt trời" />
+                                                <div class="suggesstion-box"></div>
+                                            </div>
+    
+                                            <span class="error">
+                                                <%=errorData.cinema_id%>
+                                            </span>
+                                        </div> <br>
+
+                                        <br>     
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button class="btn btn-info" type="submit"> 
+                                                        <i class="ace-icon fa fa-check bigger-110"></i> Xác nhận
+                                                    </button>
+                                                    &nbsp; &nbsp; &nbsp;
+                                                    <a href="/admin/<%=controller%>/list%>"> 
+                                                        <button class="btn" type="button"> Hủy </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="space-2"></div>
+                                        </div>   
+                                    </div>
+                                </div>                 
+                            </form> 
+                        </div>
+                    </div><!-- /.span --> 
+                </div>  
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+
+<%- include('../elements/footer'); %> 
+
+<script src="/js/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+    function bindClickForOptionItems() {
+        $(".option-item").unbind('click').bind('click', function() {
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+            const suggesstionBox = $(this).closest('.suggesstion-box');
+
+            suggesstionBox.siblings('.director_id_input').val(id);
+            suggesstionBox.siblings('.search-box').val(name);
+            suggesstionBox.hide();
+        });
+    }
+
+    function successHandler(directors) {
+        let suggestionOptionHtml = '<ul class="option-list">';
+
+        directors.forEach(director => {
+            suggestionOptionHtml += `
+                <li 
+                    class="option-item" 
+                    data-id="${director.id}" 
+                    data-name="${director.name}"
+                >
+                    ${director.name}
+                </li>
+            `;
+        });
+
+        suggestionOptionHtml += '</ul>';
+
+        $(this).siblings('.suggesstion-box').show();
+        $(this).siblings('.suggesstion-box').html(suggestionOptionHtml);
+        $(this).css("background", "#FFF");
+
+        bindClickForOptionItems();
+    }
+
+    function bindKeyUpSearchBox() {
+        $(".search-box.director").unbind('keyup').bind('keyup', function () {
+            const self = this;
+            $.ajax({
+                type: 'GET',
+                url: '/admin/cinemas',
+                data: `name=${$(self).val()}`,
+                success: successHandler.bind(self)
+            });
+        });
+    }
+
+    jQuery(function ($) {
+        bindKeyUpSearchBox();
+        bindClickForOptionItems();
+    })
+</script>

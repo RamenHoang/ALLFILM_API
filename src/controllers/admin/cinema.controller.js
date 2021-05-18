@@ -1,5 +1,8 @@
+const { Op } = require('sequelize');
+const _ = require('lodash');
+
 const {
-  Cinema
+  Cinema, Room
 } = require('../../models');
 
 const controller = 'cinemas';
@@ -8,6 +11,30 @@ const VIEW_EDIT_PATH = 'admin/cinemas/edit';
 const VIEW_ADD_PATH = 'admin/cinemas/add';
 
 const CinemaController = module.exports;
+
+CinemaController.get = async(req, res) => {
+  const cinemaQueryName = req.query.name;
+
+  const cinemas = await Cinema.findAll({
+    where: {
+      name: {
+        [Op.like]: `%${cinemaQueryName}%`
+      }
+    },
+    attributes: ['id', 'name'],
+    include: {
+      model: Room,
+      attributes: ['id'],
+      seperate: true
+    }
+  });
+
+  res.status(200).json(_.map(cinemas, (cinema) => ({
+    id: cinema.id,
+    name: cinema.name,
+    suggestedRoomName: `RAP${cinema.Rooms.length + 1}`
+  })));
+};
 
 CinemaController.list = async(req, res) => {
   const loginUser = req.currentUser;

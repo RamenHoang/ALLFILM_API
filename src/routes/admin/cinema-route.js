@@ -17,4 +17,6 @@ route.get('/add', cinema.getById);
 
 route.post('/add', cinema.createNew);
 
+route.get('/', cinema.get);
+
 module.exports = route;

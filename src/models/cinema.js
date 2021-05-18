@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   // eslint-disable-next-line no-unused-vars
   Cinema.associate = (models) => {
     Cinema.hasMany(models.Session);
+    Cinema.hasMany(models.Room);
   };
 
   return Cinema;
