@@ -17,4 +17,6 @@ route.get('/add', room.getById);
 
 route.post('/add', room.createNew);
 
+route.get('', room.get);
+
 module.exports = route;

@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const { Op } = require('sequelize');
 
 const {
   Film, FilmType, masterDB, FilmHasType, FilmActor, Director, Actor
@@ -29,6 +30,26 @@ function filmMapper(film) {
     director: { id: film.Director.id, name: film.Director.name }
   };
 }
+
+FilmController.get = async(req, res) => {
+  const filmQueryName = req.query.name;
+
+  const films = await Film.findAll({
+    where: {
+      name: {
+        [Op.like]: `%${filmQueryName}%`
+      }
+    },
+    attributes: ['id', 'name', 'duration'],
+    raw: true
+  });
+
+  res.status(200).json(_.map(films, (film) => ({
+    id: film.id,
+    name: film.name,
+    duration: film.duration
+  })));
+};
 
 FilmController.list = async(req, res) => {
   try {

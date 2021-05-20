@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const { Op } = require('sequelize');
 
 const {
   Room, Cinema
@@ -22,6 +23,31 @@ function roomMapper(room) {
     cinema: { id: room.Cinema.id, name: room.Cinema.name }
   };
 }
+
+RoomController.get = async(req, res) => {
+  try {
+    const roomQueryName = req.query.name;
+    const { cinemaId } = req.query;
+
+    const rooms = await Room.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${roomQueryName}%`,
+        },
+        cinemaId
+      },
+      attributes: ['id', 'name'],
+      raw: true
+    });
+
+    res.status(200).json(_.map(rooms, (room) => ({
+      id: room.id,
+      name: room.name
+    })));
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 RoomController.list = async(req, res) => {
   try {
