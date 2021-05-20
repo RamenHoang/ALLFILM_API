@@ -1,52 +1,25 @@
-const cinemaData = [
-  {
-    id: 1,
-    name: 'Mặt trời',
-    address: 'Đà Nẵng',
-    Sessions: [
-      {
-        id: 1,
-        date: '2021-04-29',
-        startTime: '2021-04-29 08:00:00'
-      },
-      {
-        id: 10,
-        date: '2021-04-29',
-        startTime: '2021-04-29 10:00:00'
-      },
-      {
-        id: 10,
-        date: '2021-04-30',
-        startTime: '2021-04-29 10:00:00'
-      },
-      {
-        id: 10,
-        date: '2021-05-01',
-        startTime: '2021-04-29 10:00:00'
-      }
-    ]
-  }
-];
+const _now = '08:00';
+const _duration = '120';
 
-const sessionsGroupByDate = cinemaData[0].Sessions.reduce((sessionObject, currentSession) => {
-  if (Array.isArray(sessionObject[currentSession.date])) {
-    sessionObject[currentSession.date].push({
-      id: currentSession.id,
-      startTime: currentSession.startTime
-    });
+function estimateEndTime(startTime, duration) {
+  if (typeof (duration) === 'string') { duration = parseInt(duration, 10); }
+  const hhmmArray = startTime.split(':');
+  const hh = parseInt(hhmmArray[0], 10);
+  const mm = parseInt(hhmmArray[1], 10);
+  const minutes = hh * 60 + mm + duration;
+  const endMinutes = (minutes % 60 === 0 ? minutes : 60 * Math.ceil(minutes / 60));
 
-    return sessionObject;
+  const integerEndHh = endMinutes / 60;
+  const integerEndMm = endMinutes % 60;
+
+  function fillZeroAheadDigit(digit) {
+    if (digit >= 10) return `${digit}`;
+
+    return `0${digit}`;
   }
 
-  sessionObject[currentSession.date] = [{
-    id: currentSession.id,
-    startTime: currentSession.startTime
-  }];
+  return `${fillZeroAheadDigit(integerEndHh)}:${fillZeroAheadDigit(integerEndMm)}`;
+}
 
-  return sessionObject;
-}, {});
-
-cinemaData[0].Sessions = sessionsGroupByDate;
-
-console.log(cinemaData[0].Sessions);
+console.log(estimateEndTime(_now, _duration));
 

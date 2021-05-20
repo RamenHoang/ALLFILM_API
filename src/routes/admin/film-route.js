@@ -17,4 +17,6 @@ route.get('/add', film.getById);
 
 route.post('/add', film.createNew);
 
+route.get('', film.get);
+
 module.exports = route;
