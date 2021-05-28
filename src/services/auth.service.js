@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const { User, Role, UserRole } = require('../models');
 const { REGEX } = require('../constants');
-const { NotFoundError } = require('../errors');
+const { NotFoundError, BadRequestError } = require('../errors');
 const jwtHelper = require('../helpers/jwt.helper');
 const { saltRound } = require('../config/app');
 
@@ -39,6 +39,17 @@ AuthService.login = async(username, password) => {
         field: 'username',
         type: 'any.not_found',
         message: '"username" does not exist'
+      }]
+    );
+  }
+
+  if (!_.isNil(user.registerVerifyingToken)) {
+    throw new BadRequestError(
+      t('bad_request'),
+      [{
+        field: 'account',
+        type: 'any.not_active',
+        message: 'Account is not active. Please check mail to verify your account'
       }]
     );
   }
