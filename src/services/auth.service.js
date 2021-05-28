@@ -19,7 +19,7 @@ AuthService.login = async(username, password) => {
       },
       attributes: ['permition', 'entity']
     },
-    attributes: ['id', 'passwordHash']
+    attributes: ['id', 'passwordHash', 'registerVerifyingToken']
   };
 
   if (username.match(REGEX.USERNAME_ONLY)) {
