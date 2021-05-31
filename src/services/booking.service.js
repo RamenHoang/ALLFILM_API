@@ -7,7 +7,8 @@ const {
   Session,
   Cinema,
   Room,
-  Film
+  Film,
+  User
 } = require('../models');
 
 const BookingService = module.exports;
@@ -86,14 +87,15 @@ BookingService.bookTicket = async(userId, bookingOption) => {
   );
 };
 
-BookingService.checkout = async(userId, bookingId) => {
+BookingService.checkout = async(bookingId, payDate) => {
   const checkoutStatus = await Booking.update({
-    checkedOutAt: Date.now()
+    checkedOutAt: payDate
   }, {
     where: {
-      id: bookingId,
-      userId
-    }
+      id: bookingId
+    },
+    raw: true,
+    nest: true
   });
 
   if (checkoutStatus[0]) {
@@ -116,6 +118,10 @@ BookingService.checkout = async(userId, bookingId) => {
               attributes: ['name', 'subName', 'poster']
             }
           ]
+        },
+        {
+          model: User,
+          attributes: ['email']
         }
       ]
     });
@@ -126,7 +132,7 @@ BookingService.checkout = async(userId, bookingId) => {
     [{
       field: 'booking',
       type: 'any.not_found',
-      message: 'Booking is not exist'
+      message: 'Vé không tồn tại'
     }]
   );
 };
