@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kết quả thanh toán</title>
+  <link rel="stylesheet" href="/stylesheets/jumbotron-narrow.css">
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header clearfix">
+      <ul class="nav nav-pills pull-right">
+
+      </ul>
+      <h3 class="text-muted">VNPAY</h3>
+    </div>
+
+    <% if (code === '00') { %>
+      <p style="text-align: center;"><%- message %> </p>
+    <% } else { %>
+      <p style="text-align: center; color: red"><%- message %></p>
+    <% } %>
+    
+    <p style="text-align: center;">
+      <a href="http://allfilm.mediadnnb.codes:5000" class="btn btn-default">Về Home</a>
+    </p>
+  </div>
+</body>
+</html>

@@ -147,7 +147,7 @@ Desktop.ini
 # Ansible
 ######################
 playbooks/*.retry
-/.env
+.env
 
 ######################
 # Terraform
