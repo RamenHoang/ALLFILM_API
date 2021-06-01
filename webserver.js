@@ -7,6 +7,7 @@ const flash = require('express-flash-messages');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const cron = require('node-cron');
 
 const { accessTokenTTL, accessTokenSecret } = require('./src/config/oauth2');
 
@@ -17,6 +18,7 @@ const adminRoutes = require('./src/routes/admin');
 const { masterDB } = require('./src/database');
 const errorHandler = require('./src/middlewares/error-handler');
 const setupWinston = require('./winston-setup');
+const job = require('./scheduler/removing-booking-15-minutes.schedule');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -61,6 +63,17 @@ function start() {
 setupWinston();
 
 start();
+
+cron.schedule('*/15  * * * *', () => {
+  job()
+    .then((result) => {
+      if (result === null) {
+        winston.info('15 minutes job success');
+      } else {
+        winston.error(winston.error(result.message));
+      }
+    });
+});
 
 // Export your express server so you can import it in the lambda function.
 module.exports = app;
