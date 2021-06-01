@@ -153,3 +153,13 @@ BookingController.getReturn = async(req, res, next) => {
     next(e);
   }
 };
+
+BookingController.remove = async(req, res, next) => {
+  try {
+    const result = await bookingService.removeAfterFifteen();
+
+    ok(req, res, result);
+  } catch (e) {
+    next(e);
+  }
+};

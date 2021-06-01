@@ -12,4 +12,6 @@ route.get('/ipn', booking.getIpn);
 
 route.get('/return-url', booking.getReturn);
 
+route.get('/remove', booking.remove);
+
 module.exports = route;
