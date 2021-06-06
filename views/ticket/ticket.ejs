@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Chúc mừng! Bạn đã đặt vé thành công!</title>
+</head>
+
+<body>
+	<div style="display: flex; flex-wrap: wrap; width: 100%; max-width: 700px; min-width: 500px; margin: auto; font-family: sans-serif">
+		<h1 style="width: 100%; text-align: center">Chúc mừng! Bạn đã đặt vé thành công!</h1>
+		<div style="width: 40%; background: orange; padding: 20px">
+			<img style="width: 100%" src="<%- ticketInfo.Session.Film.poster %> ">
+    </div>
+    <div style="width: 50%; margin-left: 20px;">
+      <h2 style="width: 100%; text-align: center"><%- ticketInfo.Session.Film.subName %></h2>
+      <h3 style="width: 100%; text-align: center"><%- ticketInfo.Session.Film.name %></h3>
+      <div style="width: 100%; text-align: center">
+        Vé(<%- ticketInfo.seats.split(',').length %>) (Ghế <%- ticketInfo.seats %>) <%- ticketInfo.Session.Room.name %>  Chi nhánh <%- ticketInfo.Session.Cinema.name %>  - <%- ticketInfo.Session.Cinema.address %> 
+      </div>
+      <br>
+      <div style="width: 100%; text-align: center">
+        <%- foodDrinks %> 
+      </div>
+      <br>
+      <table style="width: 100%">
+        <tr>
+          <th>Ngày:</th>
+          <th>Thời gian:</th>
+          <th>Rạp:</th>
+        </tr>
+        <tr>
+          <th style="color: orange"><%- ticketInfo.Session.startTime.split(' ')[0] %> </th>
+          <th style="color: orange"><%- ticketInfo.Session.startTime.split(' ')[1] %> </th>
+          <th style="color: orange"><%- ticketInfo.Session.Room.name %> </th>
+      </tr>
+      </table>
+
+      <div style="display:flex; width: 100%">
+        <img style="width: 250px; height: 250px; margin: auto" src="<%- qrCode %> ">
+      </div>
+    </div>
+    
+    </div>
+  </body>
+</html>
