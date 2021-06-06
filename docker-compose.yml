@@ -4,7 +4,7 @@ services:
   masterdb: 
     image: mysql:5.7.22
     ports: 
-     - 4407:3306
+      - 4407:3306
     environment: 
       MYSQL_USER: dbuser
       MYSQL_PASSWORD: dbpassword

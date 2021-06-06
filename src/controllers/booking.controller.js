@@ -11,6 +11,9 @@ const { ok } = require('../helpers/response.helper');
 const objectHelper = require('../helpers/object.helper');
 const vnpayConfig = require('../config/vnpay');
 const { VNPAY_ERROR_CODE } = require('../constants');
+const { bookingMapper } = require('../mapper');
+const { Booking } = require('../models');
+const { NotFoundError, BadRequestError } = require('../errors');
 
 // const { NotFoundError, ValidationError } = require('../errors');
 
@@ -27,7 +30,7 @@ BookingController.bookTicket = async(req, res, next) => {
     const sessionRoomId = _.get(req.body, 'sessionRoomId');
     const foodDrinks = _.get(req.body, 'foodDrinks');
 
-    const ticket = await bookingService.bookTicket(userId, {
+    const ticket = bookingMapper.toBooking(await bookingService.bookTicket(userId, {
       bookingTime,
       keepingTime,
       seats,
@@ -35,7 +38,7 @@ BookingController.bookTicket = async(req, res, next) => {
       sessionId,
       sessionRoomId,
       foodDrinks
-    });
+    }));
 
     ok(req, res, ticket);
   } catch (e) {
@@ -127,12 +130,12 @@ BookingController.getReturn = async(req, res, next) => {
       const bookingId = vnpParams.vnp_TxnRef.split('_')[0];
       // const rspCode = vnpParams.vnp_ResponseCode;
 
-      const checkedOutBookingInfo = await bookingService.checkout(
+      const checkedOutBookingInfo = bookingMapper.toBookingWithUser(await bookingService.checkout(
         bookingId,
         vnpParams
           .vnp_PayDate
           .replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3 $4:$5:$6')
-      );
+      ));
 
       await mailService.sendMailBookTicketSuccesfully(
         checkedOutBookingInfo.User.email,
@@ -159,6 +162,50 @@ BookingController.remove = async(req, res, next) => {
     const result = await bookingService.removeAfterFifteen();
 
     ok(req, res, result);
+  } catch (e) {
+    next(e);
+  }
+};
+
+BookingController.closeTicket = async(req, res, next) => {
+  try {
+    const { bookingId } = req.params;
+    const ticket = await Booking.findByPk(bookingId);
+
+    if (_.isNil(ticket)) {
+      throw new NotFoundError(
+        t('not_found'),
+        [{
+          field: 'bookingId',
+          type: 'any.not_found',
+          message: 'Vé không tồn tại.'
+        }]
+      );
+    }
+
+    // eslint-disable-next-line eqeqeq
+    if (ticket.isClose === true) {
+      throw new BadRequestError(
+        t('bad_request'),
+        [
+          {
+            field: 'booking',
+            type: 'bad_request',
+            message: 'Vé đã được sử dụng.'
+          }
+        ]
+      );
+    }
+
+    Booking.update({
+      isClose: true
+    }, {
+      where: {
+        id: bookingId
+      }
+    });
+
+    ok(req, res, { message: 'Vé hợp lệ. Chúc quý khách xem phim vui vẻ.' });
   } catch (e) {
     next(e);
   }

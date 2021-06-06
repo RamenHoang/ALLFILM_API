@@ -14,4 +14,6 @@ route.get('/return-url', booking.getReturn);
 
 route.get('/remove', booking.remove);
 
+route.get('/:bookingId/close', booking.closeTicket);
+
 module.exports = route;

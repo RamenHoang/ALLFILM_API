@@ -533,6 +533,30 @@ module.exports = {
         responses: {}
       }
     },
+    '/booking/{id}/close': {
+      get: {
+        tags: [
+          'Booking'
+        ],
+        produces: [
+          'application/json'
+        ],
+        consumes: [
+          'application/json'
+        ],
+        description: 'API sử dụng vé',
+        parameters: [
+          {
+            in: 'path',
+            name: 'id',
+            required: true,
+            type: 'integer',
+            description: 'Id của vé cần sử dụng'
+          }
+        ],
+        responses: {}
+      }
+    },
     '/food-drink': {
       get: {
         tags: [

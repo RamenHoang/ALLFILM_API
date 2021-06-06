@@ -11,9 +11,9 @@ const {
   Room,
   Film,
   User,
-  masterDB
+  masterDB,
+  FoodDrink
 } = require('../models');
-const { sessionService } = require('.');
 
 const BookingService = module.exports;
 
@@ -96,7 +96,7 @@ BookingService.bookTicket = async(userId, bookingOption) => {
       include: [
         {
           model: Session,
-          attributes: ['startTime'],
+          attributes: ['startTime', 'price'],
           include: [
             {
               model: Cinema,
@@ -111,6 +111,13 @@ BookingService.bookTicket = async(userId, bookingOption) => {
               attributes: ['name', 'subName']
             }
           ]
+        },
+        {
+          model: FoodDrink,
+          attributes: ['name', 'price'],
+          through: {
+            attributes: ['count']
+          }
         }
       ]
     });
@@ -161,6 +168,13 @@ BookingService.checkout = async(bookingId, payDate) => {
         {
           model: User,
           attributes: ['email']
+        },
+        {
+          model: FoodDrink,
+          attributes: ['name', 'price'],
+          through: {
+            attributes: ['count']
+          }
         }
       ]
     });
