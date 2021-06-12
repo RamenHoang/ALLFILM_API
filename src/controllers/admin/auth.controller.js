@@ -126,3 +126,13 @@ AuthController.dashboard = async(req, res, next) => {
     next(e);
   }
 };
+
+AuthController.logout = async(req, res) => {
+  try {
+    cookieHepler.deleteData(res, 'token');
+
+    res.redirect('/admin/login');
+  } catch (e) {
+    console.error(e);
+  }
+};

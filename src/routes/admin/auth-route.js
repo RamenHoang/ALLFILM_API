@@ -10,4 +10,6 @@ route.post('/login', auth.login);
 
 route.get('/dashboard', adminAuth, auth.dashboard);
 
+route.get('/logout', adminAuth, auth.logout);
+
 module.exports = route;
