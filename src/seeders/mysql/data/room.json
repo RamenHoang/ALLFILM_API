@@ -3,7 +3,7 @@
     "id": 1,
     "name": "RAP1",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 1,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -12,7 +12,7 @@
     "id": 2,
     "name": "RAP2",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 1,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -21,7 +21,7 @@
     "id": 3,
     "name": "RAP3",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 1,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -30,7 +30,7 @@
     "id": 4,
     "name": "RAP4",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 1,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -39,7 +39,7 @@
     "id": 5,
     "name": "RAP5",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 1,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -48,7 +48,7 @@
     "id": 6,
     "name": "RAP6",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 1,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -57,7 +57,7 @@
     "id": 7,
     "name": "RAP1",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 2,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -66,7 +66,7 @@
     "id": 8,
     "name": "RAP2",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 2,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -75,7 +75,7 @@
     "id": 9,
     "name": "RAP3",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 2,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -84,7 +84,7 @@
     "id": 10,
     "name": "RAP4",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 2,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -93,7 +93,7 @@
     "id": 11,
     "name": "RAP5",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 2,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
@@ -102,7 +102,7 @@
     "id": 12,
     "name": "RAP6",
     "row": 10,
-    "column": 12,
+    "col": 12,
     "cinema_id": 2,
     "created_at": "2021-04-25 17:14:00",
     "updated_at": "2021-04-25 17:14:00"
