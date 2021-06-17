@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
+const { isNil } = require('lodash');
 const {
-  Film, Actor, Director, FilmType
+  Film, Actor, Director, FilmType, Rating
 } = require('../models');
 
 const FilmService = module.exports;
@@ -42,4 +43,26 @@ FilmService.getById = async(id) => {
   };
 
   return Film.findOne(option);
+};
+
+FilmService.rating = async(userId, id, point, film = null) => {
+  if (isNil(film)) {
+    film = await Film.findOne({ where: { id } });
+  }
+  point = parseInt(point, 10);
+  const { rating, ratingTurn } = film;
+
+  const ratingSum = rating * ratingTurn;
+  const newRatingTurn = ratingTurn + 1;
+  const newRating = parseFloat(((ratingSum + point) / newRatingTurn).toFixed(1));
+
+  Rating.create({
+    userId,
+    filmId: id
+  });
+
+  return film.update({
+    rating: newRating,
+    ratingTurn: newRatingTurn
+  });
 };

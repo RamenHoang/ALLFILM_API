@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     nation: DataTypes.STRING,
     description: DataTypes.STRING,
     rating: DataTypes.DOUBLE,
-    rating_turn: DataTypes.INTEGER,
+    ratingTurn: DataTypes.INTEGER,
     directorId: DataTypes.INTEGER,
     duration: DataTypes.INTEGER
   }, {
