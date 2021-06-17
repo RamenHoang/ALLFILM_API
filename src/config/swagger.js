@@ -330,6 +330,38 @@ module.exports = {
         responses: {}
       }
     },
+    '/film/{id}/rating/{point}': {
+      post: {
+        tags: [
+          'Film'
+        ],
+        description: 'API đánh giá phim',
+        produces: [
+          'application/json'
+        ],
+        consumes: [
+          'application/json'
+        ],
+        security: [{
+          Bearer: []
+        }],
+        parameters: [
+          {
+            in: 'path',
+            name: 'id',
+            description: 'Id của phim cần cần đánh giá',
+            type: 'integer'
+          },
+          {
+            in: 'path',
+            name: 'point',
+            description: 'Số điểm người dùng đánh giá phim 0-10',
+            type: 'integer'
+          }
+        ],
+        responses: {}
+      }
+    },
     '/director/{id}': {
       get: {
         tags: [
