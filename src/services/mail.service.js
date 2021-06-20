@@ -1,10 +1,11 @@
 const nodemailer = require('nodemailer');
-const qrcode = require('qrcode');
 const ejs = require('ejs');
+const { v4 } = require('uuid');
 
 const mailConfig = require('../config/mail');
 const appConfig = require('../config/app');
 const { NotFoundError } = require('../errors');
+const qrHelper = require('../helpers/qr.helper');
 
 const transport = nodemailer.createTransport({
   host: mailConfig.host,
@@ -54,14 +55,16 @@ MailService.sendMailBookTicketSuccesfully = async(toEmail, ticketInfo) => {
   const html = await ejs.renderFile(
     `${__dirname}/../../views/ticket/ticket.ejs`,
     {
+      logo: `${appConfig.url}/assets/logo/ALLFILMS_500x500_black.png`,
       ticketInfo,
       foodDrinks: ticketInfo.FoodDrinks.reduce((acc, item) => {
         acc += `${item.name} x ${item.amount}; `;
 
         return acc;
       }, ''),
-      qrCode: await qrcode.toDataURL(
-        `http://${appConfig.host}:${appConfig.port}/api/v1/booking/${ticketInfo.id}/close`
+      qrCode: await qrHelper.toFile(
+        `${__dirname}/../../public/qr/${v4()}.png`,
+        `${appConfig.url}/api/v1/booking/${ticketInfo.id}/close`
       )
     }
   );

@@ -5,7 +5,7 @@ module.exports = {
   host: process.env.APP_HOST || 'localhost',
   locale: 'en',
   logLevel: process.env.LOG_LEVEL || 'debug',
-  url: process.env.APP_URL || 'localhost:5000',
+  url: process.env.APP_URL,
   env: process.env.APP_ENV || 'local',
   saltRound: +process.env.SALT_ROUND || 10
 };
