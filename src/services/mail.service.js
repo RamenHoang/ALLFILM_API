@@ -41,7 +41,8 @@ MailService.sendMail = (to, subject = 'Hi there', html = '<h1>Hi there</h1>') =>
 MailService.sendMailActivateAccount = (toEmail, token) => {
   const html = `
         <h1>ALLFILM Cinema xin chào quý khách</h1>
-        <h2>Để xác minh đây là bạn, vui lòng nhấp link bên để <a href="http://${appConfig.url}/api/v1/auth/register/${token}">kích hoạt tài khoản</a></h2>
+        <br>
+        <h2>Để xác minh đây là bạn, vui lòng nhấp link bên để <a href="${appConfig.url}/api/v1/auth/register/${token}">kích hoạt tài khoản</a></h2>
       `;
 
   MailService.sendMail(
