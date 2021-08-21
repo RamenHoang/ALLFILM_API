@@ -8,7 +8,7 @@
                     <i class="ace-icon fa fa-tachometer"></i>
                     <a href="/admin/dashboard">Bảng điều khiển</a>
                 </li>
-                <li class="active"><a href="/admin/<%= controller %>/list"> Người dùng </a></li>
+                <li class="active"><a href="/admin/<%= controller %>/list"> Ưu đãi </a></li>
                 <li class="active">Danh sách</li>
             </ul>
         </div>
@@ -17,12 +17,12 @@
             <%- include ../elements/flash.ejs %>
             <div class="page-header col-xs-12">
                 <div class="col-xs-6">
-                    <h1>  Người dùng <small> <i class="ace-icon fa fa-angle-double-right"></i> Danh sách </small></h1>
+                    <h1>  Ưu đãi <small> <i class="ace-icon fa fa-angle-double-right"></i> Danh sách </small></h1>
                 </div>
                 <div class="col-xs-6">
                     <a href="/admin/<%= controller %>/add%>">
                         <button class="btn btn-info pull-right" type="button">
-                            Thêm người dùng
+                            Thêm ưu đãi
                         </button>
                     </a>
                 </div>
@@ -32,23 +32,16 @@
                     <div class="clearfix">
                         <div class="pull-right tableTools-container"></div>
                     </div>
-                    <div class="table-header"> Danh sách người dùng </div>
+                    <div class="table-header"> Danh sách ưu đãi </div>
                     <div>
-                        <table id="dynamic-table"
-                               class="table table-striped table-bordered table-hover">
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>STT</th>
-                                <th>Họ và tên</th>
-                                <th>Email</th>
-                                <th>Số điện thoại</th>
-                                <th class="hidden-480">Ngày tạo</th>
-                                <th>
-                                    <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                    Chức vụ
-                                </th>
-                                <th class="hidden-480">Action</th>
-
+                                <th style="width: 10%;">STT</th>
+                                <th>Mã ưu đãi</th>
+                                <th>Thumbnail</th>
+                                <th>Nội dung</th>
+                                <th style="width: 10%;">Action</th>
                             </tr>
                             </thead>
 
@@ -57,42 +50,18 @@
                             for(var i = 0;i < data.length;i++) { %>
                                 <tr>
                                     <td><a href="#"><%= i + 1 %></a></td>
-                                    <td style="width: 15%;"><%= data[i].name %></td>
-                                    <td style="width: 15%;"><%= data[i].email %></td>
-                                    <td style="width: 15%;"><%= data[i].phone %></td>
-                                    <td><%= data[i].createdAt%></td>
-                                    <td class="hidden-480">
-                                        <% data[i].rbac.roles.forEach(function(role) { %>
-                                            <% if(role === 'admin') { %>
-                                                <span class="label label-sm label-success">
-                                                    Admin
-                                                </span>
-                                            <% } %>
-                                            <% if(role === 'seller') { %>
-                                                <span class="label label-sm label-warning">
-                                                Seller
-                                                </span>
-                                            <% } %>
-                                            <% if(role === 'client') { %>
-                                                <span class="label label-sm label-info">
-                                                Client
-                                                </span>
-                                            <% } %>
-                                        <% }) %>
-                                    </td>
-                                    <td class="hidden-480">
-                                        <div class="hidden-sm hidden-xs action-buttons">
+                                    <td><%= data[i].id %></td>
+                                    <td><img style="width: 50px;" src="<%= data[i].image %>"></td>
+                                    <td><%= data[i].content %></td>
+                                    <td>
+                                        <div class="action-buttons">
                                             <a class="blue" href="/admin/<%= controller %>/<%=data[i].id %>">
                                                 <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                             </a>
-                                            <a class="green"
-                                               href="/admin/<%= controller %>/edit/<%= data[i].id
-                                               %>">
+                                            <a class="green" href="/admin/<%= controller %>/edit/<%= data[i].id%>">
                                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                                             </a>
-                                            <a class="red"
-                                               onclick="return confirm('Bạn có chắc chắn muốn xóa bản ghi này?')"
-                                               href="/admin/<%= controller %>/delete/<%= data[i].id %>">
+                                            <a class="red" onclick="return confirm('Bạn có chắc chắn muốn xóa bản ghi này?')" href="/admin/<%= controller %>/delete/<%= data[i].id %>">
                                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                             </a>
                                         </div>
@@ -108,10 +77,8 @@
                     </div>
                 </div>
             </div>
-
-        </div><!-- /.page-content -->
     </div>
-</div><!-- /.main-content -->
+</div>
 
 
 <%- include('../elements/footer'); %>
@@ -134,13 +101,14 @@
       $('#dynamic-table')
         //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
         .DataTable({
-          bAutoWidth: false,
+          bAutoWidth: true,
           'aoColumns': [
             { 'bSortable': false },
-            null, null, null, null, null,
+            null, null, null, null,
             { 'bSortable': false }
           ],
           'aaSorting': [],
+          "scrollX": true,
           //"bProcessing": true,
           //"bServerSide": true,
           //"sAjaxSource": "http://127.0.0.1/table.php"	,

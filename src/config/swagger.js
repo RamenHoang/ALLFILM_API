@@ -618,6 +618,73 @@ module.exports = {
         description: 'API liệt kê rạp phim',
         responses: {}
       }
+    },
+    '/promotion': {
+      get: {
+        tags: [
+          'Promotion'
+        ],
+        produces: [
+          'application/json'
+        ],
+        consumes: [
+          'application/json'
+        ],
+        description: 'API liệt kê ưu đãi',
+        responses: {}
+      },
+      post: {
+        tags: [
+          'Promotion'
+        ],
+        produces: [
+          'application/json'
+        ],
+        consumes: [
+          'application/json'
+        ],
+        description: 'API đăng ký nhận ưu đãi qua mail',
+        parameters: [
+          {
+            in: 'body',
+            name: 'body',
+            required: true,
+            schema: {
+              properties: {
+                email: {
+                  type: 'string',
+                  description: 'Email nhận thông tin khuyến mãi'
+                }
+              }
+            }
+          }
+        ],
+        responses: {}
+      }
+    },
+    '/promotion/{id}': {
+      get: {
+        tags: [
+          'Promotion'
+        ],
+        produces: [
+          'application/json'
+        ],
+        consumes: [
+          'application/json'
+        ],
+        description: 'API xem thông tin ưu đãi',
+        parameters: [
+          {
+            in: 'path',
+            name: 'id',
+            required: true,
+            type: 'string',
+            description: 'Id của ưu đãi'
+          }
+        ],
+        responses: {}
+      }
     }
   },
   definitions: {
@@ -804,6 +871,29 @@ module.exports = {
           description: 'Id của phim mà suất chiếu đó sẽ chiếu'
         }
       }
-    }
+    },
+    Promotion: {
+      properties: {
+        id: {
+          type: 'string'
+        },
+        iamge: {
+          type: 'string'
+        },
+        content: {
+          type: 'string'
+        }
+      }
+    },
+    PromotionSubscription: {
+      properties: {
+        id: {
+          type: 'integer'
+        },
+        email: {
+          type: 'string'
+        }
+      }
+    },
   }
 };

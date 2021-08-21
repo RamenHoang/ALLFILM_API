@@ -13,6 +13,7 @@ const sessionRoute = require('./session-route');
 const bookingRoute = require('./booking-route');
 const foodDrinkRoute = require('./food-drink-route');
 const cinemaRoute = require('./cinema-route');
+const promotionRoute = require('./promotion-route');
 const apiDocsRoute = require('./apidocs-route');
 
 function route(app) {
@@ -32,6 +33,7 @@ function route(app) {
   router.use('/booking/', bookingRoute);
   router.use('/food-drink/', foodDrinkRoute);
   router.use('/cinema/', cinemaRoute);
+  router.use('/promotion/', promotionRoute);
 
   app.use('/api/v1/', router);
   app.use('/api/docs', apiDocsRoute);

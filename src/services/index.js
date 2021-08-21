@@ -12,3 +12,4 @@ Service.bookingService = require('./booking.service');
 Service.foodDrinkService = require('./food-drink.service');
 Service.cinemaService = require('./cinema.service');
 Service.vnpayService = require('./vnpay.service');
+Service.promotionService = require('./promotion.service');
