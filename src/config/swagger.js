@@ -877,7 +877,7 @@ module.exports = {
         id: {
           type: 'string'
         },
-        iamge: {
+        image: {
           type: 'string'
         },
         content: {
