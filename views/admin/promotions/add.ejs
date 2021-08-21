@@ -111,7 +111,17 @@
                                 <div class="widget-main">
 
                                     <div>
-                                        <label for="form-field-select-1">Hình ảnh</label>
+                                        <label for="form-field-select-1">Tên ưu đãi</label>
+                                        <input type="text" name="name"
+                                                value="<%= data.promotion.name ;%>"
+                                                id="form-field-select-1" placeholder="Tên ưu đãi"
+                                                class="form-control">
+                                        <span class="error"><%= errorData.name ;%></span>
+                                    </div>
+                                    <br>
+
+                                    <div>
+                                        <label for="form-field-select-1">Thumbnail</label>
                                         <input type="text" name="image"
                                                value="<%= data.promotion.image ;%>"
                                                id="form-field-select-1" placeholder="Ưu đãi thumbnail"

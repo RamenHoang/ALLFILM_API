@@ -37,11 +37,12 @@
                         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th style="width: 10%;">STT</th>
+                                <th>STT</th>
                                 <th>Mã ưu đãi</th>
+                                <th>Tên ưu đãi</th>
                                 <th>Thumbnail</th>
                                 <th>Nội dung</th>
-                                <th style="width: 10%;">Action</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
 
@@ -51,6 +52,7 @@
                                 <tr>
                                     <td><a href="#"><%= i + 1 %></a></td>
                                     <td><%= data[i].id %></td>
+                                    <td><%= data[i].name %></td>
                                     <td><img style="width: 50px;" src="<%= data[i].image %>"></td>
                                     <td><%= data[i].content %></td>
                                     <td>
@@ -95,34 +97,34 @@
 <script src="/js/dataTables.select.min.js"></script>
 
 <script type="text/javascript">
-  jQuery(function($) {
+    jQuery(function($) {
     //initiate dataTables plugin
     var myTable =
-      $('#dynamic-table')
+        $('#dynamic-table')
         //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
         .DataTable({
-          bAutoWidth: true,
-          'aoColumns': [
-            { 'bSortable': false },
-            null, null, null, null,
-            { 'bSortable': false }
-          ],
-          'aaSorting': [],
-          "scrollX": true,
-          //"bProcessing": true,
-          //"bServerSide": true,
-          //"sAjaxSource": "http://127.0.0.1/table.php"	,
-          //"sScrollY": "200px",
-          //"bPaginate": false,
-          //"sScrollX": "100%",
-          //"sScrollXInner": "120%",
-          //"bScrollCollapse": true,
-          //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-          //you may want to wrap the table inside a "div.dataTables_borderWrap" element
-          'iDisplayLength': 10,
-          select: {
-            style: 'multi'
-          }
+            bAutoWidth: false,
+            'aoColumns': [
+                { 'bSortable': false },
+                null, null, null, null,
+                { 'bSortable': false }
+            ],
+            'aaSorting': [],
+            "scrollX": true,
+            //"bProcessing": true,
+            //"bServerSide": true,
+            //"sAjaxSource": "http://127.0.0.1/table.php"	,
+            //"sScrollY": "200px",
+            //"bPaginate": false,
+            //"sScrollX": "100%",
+            //"sScrollXInner": "120%",
+            //"bScrollCollapse": true,
+            //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+            //you may want to wrap the table inside a "div.dataTables_borderWrap" element
+            'iDisplayLength': 10,
+            select: {
+                style: 'multi'
+            }
         });
     $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
 

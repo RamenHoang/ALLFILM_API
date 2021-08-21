@@ -98,12 +98,12 @@ PromotionController.updateById = async(req, res) => {
   try {
     const promotionId = req.params.id;
     const {
-      image, content
+      name, image, content
     } = req.body;
 
     await Promotion.update(
       {
-        image, content
+        name, image, content
       },
       {
         where: { id: promotionId },
@@ -139,7 +139,7 @@ PromotionController.deleteById = async(req, res) => {
 PromotionController.createNew = async(req, res) => {
   try {
     const {
-      image, content
+      name, image, content
     } = req.body;
 
     let promotion = null;
@@ -153,7 +153,7 @@ PromotionController.createNew = async(req, res) => {
 
     await Promotion.create(
       {
-        id, image, content
+        id, name, image, content
       }
     );
 
