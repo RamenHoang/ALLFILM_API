@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const _ = require('lodash');
+const { generateRandomString } = require('../../helpers/string.helper');
 
 const {
   Promotion
@@ -141,9 +142,18 @@ PromotionController.createNew = async(req, res) => {
       image, content
     } = req.body;
 
+    let promotion = null;
+    let id = null;
+
+    do {
+      id = generateRandomString();
+      // eslint-disable-next-line no-await-in-loop
+      promotion = await Promotion.findByPk(id);
+    } while (promotion);
+
     await Promotion.create(
       {
-        image, content
+        id, image, content
       }
     );
 
