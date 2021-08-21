@@ -1,13 +1,9 @@
-
-const { generateRandomString } = require('../helpers/string.helper');
-
 module.exports = (sequelize, DataTypes) => {
   const Promotion = sequelize.define('Promotion', {
     id: {
       allowNull: false,
       primaryKey: true,
-      type: DataTypes.STRING,
-      defaultValue: generateRandomString()
+      type: DataTypes.STRING
     },
     image: DataTypes.STRING,
     content: DataTypes.STRING
