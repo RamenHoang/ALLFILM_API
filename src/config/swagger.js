@@ -877,6 +877,9 @@ module.exports = {
         id: {
           type: 'string'
         },
+        name: {
+          type: 'string'
+        },
         image: {
           type: 'string'
         },
