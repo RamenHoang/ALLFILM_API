@@ -239,7 +239,7 @@ BookingService.removeAfterFifteen = async() => {
         where: {
           checkedOutAt: null,
           keepingTime: {
-            [Op.lte]: dateFormat(new Date(), 'yyyy-mm-dd hh:MM:ss')
+            [Op.lte]: dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss')
           }
         },
         attributes: ['id', 'sessionId', 'seats'],
