@@ -23,6 +23,12 @@ AuthValidation.validateRegister = {
   })
 };
 
+AuthValidation.validateEmail = {
+  [VALIDATE_ON.BODY]: Joi.object({
+    email: Joi.string().regex(REGEX.EMAIL_ONLY)
+  })
+};
+
 AuthValidation.validateUniqueUsername = async(req) => {
   const username = _.get(req, 'body.username');
 

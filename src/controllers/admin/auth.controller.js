@@ -2,7 +2,9 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
 const { REGEX } = require('../../constants');
-const { User, Role } = require('../../models');
+const {
+  User, Role, Booking, FilmType, Film, Session, FoodDrink
+} = require('../../models');
 const jwtHelper = require('../../helpers/jwt.helper');
 const cookieHepler = require('../../helpers/cookie.helper');
 
@@ -110,7 +112,59 @@ AuthController.dashboard = async(req, res, next) => {
   try {
     const action = 'login';
 
-    const data = {};
+    const rawData = JSON.parse(JSON.stringify(await Booking.findAll({
+      include: [
+        {
+          model: Session,
+          include: [
+            {
+              model: Film,
+              include: {
+                model: FilmType,
+                through: {
+                  attributes: []
+                }
+              }
+            }
+          ]
+        },
+        {
+          model: FoodDrink,
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    })));
+
+    const data = {
+      totalMoney: 0,
+      foodDrinks: {},
+      filmTypes: {}
+    };
+
+    if (rawData) {
+      rawData.forEach((booking) => {
+        data.totalMoney += booking.fee;
+
+        booking.FoodDrinks.forEach(({ name }) => {
+          if (data.foodDrinks[name]) {
+            data.foodDrinks[name]++;
+          } else {
+            data.foodDrinks[name] = 1;
+          }
+        });
+
+        booking.Session.Film.FilmTypes.forEach(({ name }) => {
+          if (data.filmTypes[name]) {
+            data.filmTypes[name]++;
+          } else {
+            data.filmTypes[name] = 1;
+          }
+        });
+      });
+    }
+
     const loginUser = req.currentUser;
     const errorData = {};
 

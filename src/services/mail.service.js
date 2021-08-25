@@ -76,3 +76,19 @@ MailService.sendMailBookTicketSuccesfully = async(toEmail, ticketInfo) => {
     html
   );
 };
+
+MailService.sendMailPromotion = async(toEmail, promotion) => {
+  const html = await ejs.renderFile(
+    `${__dirname}/../../views/ticket/promotion.ejs`,
+    {
+      logo: `${appConfig.url}/assets/logo/ALLFILMS_500x500_black.png`,
+      promotion
+    }
+  );
+
+  MailService.sendMail(
+    toEmail,
+    'Chúc mừng bạn đặt vé thành công',
+    html
+  );
+};

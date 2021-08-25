@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 const { saltRound } = require('../../config/app');
 
+const { REGEX } = require('../../constants');
 const {
   User, Role, UserRole, masterDB
 } = require('../../models');
@@ -129,13 +130,19 @@ UserController.updateById = async(req, res) => {
   try {
     const userId = req.params.id;
     const {
-      name, username, firstname, email, phone, roles
+      name, username, firstname, email, phone, roles, password
     } = req.body;
+
+    if (!password.match(REGEX.PASSWORD)) {
+      throw new Error();
+    }
+
+    const passwordHash = await bcrypt.hash(password, saltRound);
 
     await masterDB.transaction(async(t) => {
       await User.update(
         {
-          name, username, firstname, email, phone
+          name, username, firstname, email, phone, passwordHash
         },
         {
           where: { id: userId },
@@ -197,6 +204,10 @@ UserController.createNew = async(req, res) => {
     const {
       name, username, firstname, email, phone, roles, password
     } = req.body;
+
+    if (!password.match(REGEX.PASSWORD)) {
+      throw new Error();
+    }
 
     const hashedPassword = await bcrypt.hash(password, saltRound);
 
