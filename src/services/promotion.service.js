@@ -28,4 +28,6 @@ PromotionService.list = (queryOption) => {
 
 PromotionService.subscribe = (email) => PromotionSubscription.create({ email });
 
-PromotionService.findByEmail = (email) => PromotionSubscription.findOne({ email });
+PromotionService.findByEmail = (email) => PromotionSubscription.findOne({
+  where: { email }
+});
