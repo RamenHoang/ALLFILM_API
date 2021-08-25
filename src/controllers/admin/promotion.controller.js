@@ -3,8 +3,9 @@ const _ = require('lodash');
 const { generateRandomString } = require('../../helpers/string.helper');
 
 const {
-  Promotion
+  Promotion, PromotionSubscription
 } = require('../../models');
+const { mailService } = require('../../services');
 
 const controller = 'promotions';
 const VIEW_SHOW_PATH = 'admin/promotions/view';
@@ -151,11 +152,15 @@ PromotionController.createNew = async(req, res) => {
       promotion = await Promotion.findByPk(id);
     } while (promotion);
 
-    await Promotion.create(
+    const promotionData = await Promotion.create(
       {
         id, name, image, content
       }
     );
+
+    JSON.parse(JSON.stringify(await PromotionSubscription.findAll())).forEach((subcriber) => {
+      mailService.sendMailPromotion(subcriber.email, promotionData);
+    });
 
     req.flash('success', 'Ưu đãi được thêm thành công');
     res.redirect(`/admin/${controller}/list`);

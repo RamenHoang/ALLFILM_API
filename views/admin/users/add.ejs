@@ -91,6 +91,16 @@
                                     </div>
                                     <br>
 
+                                    <div>
+                                        <label for="form-field-select-1"> Mật khẩu </label>
+                                        <input type="text" name="phone"
+                                               value=""
+                                               id="form-field-select-1" placeholder="Mật khẩu"
+                                               class="form-control" required>
+                                        <span class="error"><%= errorData.pasword ;%></span>
+                                    </div>
+                                    <br>
+
                                     <br>
 
                                     <div>
@@ -99,23 +109,23 @@
                                             id="form-field-select-2">
                                             <% data.sytemRoles.forEach(function(role) { %>
                                                 <span class="role-option">
-                                                    <input 
-                                                    type="checkbox" 
+                                                    <input
+                                                    type="checkbox"
                                                     value="<%- role.id %>"
                                                     name="roles[]"
                                                     <% if (data.user.roleIds && data.user.roleIds.indexOf(role.id) !== -1) { %>
-                                                        checked 
-                                                    <% } %> 
+                                                        checked
+                                                    <% } %>
                                                     >
-                                                        <%- role.name %> -  
+                                                        <%- role.name %> -
                                                         <% if (role.permition === 'r') { %>
-                                                            Xem <%- role.entity %>   
+                                                            Xem <%- role.entity %>
                                                         <% } else if (role.permition === 'w') { %>
                                                             Sửa <%- role.entity %>
-                                                        <% } %> 
+                                                        <% } %>
                                                 </span>
                                                 <br>
-                                            <% }) %> 
+                                            <% }) %>
                                         </div>
                                         <span class="error"><%= errorData.is_active ;%></span>
                                     </div>
