@@ -88,7 +88,7 @@ MailService.sendMailPromotion = async(toEmail, promotion) => {
 
   MailService.sendMail(
     toEmail,
-    'Chúc mừng bạn đặt vé thành công',
+    'Ưu đãi mới nè',
     html
   );
 };
