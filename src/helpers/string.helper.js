@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { min, repeat, max } = require('lodash');
 
 const StringHelper = module.exports;
 
@@ -15,16 +15,21 @@ StringHelper.mask = (data, options) => {
     ...defaultMaskOptions,
     ...options
   };
-  const maskLength = _.min([maskOptions.maskLength, _.max([
+  const maskLength = min([maskOptions.maskLength, max([
     data.length - maskOptions.unmaskedStartCharacters - maskOptions.unmaskedEndCharacters,
     0])]);
 
   return data.substr(0, maskOptions.unmaskedStartCharacters)
-    + _.repeat(maskOptions.maskWith, maskLength)
-    + data.substr(_.max([data.length - maskOptions.unmaskedEndCharacters,
+    + repeat(maskOptions.maskWith, maskLength)
+    + data.substr(max([data.length - maskOptions.unmaskedEndCharacters,
       maskOptions.unmaskedStartCharacters]));
 };
 
+/**
+ *
+ * @param {*} data
+ * @returns {boolean}
+ */
 StringHelper.isJsonString = (data) => {
   try {
     JSON.parse(data);
@@ -35,8 +40,19 @@ StringHelper.isJsonString = (data) => {
   return true;
 };
 
-StringHelper.formUrlEncoded = (data) => Object.keys(data).reduce((result, key) => `${result}&${key}=${encodeURIComponent(data[key])}`, '');
+/**
+ *
+ * @param {object} data
+ * @returns {string}
+ */
+StringHelper.formUrlEncoded = (data) => Object.keys(data)
+  .reduce((result, key) => `${result}&${key}=${encodeURIComponent(data[key])}`, '');
 
+/**
+ *
+ * @param {number} length
+ * @returns {string}
+ */
 StringHelper.generateRandomString = (length = 5) => {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -48,3 +64,10 @@ StringHelper.generateRandomString = (length = 5) => {
 
   return result;
 };
+
+/**
+ *
+ * @param {*} modelObject
+ * @returns {object}
+ */
+StringHelper.modelObjectl2JSobject = (modelObject) => JSON.parse(JSON.stringify(modelObject));

@@ -4,7 +4,6 @@ const { v4 } = require('uuid');
 
 const mailConfig = require('../config/mail');
 const appConfig = require('../config/app');
-const { NotFoundError } = require('../errors');
 const qrHelper = require('../helpers/qr.helper');
 
 const transport = nodemailer.createTransport({
@@ -18,16 +17,7 @@ const transport = nodemailer.createTransport({
 
 const MailService = module.exports;
 
-MailService.sendMail = (to, subject = 'Hi there', html = '<h1>Hi there</h1>') => {
-  if (!to) {
-    throw new NotFoundError(t('not_found'),
-      [{
-        field: 'to',
-        type: 'any.not_found',
-        message: '"to" does not exist'
-      }]);
-  }
-
+MailService.sendMail = (to, subject, html) => {
   const mailOptions = {
     from: `ALLFILM Cinema <${mailConfig.admin}>`,
     to,
@@ -38,23 +28,27 @@ MailService.sendMail = (to, subject = 'Hi there', html = '<h1>Hi there</h1>') =>
   return transport.sendMail(mailOptions);
 };
 
-MailService.sendMailActivateAccount = (toEmail, token) => {
-  const html = `
-        <h1>ALLFILM Cinema xin chào quý khách</h1>
-        <br>
-        <h2>Để xác minh đây là bạn, vui lòng nhấp link bên để <a href="${appConfig.url}/api/v1/auth/register/${token}">kích hoạt tài khoản</a></h2>
-      `;
+MailService.sendMailActivateAccount = async(toEmail, token) => {
+  const html = await ejs.renderFile(
+    `${__dirname}/../../views/mail/activate_account.ejs`,
+    {
+      allfilmsDear: t('allfilms_dear'),
+      message: t('mail_activate_message'),
+      logo: `${appConfig.url}/assets/logo/ALLFILMS_500x500_black.png`,
+      url: `${appConfig.url}/api/v1/auth/register/${token}`
+    }
+  );
 
   MailService.sendMail(
     toEmail,
-    'Kích hoạt tài khoản',
+    t('mail_activate_account_title'),
     html
   );
 };
 
 MailService.sendMailBookTicketSuccesfully = async(toEmail, ticketInfo) => {
   const html = await ejs.renderFile(
-    `${__dirname}/../../views/ticket/ticket.ejs`,
+    `${__dirname}/../../views/mail/ticket.ejs`,
     {
       logo: `${appConfig.url}/assets/logo/ALLFILMS_500x500_black.png`,
       ticketInfo,
@@ -72,14 +66,14 @@ MailService.sendMailBookTicketSuccesfully = async(toEmail, ticketInfo) => {
 
   MailService.sendMail(
     toEmail,
-    'Chúc mừng bạn đặt vé thành công',
+    t('mail_booking_success_title'),
     html
   );
 };
 
 MailService.sendMailPromotion = async(toEmail, promotion) => {
   const html = await ejs.renderFile(
-    `${__dirname}/../../views/ticket/promotion.ejs`,
+    `${__dirname}/../../views/mail/promotion.ejs`,
     {
       logo: `${appConfig.url}/assets/logo/ALLFILMS_500x500_black.png`,
       promotion
@@ -88,7 +82,7 @@ MailService.sendMailPromotion = async(toEmail, promotion) => {
 
   MailService.sendMail(
     toEmail,
-    'Ưu đãi mới nè',
+    t('mail_new_promotion_title'),
     html
   );
 };

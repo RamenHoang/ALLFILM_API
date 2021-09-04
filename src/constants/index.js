@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const Constants = module.exports;
 
 Constants.PAGINATION = Object.freeze({
@@ -20,14 +21,18 @@ Constants.VALIDATE_ON = Object.freeze({
 
 Constants.ROLES = Object.freeze({
   ADMIN: 'admin',
-  MOD: 'mod'
+  SELLER: 'seller',
+  CLIENT: 'client'
 });
 
 Constants.REGEX = Object.freeze({
   BOTH_USERNAME_EMAIL_ABSOLUTE_STRING: /^(?:[\D][\D\d]{5,}|[a-z.\d]+@[a-z.]+\.[a-z]{2,4})$/,
   PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d$@!%*?&]{8,}$/,
   USERNAME_ONLY: /^[\D][\D\d]{5,}$/,
-  EMAIL_ONLY: /^[a-z.\d]+@[a-z.]+\.[a-z]{2,4}$/
+  EMAIL_ONLY: /^[a-z.\d]+@[a-z.\\-]+\.[a-z]{2,4}$/,
+  ACTIVATION_TOKEN: /^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$/,
+  HUMAN_NAME: /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+(([ ]{1})?[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+)*$/,
+  PHONE_NUMBER: /^[0-9]{10}$/
 });
 
 Constants.VNPAY_ERROR_CODE = Object.freeze({

@@ -31,13 +31,17 @@ UserValidation.validatePasswordLogic = async(req) => {
 
   if (currentPassword === newPassword) {
     return {
-      message: 'Mật khẩu mới và mật khẩu cũ đã trùng nhau'
+      field: 'user.currentPassword',
+      type: 'any.not_existed',
+      message: t('new_password_not_equal_current_password')
     };
   }
 
   if (newPassword !== confirmPassword) {
     return {
-      message: 'Mật khẩu mới và mật khẩu nhập lại không trùng khớp'
+      field: 'user.currentPassword',
+      type: 'any.not_existed',
+      message: t('new_password_not_equal_confirm_password')
     };
   }
 
@@ -50,7 +54,7 @@ UserValidation.validatePasswordLogic = async(req) => {
     : {
       field: 'user.currentPassword',
       type: 'any.not_existed',
-      message: 'Mật khẩu hiện tại không chính xác'
+      message: t('wrong_password')
     };
 };
 
@@ -58,5 +62,15 @@ UserValidation.validateListBookingSyntax = {
   [VALIDATE_ON.QUERY]: Joi.object({
     fromDate: Joi.date().required(),
     toDate: Joi.date().greater(Joi.ref('fromDate')).required()
+  })
+};
+
+UserValidation.validateNewProfile = {
+  [VALIDATE_ON.BODY]: Joi.object({
+    username: Joi.string().regex(REGEX.USERNAME_ONLY).required(),
+    name: Joi.string().regex(REGEX.HUMAN_NAME).required(),
+    phone: Joi.string().regex(REGEX.PHONE_NUMBER).required(),
+    email: Joi.string().regex(REGEX.EMAIL_ONLY).required(),
+    fullname: Joi.string().regex(REGEX.HUMAN_NAME).required()
   })
 };

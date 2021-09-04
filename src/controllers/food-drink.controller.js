@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const { foodDrinkService } = require('../services');
 const { ok } = require('../helpers/response.helper');
 

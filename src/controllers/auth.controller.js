@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { get } = require('lodash');
 const { authService, mailService } = require('../services');
 const { ok } = require('../helpers/response.helper');
 const { BadRequestError } = require('../errors');
@@ -7,8 +7,8 @@ const AuthController = module.exports;
 
 AuthController.login = async(req, res, next) => {
   try {
-    const username = _.get(req, 'body.username');
-    const password = _.get(req, 'body.password');
+    const username = get(req, 'body.username');
+    const password = get(req, 'body.password');
     const result = await authService.login(username, password);
 
     ok(req, res, result);
@@ -20,12 +20,12 @@ AuthController.login = async(req, res, next) => {
 AuthController.register = async(req, res, next) => {
   try {
     const registerItem = {
-      name: _.get(req, 'body.name'),
-      fullname: _.get(req, 'body.fullname'),
-      phone: _.get(req, 'body.phone'),
-      email: _.get(req, 'body.email'),
-      username: _.get(req, 'body.username'),
-      password: _.get(req, 'body.password')
+      name: get(req, 'body.name'),
+      fullname: get(req, 'body.fullname'),
+      phone: get(req, 'body.phone'),
+      email: get(req, 'body.email'),
+      username: get(req, 'body.username'),
+      password: get(req, 'body.password')
     };
 
     const registerResult = await authService.register(registerItem);
@@ -44,20 +44,21 @@ AuthController.register = async(req, res, next) => {
 
 AuthController.activateAccount = async(req, res, next) => {
   try {
-    const verifyingToken = _.get(req, 'params.token');
+    const verifyingToken = get(req, 'params.token');
     const activatingResult = await authService.activateAccount(verifyingToken);
+    const dataToRender = {
+      activateAccountPageTitle: t('activate_account_page_title'),
+      activateAccountMessage: '',
+      activationAccountComeHome: t('activate_account_come_home')
+    };
 
     if (activatingResult) {
-      ok(req, res, t('successful_activation'));
-
-      return;
+      dataToRender.activateAccountMessage = t('activate_account_success');
+    } else {
+      dataToRender.activateAccountMessage = t('activate_account_failure');
     }
 
-    throw new BadRequestError(t('bad_request'), [{
-      field: t('account'),
-      type: 'any.activated',
-      message: t('account_activated')
-    }]);
+    res.render('activate_account_info.ejs', dataToRender);
   } catch (e) {
     next(e);
   }

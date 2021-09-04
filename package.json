@@ -61,6 +61,7 @@
     "qs": "6.7.0",
     "sequelize": "5.22.3",
     "sha256": "0.2.0",
+    "string-template": "1.0.0",
     "swagger-ui-express": "4.1.4",
     "uuid": "8.3.1",
     "winston": "3.3.3",

@@ -1,8 +1,5 @@
-const _ = require('lodash');
-const {
-  ValidationError,
-  NotFoundError
-} = require('../errors');
+const { get, isNil, toInteger } = require('lodash');
+const { NotFoundError } = require('../errors');
 const { userService, bookingService } = require('../services');
 const { ok } = require('../helpers/response.helper');
 
@@ -10,28 +7,17 @@ const UserController = module.exports;
 
 UserController.getById = async(req, res, next) => {
   try {
-    const id = _.get(req, 'params.id');
-
-    if (_.isNil(id)) {
-      throw new ValidationError(
-        t('validation'),
-        [{
-          field: 'id',
-          type: 'any.null',
-          message: '"id" is null'
-        }]
-      );
-    }
+    const id = get(req, 'params.id');
 
     const user = await userService.getById(id);
 
-    if (_.isNil(user)) {
+    if (isNil(user)) {
       throw new NotFoundError(
         t('not_found'),
         [{
           field: 'any',
           type: 'any.not_found',
-          message: 'User not found'
+          message: t('user_not_found')
         }]
       );
     }
@@ -44,7 +30,7 @@ UserController.getById = async(req, res, next) => {
 
 UserController.getProfile = async(req, res, next) => {
   try {
-    const userId = _.get(req, 'currentUser.id');
+    const userId = get(req, 'currentUser.id');
 
     const userProfile = await userService.getById(userId);
 
@@ -56,10 +42,10 @@ UserController.getProfile = async(req, res, next) => {
 
 UserController.list = async(req, res, next) => {
   try {
-    const q = _.get(req, 'query.q', '');
-    const offset = _.toInteger(_.get(req, 'query.offset', 1));
-    const limit = _.toInteger(_.get(req, 'query.limit', 25));
-    const sortBy = _.get(req, 'query.sort_by', '-updatedAt');
+    const q = get(req, 'query.q', '');
+    const offset = toInteger(get(req, 'query.offset', 1));
+    const limit = toInteger(get(req, 'query.limit', 25));
+    const sortBy = get(req, 'query.sort_by', '-updatedAt');
 
     const users = await userService.list({
       q,
@@ -76,20 +62,8 @@ UserController.list = async(req, res, next) => {
 
 UserController.updateProfile = async(req, res, next) => {
   try {
-    const id = _.get(req, 'currentUser.id');
-    const newProfile = _.get(req, 'body');
-
-    if (_.isNil(id) || _.isNil(newProfile)) {
-      throw new ValidationError(
-        t('validation'),
-        [{
-          field: 'id',
-          type: 'any.null',
-          message: '"id" is null'
-        }]
-      );
-    }
-
+    const id = get(req, 'currentUser.id');
+    const newProfile = get(req, 'body');
     const updateStatus = await userService.updateProfile(id, newProfile);
 
     if (!updateStatus[0]) {
@@ -98,7 +72,7 @@ UserController.updateProfile = async(req, res, next) => {
         [{
           field: 'any',
           type: 'any.not_found',
-          message: 'User not found'
+          message: t('update_profile_failure')
         }]
       );
     }
@@ -117,30 +91,6 @@ UserController.updatePassword = async(req, res, next) => {
     const updatePasswordStatus = await userService.updatePassword(userId, newPassword);
 
     ok(req, res, { success: updatePasswordStatus[0] === 1 });
-  } catch (e) {
-    next(e);
-  }
-};
-
-UserController.createUser = async(req, res, next) => {
-  try {
-    const userInfo = _.get(req, 'body.userInfo');
-    const userRole = _.get(req, 'body.userRole');
-
-    if (_.isNil(userInfo)) {
-      throw new ValidationError(
-        t('validation'),
-        [{
-          field: 'user info',
-          type: 'any.null',
-          message: '"user info" is null'
-        }]
-      );
-    }
-
-    const newUser = await userService.createUser(userInfo, userRole);
-
-    ok(req, res, newUser);
   } catch (e) {
     next(e);
   }

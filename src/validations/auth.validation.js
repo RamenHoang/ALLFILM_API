@@ -39,5 +39,11 @@ AuthValidation.validateUniqueUsername = async(req) => {
 
   return !userByUsername
     ? null
-    : { field: 'user.username', type: 'any.existed', message: `${t('user.username')}${t('existed')}` };
+    : { field: 'user.username', type: 'any.existed', message: t('username_existed') };
+};
+
+AuthValidation.validateToken = {
+  [VALIDATE_ON.PARAMS]: Joi.object({
+    token: Joi.string().regex(REGEX.ACTIVATION_TOKEN)
+  })
 };
