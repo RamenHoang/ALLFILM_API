@@ -1,4 +1,6 @@
-const _ = require('lodash');
+const {
+  pick, map, isObject, isNil
+} = require('lodash');
 const { Op } = require('sequelize');
 const dateFormat = require('dateformat');
 
@@ -22,18 +24,19 @@ function arrangeSeatOfSession(session, bookingSeats, type = 'add') {
   let bookedSeatsInSession = session.bookedSeats.split(',');
   const bookingSeatsArray = bookingSeats.split(',');
 
-  if (type === 'add') {
-    emptySeatsInSession = emptySeatsInSession.filter((seat) => !bookingSeatsArray.includes(seat));
-
-    session.bookedSeats += `,${bookingSeats}`;
-
-    session.emptySeats = emptySeatsInSession.join(',');
-  } else if (type === 'remove') {
-    bookedSeatsInSession = bookedSeatsInSession.filter((seat) => !bookingSeatsArray.includes(seat));
-
-    session.emptySeats += `,${bookingSeats}`;
-
-    session.bookedSeats = bookedSeatsInSession.join(',');
+  switch (type) {
+    case 'add':
+      emptySeatsInSession = emptySeatsInSession.filter((seat) => !bookingSeatsArray.includes(seat));
+      session.bookedSeats += `,${bookingSeats}`;
+      session.emptySeats = emptySeatsInSession.join(',');
+      break;
+    case 'remove':
+      bookedSeatsInSession = bookedSeatsInSession.filter((seat) => !bookingSeatsArray.includes(seat));
+      session.emptySeats += `,${bookingSeats}`;
+      session.bookedSeats = bookedSeatsInSession.join(',');
+      break;
+    default:
+      break;
   }
 }
 
@@ -44,25 +47,34 @@ function validateBookingSeats(bookedSeats, bookingSeats) {
 async function clearBookingAndItsRelationshipWithTransaction(sessionId, bookings, transaction) {
   const session = await Session.findByPk(sessionId);
   const promises = [];
+  const bookingIdToRemove = [];
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const booking of bookings) {
+  bookings.forEach((booking) => {
     arrangeSeatOfSession(session, booking.seats, 'remove');
+    bookingIdToRemove.push(booking.id);
+  });
 
-    promises.push(BookFoodDrink.destroy({
-      where: {
-        bookingId: booking.id
+  promises.push(BookFoodDrink.destroy({
+    where: {
+      bookingId: {
+        [Op.in]: bookingIdToRemove
       }
-    }, { transaction }));
+    }
+  }, { transaction }));
 
-    promises.push(Booking.destroy({
-      where: {
-        id: booking.id
+  promises.push(Booking.destroy({
+    where: {
+      id: {
+        [Op.in]: bookingIdToRemove
       }
-    }, { transaction }));
+    }
+  }, { transaction }));
 
-    promises.push(session.save({ transaction }));
-  }
+  promises.push(Session.update(
+    { emptySeats: session.emptySeats, bookedSeats: session.bookedSeats },
+    { where: { id: session.id } },
+    { transaction }
+  ));
 
   return Promise.all(promises);
 }
@@ -70,67 +82,66 @@ async function clearBookingAndItsRelationshipWithTransaction(sessionId, bookings
 BookingService.bookTicket = async(userId, bookingOption) => {
   const newBooking = await Booking.create({
     userId,
-    ..._.pick(bookingOption, ['bookingTime', 'keepingTime', 'seats', 'fee', 'sessionId', 'sessionRoomId'])
+    ...pick(bookingOption, ['bookingTime', 'keepingTime', 'seats', 'fee', 'sessionId', 'sessionRoomId'])
   });
 
   const sessionToUpdate = await Session.findByPk(bookingOption.sessionId);
 
   const canBookSeats = validateBookingSeats(sessionToUpdate.bookedSeats, bookingOption.seats);
 
-  if (canBookSeats) {
-    arrangeSeatOfSession(sessionToUpdate, bookingOption.seats);
-
-    // sessionToUpdate.bookedSeats += `,${bookingOption.seats}`;
-    await sessionToUpdate.save();
-
-    const rawBookFoodDrinkRecord = _.map(bookingOption.foodDrinks, (item) => ({
-      bookingId: newBooking.id,
-      bookingUserId: userId,
-      foodDrinkId: item.id,
-      count: item.count
-    }));
-
-    await BookFoodDrink.bulkCreate(rawBookFoodDrinkRecord);
-
-    return Booking.findByPk(newBooking.id, {
-      include: [
-        {
-          model: Session,
-          attributes: ['startTime', 'price'],
-          include: [
-            {
-              model: Cinema,
-              attributes: ['name', 'address']
-            },
-            {
-              model: Room,
-              attributes: ['name']
-            },
-            {
-              model: Film,
-              attributes: ['name', 'subName']
-            }
-          ]
-        },
-        {
-          model: FoodDrink,
-          attributes: ['name', 'price'],
-          through: {
-            attributes: ['count']
-          }
-        }
-      ]
-    });
+  if (!canBookSeats) {
+    throw new ValidationError(
+      t('validation_error'),
+      [{
+        field: 'seats',
+        type: 'any.duplicated',
+        message: t('seats_is_booked')
+      }]
+    );
   }
 
-  throw new ValidationError(
-    t('validation_error'),
-    [{
-      field: 'seats',
-      type: 'any.duplicated',
-      message: 'Các ghế chuẩn bị đặt đã được đặt trước. Vui lòng chọn ghế khác'
-    }]
-  );
+  arrangeSeatOfSession(sessionToUpdate, bookingOption.seats);
+
+  await sessionToUpdate.save();
+
+  const rawBookFoodDrinkRecord = map(bookingOption.foodDrinks, (item) => ({
+    bookingId: newBooking.id,
+    bookingUserId: userId,
+    foodDrinkId: item.id,
+    count: item.count
+  }));
+
+  await BookFoodDrink.bulkCreate(rawBookFoodDrinkRecord);
+
+  return Booking.findByPk(newBooking.id, {
+    include: [
+      {
+        model: Session,
+        attributes: ['startTime', 'price'],
+        include: [
+          {
+            model: Cinema,
+            attributes: ['name', 'address']
+          },
+          {
+            model: Room,
+            attributes: ['name']
+          },
+          {
+            model: Film,
+            attributes: ['name', 'subName']
+          }
+        ]
+      },
+      {
+        model: FoodDrink,
+        attributes: ['name', 'price'],
+        through: {
+          attributes: ['count']
+        }
+      }
+    ]
+  });
 };
 
 BookingService.checkout = async(bookingId, payDate) => {
@@ -144,50 +155,50 @@ BookingService.checkout = async(bookingId, payDate) => {
     nest: true
   });
 
-  if (checkoutStatus[0]) {
-    return Booking.findByPk(bookingId, {
-      include: [
-        {
-          model: Session,
-          attributes: ['startTime'],
-          include: [
-            {
-              model: Cinema,
-              attributes: ['name', 'address']
-            },
-            {
-              model: Room,
-              attributes: ['name']
-            },
-            {
-              model: Film,
-              attributes: ['name', 'subName', 'poster']
-            }
-          ]
-        },
-        {
-          model: User,
-          attributes: ['email']
-        },
-        {
-          model: FoodDrink,
-          attributes: ['name', 'price'],
-          through: {
-            attributes: ['count']
-          }
-        }
-      ]
-    });
+  if (!checkoutStatus[0]) {
+    throw new NotFoundError(
+      t('not_found'),
+      [{
+        field: 'booking',
+        type: 'any.not_found',
+        message: t('ticket_not_exist')
+      }]
+    );
   }
 
-  throw new NotFoundError(
-    t('not_found'),
-    [{
-      field: 'booking',
-      type: 'any.not_found',
-      message: 'Vé không tồn tại'
-    }]
-  );
+  return Booking.findByPk(bookingId, {
+    include: [
+      {
+        model: Session,
+        attributes: ['startTime'],
+        include: [
+          {
+            model: Cinema,
+            attributes: ['name', 'address']
+          },
+          {
+            model: Room,
+            attributes: ['name']
+          },
+          {
+            model: Film,
+            attributes: ['name', 'subName', 'poster']
+          }
+        ]
+      },
+      {
+        model: User,
+        attributes: ['email']
+      },
+      {
+        model: FoodDrink,
+        attributes: ['name', 'price'],
+        through: {
+          attributes: ['count']
+        }
+      }
+    ]
+  });
 };
 
 BookingService.listByUserAndDate = (userId, dateOption) => {
@@ -218,7 +229,7 @@ BookingService.listByUserAndDate = (userId, dateOption) => {
     attributes: ['fee', 'seats']
   };
 
-  if (_.isObject(dateOption)) {
+  if (isObject(dateOption)) {
     queryOption.where.checkedOutAt = {
       [Op.between]: [
         dateOption.fromDate,
@@ -256,16 +267,17 @@ BookingService.removeAfterFifteen = async() => {
         return accumulator;
       }, {});
 
-      // eslint-disable-next-line no-restricted-syntax
-      for (const sessionId in bookingGroupBySession) {
-        if (!_.isNil(bookingGroupBySession[`${sessionId}`])) {
+      Object.keys(bookingGroupBySession).forEach((sessionId) => {
+        if (!isNil(bookingGroupBySession[`${sessionId}`])) {
           const bookingInSession = bookingGroupBySession[`${sessionId}`];
 
-          promises.push(
-            clearBookingAndItsRelationshipWithTransaction(sessionId, bookingInSession, t)
-          );
+          promises.concat(clearBookingAndItsRelationshipWithTransaction(
+            sessionId,
+            bookingInSession,
+            t
+          ));
         }
-      }
+      });
 
       await Promise.all(promises);
     });
@@ -275,4 +287,3 @@ BookingService.removeAfterFifteen = async() => {
     return e;
   }
 };
-

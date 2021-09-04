@@ -19,7 +19,7 @@ const sequelize = new Sequelize(
       dateStrings: true,
       typeCast: true
     },
-    timezone: '+07:00'
+    timezone: dbConfig.timeZone
   },
 );
 

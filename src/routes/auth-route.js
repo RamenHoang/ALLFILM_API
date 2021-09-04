@@ -21,6 +21,10 @@ route.post(
   authController.register
 );
 
-route.get('/register/:token', authController.activateAccount);
+route.get(
+  '/register/:token',
+  validate([AuthValidation.validateToken]),
+  authController.activateAccount
+);
 
 module.exports = route;

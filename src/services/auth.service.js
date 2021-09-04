@@ -1,11 +1,11 @@
-const _ = require('lodash');
+const { isNil, pick } = require('lodash');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const { User, Role, UserRole } = require('../models');
-const { REGEX } = require('../constants');
+const { REGEX, ROLES } = require('../constants');
 const { NotFoundError, BadRequestError } = require('../errors');
-const jwtHelper = require('../helpers/jwt.helper');
 const { saltRound } = require('../config/app');
+const jwtHelper = require('../helpers/jwt.helper');
 
 const AuthService = module.exports;
 
@@ -30,31 +30,29 @@ AuthService.login = async(username, password) => {
     option.where = { email: username };
   }
 
-  let user = await User.findOne(option);
+  const user = await User.findOne(option);
 
-  if (_.isNil(user)) {
+  if (isNil(user)) {
     throw new NotFoundError(
       t('not_found'),
       [{
         field: 'username',
         type: 'any.not_found',
-        message: '"username" does not exist'
+        message: t('wrong_username')
       }]
     );
   }
 
-  if (!_.isNil(user.registerVerifyingToken)) {
+  if (!isNil(user.registerVerifyingToken)) {
     throw new BadRequestError(
       t('bad_request'),
       [{
         field: 'account',
         type: 'any.not_active',
-        message: 'Account is not active. Please check mail to verify your account'
+        message: t('account_inactive')
       }]
     );
   }
-
-  user = user.get({ plain: true });
 
   if (!bcrypt.compareSync(password, user.passwordHash)) {
     throw new NotFoundError(
@@ -62,12 +60,12 @@ AuthService.login = async(username, password) => {
       [{
         field: 'password',
         type: 'any.not_found',
-        message: '"password" does not exist'
+        message: t('wrong_pasword')
       }]
     );
   }
 
-  const payload = _.pick(user, ['id', 'Roles']);
+  const payload = pick(user, ['id', 'Roles']);
 
   return {
     access_token: jwtHelper.generateAccessToken(payload),
@@ -79,17 +77,14 @@ AuthService.register = async(registerItem) => {
   const passwordHash = await bcrypt.hash(registerItem.password, saltRound);
   const verifyingToken = uuid.v4();
   const newUserItem = {
-    ..._.pick(registerItem, ['name', 'username', 'fullname', 'phone', 'email']),
+    ...pick(registerItem, ['name', 'username', 'fullname', 'phone', 'email']),
     passwordHash,
     registerVerifyingToken: verifyingToken
   };
 
   const newUser = await User.create(newUserItem);
 
-  return newUser
-    && newUser.registerVerifyingToken === verifyingToken
-    && newUser.email === registerItem.email
-    ? { verifyingToken, email: registerItem.email } : null;
+  return newUser ? { verifyingToken, email: registerItem.email } : null;
 };
 
 AuthService.activateAccount = async(token) => {
@@ -107,9 +102,17 @@ AuthService.activateAccount = async(token) => {
     registerVerifyingToken: null
   });
 
+  const clientRole = await Role.findOne({
+    where: {
+      name: ROLES.CLIENT
+    },
+    attributes: ['id'],
+    raw: true
+  });
+
   UserRole.create({
     user_id: inactivatedAccount.id,
-    role_id: 12
+    role_id: clientRole.id
   });
 
   return true;

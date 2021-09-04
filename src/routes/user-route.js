@@ -12,9 +12,12 @@ route.get('/profile', auth, user.getProfile);
 
 route.get('', auth, user.list);
 
-route.put('/:id', auth, user.updateProfile);
-
-route.put('/profile', auth, user.updateProfile);
+route.put(
+  '/profile',
+  auth,
+  validate([UserValidation.validateNewProfile]),
+  user.updateProfile
+);
 
 route.put(
   '/profile/password',
@@ -32,7 +35,5 @@ route.get(
   validate([UserValidation.validateListBookingSyntax]),
   user.listBooking
 );
-
-route.post('', auth, user.createUser);
 
 module.exports = route;

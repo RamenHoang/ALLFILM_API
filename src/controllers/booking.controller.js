@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { get, isNil } = require('lodash');
 const sha256 = require('sha256');
 const querystring = require('qs');
 
@@ -21,14 +21,14 @@ const BookingController = module.exports;
 
 BookingController.bookTicket = async(req, res, next) => {
   try {
-    const userId = _.get(req.currentUser, 'id');
-    const bookingTime = _.get(req.body, 'bookingTime');
-    const keepingTime = _.get(req.body, 'keepingTime');
-    const seats = _.get(req.body, 'seats');
-    const fee = _.get(req.body, 'fee');
-    const sessionId = _.get(req.body, 'sessionId');
-    const sessionRoomId = _.get(req.body, 'sessionRoomId');
-    const foodDrinks = _.get(req.body, 'foodDrinks');
+    const userId = get(req.currentUser, 'id');
+    const bookingTime = get(req.body, 'bookingTime');
+    const keepingTime = get(req.body, 'keepingTime');
+    const seats = get(req.body, 'seats');
+    const fee = get(req.body, 'fee');
+    const sessionId = get(req.body, 'sessionId');
+    const sessionRoomId = get(req.body, 'sessionRoomId');
+    const foodDrinks = get(req.body, 'foodDrinks');
 
     const ticket = bookingMapper.toBooking(await bookingService.bookTicket(userId, {
       bookingTime,
@@ -48,8 +48,8 @@ BookingController.bookTicket = async(req, res, next) => {
 
 BookingController.checkoutTicket = async(req, res, next) => {
   try {
-    const bookingId = _.get(req.params, 'bookingId');
-    const userId = _.get(req.currentUser, 'id');
+    const bookingId = get(req.params, 'bookingId');
+    const userId = get(req.currentUser, 'id');
     const ipAddress = req.headers['x-forwarded-for']
     || req.connection.remoteAddress
     || req.socket.remoteAddress
@@ -172,18 +172,17 @@ BookingController.closeTicket = async(req, res, next) => {
     const { bookingId } = req.params;
     const ticket = await Booking.findByPk(bookingId);
 
-    if (_.isNil(ticket)) {
+    if (isNil(ticket)) {
       throw new NotFoundError(
         t('not_found'),
         [{
           field: 'bookingId',
           type: 'any.not_found',
-          message: 'Vé không tồn tại.'
+          message: t('ticket_not_exist')
         }]
       );
     }
 
-    // eslint-disable-next-line eqeqeq
     if (ticket.isClose === true) {
       throw new BadRequestError(
         t('bad_request'),
@@ -191,7 +190,7 @@ BookingController.closeTicket = async(req, res, next) => {
           {
             field: 'booking',
             type: 'bad_request',
-            message: 'Vé đã được sử dụng.'
+            message: t('ticket_is_used')
           }
         ]
       );
@@ -205,7 +204,7 @@ BookingController.closeTicket = async(req, res, next) => {
       }
     });
 
-    ok(req, res, { message: 'Vé hợp lệ. Chúc quý khách xem phim vui vẻ.' });
+    ok(req, res, { message: t('valid_ticket_and_wish_client') });
   } catch (e) {
     next(e);
   }

@@ -39,7 +39,7 @@ FilmController.getById = async(req, res, next) => {
         [{
           field: 'id',
           type: 'any.not_found',
-          message: `id ${t('not_exist')}`
+          message: t('film_not_found')
         }]
       );
     }
@@ -69,7 +69,7 @@ FilmController.rating = async(req, res, next) => {
         [{
           field: '',
           type: '',
-          message: 'Người dùng đã đánh giá phim.'
+          message: t('user_rated_film_before')
         }]
       );
     }
@@ -82,7 +82,7 @@ FilmController.rating = async(req, res, next) => {
         [{
           field: 'id',
           type: 'any.not_found',
-          message: `id ${t('not_exist')}`
+          message: t('film_not_found')
         }]
       );
     }

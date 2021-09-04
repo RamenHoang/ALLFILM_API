@@ -1,24 +1,13 @@
 const _ = require('lodash');
 const { directorService } = require('../services');
 const { ok } = require('../helpers/response.helper');
-const { NotFoundError, ValidationError } = require('../errors');
+const { NotFoundError } = require('../errors');
 
 const DirectorController = module.exports;
 
 DirectorController.getById = async(req, res, next) => {
   try {
     const id = _.get(req, 'params.id');
-
-    if (_.isNil(id)) {
-      throw new ValidationError(
-        t('validation_error'),
-        [{
-          field: 'id',
-          type: 'any.null',
-          message: '"id" is null'
-        }]
-      );
-    }
 
     const actor = await directorService.getById(id);
 
@@ -28,7 +17,7 @@ DirectorController.getById = async(req, res, next) => {
         [{
           field: 'id',
           type: 'any.not_found',
-          message: `Director with "${id}" is not found`
+          message: t('director_not_found')
         }]
       );
     }
