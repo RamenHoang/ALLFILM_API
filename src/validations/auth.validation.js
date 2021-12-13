@@ -8,18 +8,22 @@ const AuthValidation = module.exports;
 AuthValidation.validateLogin = {
   [VALIDATE_ON.BODY]: Joi.object({
     username: Joi.string().regex(REGEX.BOTH_USERNAME_EMAIL_ABSOLUTE_STRING).required(),
-    password: Joi.string().regex(REGEX.PASSWORD).required()
+    password: Joi.string().regex(REGEX.PASSWORD).required().messages({
+      'string.pattern.base': 'Vui lòng nhập mật khẩu chỉ chứa chữ và số, có độ dài từ 8 tới 64 kí tự'
+    })
   }),
 };
 
 AuthValidation.validateRegister = {
   [VALIDATE_ON.BODY]: Joi.object({
-    name: Joi.string().required(),
-    fullname: Joi.string().required(),
-    phone: Joi.string().required(),
+    name: Joi.string().regex(REGEX.USERNAME_ONLY).required(),
+    fullname: Joi.string().regex(REGEX.HUMAN_NAME).required(),
+    phone: Joi.string().regex(REGEX.PHONE_NUMBER).required(),
     email: Joi.string().email().required(),
     username: Joi.string().regex(REGEX.BOTH_USERNAME_EMAIL_ABSOLUTE_STRING).required(),
-    password: Joi.string().regex(REGEX.PASSWORD).required()
+    password: Joi.string().regex(REGEX.PASSWORD).required().messages({
+      'string.pattern.base': 'Vui lòng nhập mật khẩu chỉ chứa chữ và số, có độ dài từ 8 tới 64 kí tự'
+    })
   })
 };
 
