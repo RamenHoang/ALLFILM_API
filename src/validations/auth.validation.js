@@ -8,7 +8,7 @@ const AuthValidation = module.exports;
 AuthValidation.validateLogin = {
   [VALIDATE_ON.BODY]: Joi.object({
     username: Joi.string().regex(REGEX.USERNAME_ONLY).required().messages({
-      'string.pattern.base': 'Vui lòng nhập mật khẩu chỉ chứa chữ và số, có độ dài tối đa 65  kí tự'
+      'string.pattern.base': 'Vui lòng nhập tên đăng nhập chỉ chứa chữ và số, có độ dài tối đa 65  kí tự'
     }),
     password: Joi.string().regex(REGEX.PASSWORD).required().messages({
       'string.pattern.base': 'Vui lòng nhập mật khẩu chỉ chứa chữ và số, có độ dài từ 8 tới 64 kí tự'
