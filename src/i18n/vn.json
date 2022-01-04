@@ -30,5 +30,7 @@
 
   "allfilms_dear": "ALLFILM Cinema xin chào quý khách",
   "mail_activate_account_title": "Kích hoạt tài khoản",
-  "mail_activate_message": "Vui lòng nhấp link bên để kích hoạt tài khoản: "
+  "mail_activate_message": "Vui lòng nhấp link bên để kích hoạt tài khoản: ",
+
+  "username_existed": "Nickname đã tồn tại"
 }

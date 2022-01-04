@@ -99,7 +99,7 @@ ResponseHelper.error = (req, res, error) => {
   const statusCode = _.get(error.output, 'httpStatusCode', 500);
 
   errorResponse(req, res, {
-    message: statusCode === 500 ? t('internal_server_error') : error.message,
+    message: statusCode === 500 ? t('internal_server_error') : t(error.message),
     code: _.get(error.output, 'code', 'INTERNAL_SERVER_ERROR'),
     errors: _.get(error.output, 'errors', [])
   }, statusCode);
