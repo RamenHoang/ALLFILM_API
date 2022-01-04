@@ -21,7 +21,7 @@ AuthValidation.validateRegister = {
     name: Joi.string().regex(REGEX.USERNAME_ONLY).required(),
     fullname: Joi.string().regex(REGEX.HUMAN_NAME).required(),
     phone: Joi.string().regex(REGEX.PHONE_NUMBER).required(),
-    email: Joi.string().email().required().message({
+    email: Joi.string().email().required().messages({
       'string.email': 'Vui lòng nhập email hợp lệ.'
     }),
     username: Joi.string().regex(REGEX.BOTH_USERNAME_EMAIL_ABSOLUTE_STRING).required(),
