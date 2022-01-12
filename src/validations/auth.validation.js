@@ -18,13 +18,17 @@ AuthValidation.validateLogin = {
 
 AuthValidation.validateRegister = {
   [VALIDATE_ON.BODY]: Joi.object({
-    name: Joi.string().regex(REGEX.USERNAME_ONLY).required(),
+    name: Joi.string().regex(REGEX.USERNAME_ONLY).required().messages({
+      'string.pattern.base': 'Vui lòng nhập tên chỉ chứa chữ và số, có độ dài tối đa 65  kí tự'
+    }),
     fullname: Joi.string().regex(REGEX.HUMAN_NAME).required(),
     phone: Joi.string().regex(REGEX.PHONE_NUMBER).required(),
     email: Joi.string().email().required().messages({
       'string.email': 'Vui lòng nhập email hợp lệ.'
     }),
-    username: Joi.string().regex(REGEX.BOTH_USERNAME_EMAIL_ABSOLUTE_STRING).required(),
+    username: Joi.string().regex(REGEX.USERNAME_ONLY).required().messages({
+      'string.pattern.base': 'Vui lòng nhập tên đăng nhập chỉ chứa chữ và số, có độ dài tối đa 65  kí tự'
+    }),
     password: Joi.string().regex(REGEX.PASSWORD).required().messages({
       'string.pattern.base': 'Vui lòng nhập mật khẩu chỉ chứa chữ và số, có độ dài từ 8 tới 64 kí tự'
     })
