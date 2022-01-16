@@ -11,7 +11,7 @@
   "active_account_subject": "[ALLFILM] Kích hoạt tài khoản",
   "allfilm_welcome": "Chào mừng tới ALLFILM!",
   "click_to_active_account": "Nhấn vào đây để kích hoạt tài khoản: ",
-  "account_activated": "Tài khoản của bản đã được kích hoạt!",
+  "account_activated": "Tài khoản của bạn đã được kích hoạt!",
 
   "actor_not_found": "Không tìm thấy diễn viên",
   "not_null": "Tham số phải có giá trị khác null",
@@ -32,5 +32,5 @@
   "mail_activate_account_title": "Kích hoạt tài khoản",
   "mail_activate_message": "Vui lòng nhấp link bên để kích hoạt tài khoản: ",
 
-  "username_existed": "Nickname đã tồn tại"
+  "username_existed": "Tên tài khoản đã tồn tại, vui lòng sử dụng tên khác."
 }
