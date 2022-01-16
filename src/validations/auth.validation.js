@@ -8,10 +8,10 @@ const AuthValidation = module.exports;
 AuthValidation.validateLogin = {
   [VALIDATE_ON.BODY]: Joi.object({
     username: Joi.string().regex(REGEX.USERNAME_ONLY).required().messages({
-      'string.pattern.base': 'Vui lòng nhập tên đăng nhập chỉ chứa chữ và số, có độ dài tối đa 65  kí tự'
+      'string.pattern.base': 'Vui lòng nhập tên đăng nhập chỉ chứa chữ và số, có độ dài tối đa 64 kí tự.'
     }),
     password: Joi.string().regex(REGEX.PASSWORD).required().messages({
-      'string.pattern.base': 'Vui lòng nhập mật khẩu chỉ chứa chữ và số, có độ dài từ 8 tới 64 kí tự'
+      'string.pattern.base': 'Vui lòng nhập mật khẩu chỉ chứa chữ và số, có độ dài từ 8 tới 64 kí tự.'
     })
   }),
 };
@@ -19,18 +19,22 @@ AuthValidation.validateLogin = {
 AuthValidation.validateRegister = {
   [VALIDATE_ON.BODY]: Joi.object({
     name: Joi.string().regex(REGEX.USERNAME_ONLY).required().messages({
-      'string.pattern.base': 'Vui lòng nhập tên chỉ chứa chữ và số, có độ dài tối đa 65  kí tự'
+      'string.pattern.base': 'Vui lòng nhập tên chỉ chứa chữ và số, có độ dài tối đa 64 kí tự.'
     }),
-    fullname: Joi.string().regex(REGEX.HUMAN_NAME).required(),
-    phone: Joi.string().regex(REGEX.PHONE_NUMBER).required(),
-    email: Joi.string().email().required().messages({
-      'string.email': 'Vui lòng nhập email hợp lệ.'
+    fullname: Joi.string().regex(REGEX.HUMAN_NAME).required().messages({
+      'string.pattern.base': 'Vui lòng nhập họ tên của bạn từ 1 đến 128 ký tự.'
+    }),
+    phone: Joi.string().regex(REGEX.PHONE_NUMBER).required().messages({
+      'string.pattern.base': 'Vui lòng nhập số điện thoại hợp lệ.'
+    }),
+    email: Joi.string().regex(REGEX.EMAIL_ONLY).required().messages({
+      'string.pattern.base': 'Vui lòng nhập email hợp lệ.'
     }),
     username: Joi.string().regex(REGEX.USERNAME_ONLY).required().messages({
-      'string.pattern.base': 'Vui lòng nhập tên đăng nhập chỉ chứa chữ và số, có độ dài tối đa 65  kí tự'
+      'string.pattern.base': 'Vui lòng nhập tên đăng nhập chỉ chứa chữ và số, có độ dài tối đa 64 kí tự.'
     }),
     password: Joi.string().regex(REGEX.PASSWORD).required().messages({
-      'string.pattern.base': 'Vui lòng nhập mật khẩu chỉ chứa chữ và số, có độ dài từ 8 tới 64 kí tự'
+      'string.pattern.base': 'Vui lòng nhập mật khẩu chỉ chứa chữ và số, có độ dài từ 8 tới 64 kí tự.'
     })
   })
 };
