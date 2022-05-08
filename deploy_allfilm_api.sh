@@ -1,4 +1,4 @@
-ssh -i ~/.ssh/id_rsa_local root@allfilm.mediadnnb.codes << \EOF
+ssh -i ~/.ssh/id_rsa_local root@209.97.168.57 << \EOF
 string_pids=`ps aux | grep app.local.js | grep -v grep | tr -s ' ' | cut -d ' ' -f 2`
 
 array_pids=($string_pids)
