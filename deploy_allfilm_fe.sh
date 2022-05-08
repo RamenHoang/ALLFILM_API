@@ -1,4 +1,4 @@
-ssh -i ~/.ssh/id_rsa_local root@allfilm.mediadnnb.codes << \EOF
+ssh -i ~/.ssh/id_rsa_local root@209.97.168.57 << \EOF
 string_pids=`ps aux | grep serve | grep -v grep | tr -s ' ' | cut -d ' ' -f 2`
 
 array_pids=($string_pids)
@@ -23,7 +23,7 @@ then
     echo "----------------Build static files----------------"
     npm run build
     echo "----------------Starting server----------------"
-    serve -s build &
+    serve -l 5000 -s build &
 else
     echo "No running process"
 fi
