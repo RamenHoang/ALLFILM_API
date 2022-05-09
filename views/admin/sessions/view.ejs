@@ -1,5 +1,5 @@
 
-<%- include('../elements/header'); %> 
+<%- include('../elements/header'); %>
 
 <div class="main-content">
         <div class="main-content-inner">
@@ -8,7 +8,7 @@
                         <li> <i class="ace-icon fa fa-tachometer"></i> <a href="/admin/dashboard">Bảng điều khiển</a> </li>
                         <li class="active"><a href="/admin/<%=controller%>/list"> Suất chiếu </a> </li>
                         <li class="active">Chỉnh sửa</li>
-                    </ul><!-- /.breadcrumb --> 
+                    </ul><!-- /.breadcrumb -->
 
                 <div class="nav-search" id="nav-search">
                     <form class="form-search">
@@ -17,46 +17,46 @@
                             <i class="ace-icon fa fa-search nav-search-icon"></i>
                         </span>
                     </form>
-                </div><!-- /.nav-search --> 
+                </div><!-- /.nav-search -->
             </div>
 
             <div class="page-content">
 
                 <div class="page-header">
-                    <h1>  Suất chiếu <small>   <i class="ace-icon fa fa-angle-double-right"></i>   Chỉnh sửa  </small> </h1> 
-                </div>    
-                <div class="row">  
+                    <h1>  Suất chiếu <small>   <i class="ace-icon fa fa-angle-double-right"></i>   Chỉnh sửa  </small> </h1>
+                </div>
+                <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <div class="">   
+                        <div class="">
                             <form method="post" action="/admin/<%=controller%>/edit/<%=data.session.id%>">
-                                <div class="widget-body">  
-                                    <input type="hidden" value="<%=data.session.id%>" name="id"> 
-                                    <div class="widget-main">  
+                                <div class="widget-body">
+                                    <input type="hidden" value="<%=data.session.id%>" name="id">
+                                    <div class="widget-main">
                                         <div>
                                             <label for="form-field-select-1"> Rạp chiếu </label>
                                             <div class="frmSearch">
                                                 <input class="director_id_input" type="hidden" value="<%- data.session.cinema.id %>" name="cinemaId" >
                                                 <input type="text" class="search-box cinema form-control" value="<%- data.session.cinema.name %> " placeholder="Mặt trời" required/>
-                                                <div class="suggesstion-box"></div>
+                                                <div class="suggestion-box"></div>
                                             </div>
-    
+
                                             <span class="error">
                                                 <%=errorData.cinema_id%>
                                             </span>
-                                        </div> <br>  
-    
+                                        </div> <br>
+
                                         <div>
                                             <label for="form-field-select-1"> Phim </label>
                                             <div class="frmSearch">
                                                 <input class="director_id_input" type="hidden" value="<%- data.session.film.id %>" name="filmId" >
                                                 <input type="text" class="search-box film form-control" value="<%- data.session.film.name %> " placeholder="Mặt trời" data-duration="<%- data.session.film.duration %> " required/>
-                                                <div class="suggesstion-box"></div>
+                                                <div class="suggestion-box"></div>
                                                 <div style="font-size: 1.1rem;">
-                                                    <span id="film-duration"><%- data.session.film.duration %></span> 
+                                                    <span id="film-duration"><%- data.session.film.duration %></span>
                                                     phút
                                                 </div>
                                             </div>
-    
+
                                             <span class="error">
                                                 <%=errorData.film_id%>
                                             </span>
@@ -67,9 +67,9 @@
                                             <div class="frmSearch">
                                                 <input class="director_id_input" type="hidden" value="<%- data.session.room.id %>" name="roomId" >
                                                 <input type="text" class="search-box room form-control" value="<%- data.session.room.name %> " placeholder="RAP1" required/>
-                                                <div class="suggesstion-box"></div>
+                                                <div class="suggestion-box"></div>
                                             </div>
-    
+
                                             <span class="error">
                                                 <%=errorData.room_id%>
                                             </span>
@@ -77,8 +77,8 @@
 
                                         <div>
                                             <label for="form-field-select-1"> Ngày chiếu </label>
-                                            <input id="datepicker" type="text" name="date" value="<%=data.session.date%>" id="form-field-select-1" placeholder="2021-04-05" class="form-control" required>  
-                                            <span class="error"><%=errorData.date%></span>   
+                                            <input id="datepicker" type="text" name="date" value="<%=data.session.date%>" id="form-field-select-1" placeholder="2021-04-05" class="form-control" required>
+                                            <span class="error"><%=errorData.date%></span>
                                         </div> <br>
 
                                         <div>
@@ -102,43 +102,43 @@
 
                                         <div>
                                             <label for="form-field-select-1"> Giờ kết thúc </label>
-                                            <input id="end-time-input" type="text" name="endTime" value="<%=data.session.endTime%>" id="form-field-select-1" placeholder="2021-04-05" class="form-control" readonly required>  
-                                            <span class="error"><%=errorData.endTime%></span>   
+                                            <input id="end-time-input" type="text" name="endTime" value="<%=data.session.endTime%>" id="form-field-select-1" placeholder="2021-04-05" class="form-control" readonly required>
+                                            <span class="error"><%=errorData.endTime%></span>
                                         </div> <br>
 
                                         <div>
                                             <label for="form-field-select-1"> Giá (VNĐ) </label>
-                                            <input id="end-time-input" type="text" name="price" value="<%=data.session.price%>" id="form-field-select-1" placeholder="60000" class="form-control" required>  
-                                            <span class="error"><%=errorData.price%></span>   
+                                            <input id="end-time-input" type="text" name="price" value="<%=data.session.price%>" id="form-field-select-1" placeholder="60000" class="form-control" required>
+                                            <span class="error"><%=errorData.price%></span>
                                         </div> <br>
 
-                                        <br>     
+                                        <br>
                                         <div>
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
-                                                    <button class="btn btn-info" type="submit"> 
+                                                    <button class="btn btn-info" type="submit">
                                                         <i class="ace-icon fa fa-check bigger-110"></i> Xác nhận
                                                     </button>
                                                     &nbsp; &nbsp; &nbsp;
-                                                    <a href="/admin/<%=controller%>/list%>"> 
+                                                    <a href="/admin/<%=controller%>/list%>">
                                                         <button class="btn" type="button"> Hủy </button>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="space-2"></div>
-                                        </div>   
+                                        </div>
                                     </div>
-                                </div>                 
-                            </form> 
+                                </div>
+                            </form>
                         </div>
-                    </div><!-- /.span --> 
-                </div>  
+                    </div><!-- /.span -->
+                </div>
             </div><!-- /.page-content -->
         </div>
     </div><!-- /.main-content -->
 
 
-<%- include('../elements/footer'); %> 
+<%- include('../elements/footer'); %>
 
 <script src="/js/jquery-ui.min.js"></script>
 
@@ -154,9 +154,9 @@
                 data: `date=${$(self).val()}&cinemaId=${cinemaId}&roomId=${roomId}`,
                 success: function(scheduledTimes) {
                     const scheduledTimesBlock = $('#scheduled_times_block');
-                    
+
                     scheduledTimesBlock.html('');
-                    
+
                     if (Array.isArray(scheduledTimes)) {
                         scheduledTimes.forEach((time) => {
                             scheduledTimesBlock.append(`
@@ -172,8 +172,8 @@
     }
 
     function estimateEndTime(startTime, duration) {
-        if (typeof (duration) === 'string') { 
-            duration = parseInt(duration, 10); 
+        if (typeof (duration) === 'string') {
+            duration = parseInt(duration, 10);
         }
 
         const hhmmArray = startTime.split(':');
@@ -208,9 +208,9 @@
             const entity = $(this).parent().data('entity');
             const id = $(this).data('id');
             const name = $(this).data('name');
-            const suggesstionBox = $(this).closest('.suggesstion-box');
+            const suggestionBox = $(this).closest('.suggestion-box');
 
-            if (name !== suggesstionBox.siblings('.search-box').val()) {
+            if (name !== suggestionBox.siblings('.search-box').val()) {
                 if (entity === 'film') {
                     $('#film-duration').html($(this).data('duration'));
                 }
@@ -220,23 +220,23 @@
                     $('input.search-box.room').val('');
                 }
 
-                suggesstionBox.siblings('.director_id_input').val(id);           
-                suggesstionBox.siblings('.search-box').val(name);
+                suggestionBox.siblings('.director_id_input').val(id);
+                suggestionBox.siblings('.search-box').val(name);
             }
-            
-            suggesstionBox.hide();
+
+            suggestionBox.hide();
         });
     }
 
     function successHandler(entity = null, respondedObjects) {
-        let suggestionOptionHtml = 
+        let suggestionOptionHtml =
             `<ul class="option-list" style="max-height: 150px; overflow:hidden; overflow-y:scroll;" data-entity="${entity}">`;
 
         respondedObjects.forEach(object => {
             suggestionOptionHtml += `
-                <li 
-                    class="option-item" 
-                    data-id="${object.id}" 
+                <li
+                    class="option-item"
+                    data-id="${object.id}"
                     data-name="${object.name}"
                     data-duration="${object.duration}"
                 >
@@ -247,8 +247,8 @@
 
         suggestionOptionHtml += '</ul>';
 
-        $(this).siblings('.suggesstion-box').show();
-        $(this).siblings('.suggesstion-box').html(suggestionOptionHtml);
+        $(this).siblings('.suggestion-box').show();
+        $(this).siblings('.suggestion-box').html(suggestionOptionHtml);
         $(this).css("background", "#FFF");
 
         bindClickForOptionItems();

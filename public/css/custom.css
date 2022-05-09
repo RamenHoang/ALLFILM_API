@@ -7,3 +7,7 @@
 	text-align: center !important;
     float: none !important;
 }
+
+.btn>.ace-icon {
+  margin-left: 4px;
+}

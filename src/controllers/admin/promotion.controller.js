@@ -26,12 +26,12 @@ PromotionController.get = async(req, res) => {
     raw: true
   });
 
-  const idAndNameOfpromotion = _.map(
+  const idAndNameOfPromotion = _.map(
     promotion,
     (actor) => ({ id: actor.id, name: actor.name })
   );
 
-  return res.status(200).json(idAndNameOfpromotion);
+  return res.status(200).json(idAndNameOfPromotion);
 };
 
 PromotionController.list = async(req, res) => {
@@ -60,7 +60,7 @@ PromotionController.getById = async(req, res) => {
     const loginUser = req.currentUser;
     const { originalUrl } = req;
 
-    let viewPath = '';
+    let viewPath;
     const data = { promotion: {} };
     const errorData = {};
     let action;
@@ -77,9 +77,7 @@ PromotionController.getById = async(req, res) => {
     }
 
     if (viewPath !== VIEW_ADD_PATH) {
-      const promotion = await Promotion.findByPk(promotionId);
-
-      data.promotion = promotion;
+      data.promotion = await Promotion.findByPk(promotionId);
     }
 
     res.render(viewPath, {
@@ -170,4 +168,3 @@ PromotionController.createNew = async(req, res) => {
     res.redirect(`/admin/${controller}/list`);
   }
 };
-

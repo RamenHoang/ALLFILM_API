@@ -6,7 +6,7 @@ const {
   User, Role, Booking, FilmType, Film, Session, FoodDrink
 } = require('../../models');
 const jwtHelper = require('../../helpers/jwt.helper');
-const cookieHepler = require('../../helpers/cookie.helper');
+const cookieHelper = require('../../helpers/cookie.helper');
 
 const AuthController = module.exports;
 const controller = 'admin';
@@ -29,7 +29,7 @@ AuthController.login = async(req, res) => {
     let data = {};
     const errorData = {};
 
-    const { token } = cookieHepler.getData(req, 'token');
+    const { token } = cookieHelper.getData(req, 'token');
 
     if (token) {
       const { id } = jwtHelper.verifyAccessToken(token);
@@ -88,7 +88,7 @@ AuthController.login = async(req, res) => {
             const payload = _.pick(user, ['id', 'Roles']);
             const accessToken = jwtHelper.generateAccessToken(payload);
 
-            cookieHepler.storeData(res, { token: accessToken });
+            cookieHelper.storeData(res, { token: accessToken });
 
             return res.redirect('/admin/dashboard');
           }
@@ -96,13 +96,15 @@ AuthController.login = async(req, res) => {
       }
     }
 
+    cookieHelper.deleteData(res, 'token');
+
     return res.render('admin/login', {
       page_title: 'Admin - Login',
       data,
       errorData
     });
   } catch (e) {
-    cookieHepler.deleteData(res, 'token');
+    cookieHelper.deleteData(res, 'token');
 
     return res.redirect('/admin/dashboard');
   }
@@ -183,7 +185,7 @@ AuthController.dashboard = async(req, res, next) => {
 
 AuthController.logout = async(req, res) => {
   try {
-    cookieHepler.deleteData(res, 'token');
+    cookieHelper.deleteData(res, 'token');
 
     res.redirect('/admin/login');
   } catch (e) {
