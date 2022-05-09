@@ -1,5 +1,5 @@
- 
-<%- include('../elements/header'); %> 
+
+<%- include('../elements/header'); %>
 
 <div class="main-content">
         <div class="main-content-inner">
@@ -8,7 +8,7 @@
                         <li> <i class="ace-icon fa fa-tachometer"></i> <a href="/admin/dashboard">Bảng điều khiển</a> </li>
                         <li class="active"><a href="/admin/<%=controller%>/list"> Phòng chiếu </a> </li>
                         <li class="active">Chỉnh sửa</li>
-                    </ul><!-- /.breadcrumb --> 
+                    </ul><!-- /.breadcrumb -->
 
                 <div class="nav-search" id="nav-search">
                     <form class="form-search">
@@ -17,37 +17,37 @@
                             <i class="ace-icon fa fa-search nav-search-icon"></i>
                         </span>
                     </form>
-                </div><!-- /.nav-search --> 
+                </div><!-- /.nav-search -->
             </div>
 
             <div class="page-content">
 
                 <div class="page-header">
-                    <h1>  Phòng chiếu <small>   <i class="ace-icon fa fa-angle-double-right"></i>   Chỉnh sửa  </small> </h1> 
-                </div>    
-                <div class="row">  
+                    <h1>  Phòng chiếu <small>   <i class="ace-icon fa fa-angle-double-right"></i>   Chỉnh sửa  </small> </h1>
+                </div>
+                <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <div class="">   
+                        <div class="">
                             <form method="post" action="/admin/<%=controller%>/edit/<%=data.room.id%>">
-                                <div class="widget-body">  
-                                    <input type="hidden" value="<%=data.room.id%>" name="id"> 
-                                    <div class="widget-main">  
+                                <div class="widget-body">
+                                    <input type="hidden" value="<%=data.room.id%>" name="id">
+                                    <div class="widget-main">
                                         <div>
-                                            <label for="form-field-select-1">Tên</label> 
-                                            <input type="text" name="name" value="<%=data.room.name%>" id="form-field-select-1" placeholder="Mặt trời" class="form-control" readonly>  
-                                            <span class="error"><%=errorData.name%></span> 
-                                        </div>  <br>  
-    
-                                        <div>
-                                            <label for="form-field-select-1">Số hàng</label> 
-                                            <input type="text" class="form-control" name="row" placeholder="12" value="<%=data.room.row%>" >
-                                            <span class="error"><%=errorData.row%></span> 
+                                            <label for="form-field-select-1">Tên</label>
+                                            <input type="text" name="name" value="<%=data.room.name%>" id="form-field-select-1" placeholder="Mặt trời" class="form-control" readonly>
+                                            <span class="error"><%=errorData.name%></span>
                                         </div>  <br>
 
                                         <div>
-                                            <label for="form-field-select-1">Số cột</label> 
+                                            <label for="form-field-select-1">Số hàng</label>
+                                            <input type="text" class="form-control" name="row" placeholder="12" value="<%=data.room.row%>" >
+                                            <span class="error"><%=errorData.row%></span>
+                                        </div>  <br>
+
+                                        <div>
+                                            <label for="form-field-select-1">Số cột</label>
                                             <input type="text" class="form-control" name="column" placeholder="10" value="<%=data.room.column%>" >
-                                            <span class="error"><%=errorData.column%></span> 
+                                            <span class="error"><%=errorData.column%></span>
                                         </div>  <br>
 
                                         <div>
@@ -55,41 +55,41 @@
                                             <div class="frmSearch">
                                                 <input class="director_id_input" type="hidden" value="<%- data.room.cinema.id %>" name="cinemaId" >
                                                 <input type="text" class="search-box director form-control" value="<%- data.room.cinema.name %> " placeholder="Mặt trời" />
-                                                <div class="suggesstion-box"></div>
+                                                <div class="suggestion-box"></div>
                                             </div>
-    
+
                                             <span class="error">
                                                 <%=errorData.cinema_id%>
                                             </span>
                                         </div> <br>
 
-                                        <br>     
+                                        <br>
                                         <div>
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
-                                                    <button class="btn btn-info" type="submit"> 
+                                                    <button class="btn btn-info" type="submit">
                                                         <i class="ace-icon fa fa-check bigger-110"></i> Xác nhận
                                                     </button>
                                                     &nbsp; &nbsp; &nbsp;
-                                                    <a href="/admin/<%=controller%>/list%>"> 
+                                                    <a href="/admin/<%=controller%>/list%>">
                                                         <button class="btn" type="button"> Hủy </button>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="space-2"></div>
-                                        </div>   
+                                        </div>
                                     </div>
-                                </div>                 
-                            </form> 
+                                </div>
+                            </form>
                         </div>
-                    </div><!-- /.span --> 
-                </div>  
+                    </div><!-- /.span -->
+                </div>
             </div><!-- /.page-content -->
         </div>
     </div><!-- /.main-content -->
 
 
-<%- include('../elements/footer'); %> 
+<%- include('../elements/footer'); %>
 
 <script src="/js/jquery-ui.min.js"></script>
 
@@ -98,11 +98,11 @@
         $(".option-item").unbind('click').bind('click', function() {
             const id = $(this).data('id');
             const name = $(this).data('name');
-            const suggesstionBox = $(this).closest('.suggesstion-box');
+            const suggestionBox = $(this).closest('.suggestion-box');
 
-            suggesstionBox.siblings('.director_id_input').val(id);
-            suggesstionBox.siblings('.search-box').val(name);
-            suggesstionBox.hide();
+            suggestionBox.siblings('.director_id_input').val(id);
+            suggestionBox.siblings('.search-box').val(name);
+            suggestionBox.hide();
         });
     }
 
@@ -111,9 +111,9 @@
 
         directors.forEach(director => {
             suggestionOptionHtml += `
-                <li 
-                    class="option-item" 
-                    data-id="${director.id}" 
+                <li
+                    class="option-item"
+                    data-id="${director.id}"
                     data-name="${director.name}"
                 >
                     ${director.name}
@@ -123,8 +123,8 @@
 
         suggestionOptionHtml += '</ul>';
 
-        $(this).siblings('.suggesstion-box').show();
-        $(this).siblings('.suggesstion-box').html(suggestionOptionHtml);
+        $(this).siblings('.suggestion-box').show();
+        $(this).siblings('.suggestion-box').html(suggestionOptionHtml);
         $(this).css("background", "#FFF");
 
         bindClickForOptionItems();
@@ -145,5 +145,6 @@
     jQuery(function ($) {
         bindKeyUpSearchBox();
         bindClickForOptionItems();
+        bindFocusOutSearchBox();
     })
 </script>

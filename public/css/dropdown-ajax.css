@@ -1,4 +1,4 @@
-.suggesstion-box {
+.suggestion-box {
   width: 100%;
   position: relative;
 }
@@ -11,10 +11,10 @@
 .option-list {
   list-style: none;
   bottom: 4rem;
-  right: 0;
   padding: 0;
   position: absolute;
   margin: 0 !important;
+  width: 100%;
 }
 
 .option-list li {

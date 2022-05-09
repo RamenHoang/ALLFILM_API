@@ -1,5 +1,5 @@
- 
-<%- include('../elements/header'); %> 
+
+<%- include('../elements/header'); %>
 
 <div class="main-content">
         <div class="main-content-inner">
@@ -8,7 +8,7 @@
                         <li> <i class="ace-icon fa fa-tachometer"></i> <a href="/admin/dashboard">Bảng điều khiển</a> </li>
                         <li class="active"><a href="/admin/<%=controller%>/list"> Phòng chiếu </a> </li>
                         <li class="active">Chi tiết</li>
-                    </ul><!-- /.breadcrumb --> 
+                    </ul><!-- /.breadcrumb -->
 
                 <div class="nav-search" id="nav-search">
                     <form class="form-search">
@@ -17,37 +17,37 @@
                             <i class="ace-icon fa fa-search nav-search-icon"></i>
                         </span>
                     </form>
-                </div><!-- /.nav-search --> 
+                </div><!-- /.nav-search -->
             </div>
 
             <div class="page-content">
 
                 <div class="page-header">
-                    <h1>  Phòng chiếu <small>   <i class="ace-icon fa fa-angle-double-right"></i>   Chi tiết  </small> </h1> 
-                </div>    
-                <div class="row">  
+                    <h1>  Phòng chiếu <small>   <i class="ace-icon fa fa-angle-double-right"></i>   Chi tiết  </small> </h1>
+                </div>
+                <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <div class="">   
+                        <div class="">
                             <form>
-                                <div class="widget-body">  
-                                    <input type="hidden" value="<%=data.room.id%>" name="id"> 
-                                    <div class="widget-main">  
+                                <div class="widget-body">
+                                    <input type="hidden" value="<%=data.room.id%>" name="id">
+                                    <div class="widget-main">
                                         <div>
-                                            <label for="form-field-select-1">Tên</label> 
-                                            <input type="text" name="name" value="<%=data.room.name%>" id="form-field-select-1" placeholder="RAP0" class="form-control" disabled>  
-                                            <span class="error"><%=errorData.name%></span> 
-                                        </div>  <br>  
-    
-                                        <div>
-                                            <label for="form-field-select-1">Số hàng</label> 
-                                            <input type="text" class="form-control" name="row" placeholder="12" value="<%=data.room.row%>" disabled>
-                                            <span class="error"><%=errorData.row%></span> 
+                                            <label for="form-field-select-1">Tên</label>
+                                            <input type="text" name="name" value="<%=data.room.name%>" id="form-field-select-1" placeholder="RAP0" class="form-control" disabled>
+                                            <span class="error"><%=errorData.name%></span>
                                         </div>  <br>
 
                                         <div>
-                                            <label for="form-field-select-1">Số cột</label> 
+                                            <label for="form-field-select-1">Số hàng</label>
+                                            <input type="text" class="form-control" name="row" placeholder="12" value="<%=data.room.row%>" disabled>
+                                            <span class="error"><%=errorData.row%></span>
+                                        </div>  <br>
+
+                                        <div>
+                                            <label for="form-field-select-1">Số cột</label>
                                             <input type="text" class="form-control" name="column" placeholder="10" value="<%=data.room.column%>" disabled>
-                                            <span class="error"><%=errorData.column%></span> 
+                                            <span class="error"><%=errorData.column%></span>
                                         </div>  <br>
 
                                         <div>
@@ -55,32 +55,32 @@
                                             <div class="frmSearch">
                                                 <input class="director_id_input" type="hidden" value="<%- data.room.cinema.id %>" name="cinemaId" disabled>
                                                 <input type="text" class="search-box director form-control" value="<%- data.room.cinema.name %> " placeholder="Mặt trời" disabled/>
-                                                <div class="suggesstion-box"></div>
+                                                <div class="suggestion-box"></div>
                                             </div>
-    
+
                                             <span class="error">
                                                 <%=errorData.cinema_id%>
                                             </span>
                                         </div> <br>
 
-                                        <br>     
-                                        <div> 
+                                        <br>
+                                        <div>
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
-                                                    <a href="/admin/<%=controller%>/list%>" style="float: right;"> <button class="btn" type="button"> Hủy </button></a>   
-                                                </div>   
-                                            </div>   
-                                            <div class="space-2"></div>  
-                                        </div>    
+                                                    <a href="/admin/<%=controller%>/list%>" style="float: right;"> <button class="btn" type="button"> Hủy </button></a>
+                                                </div>
+                                            </div>
+                                            <div class="space-2"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </form> 
+                            </form>
                         </div>
-                    </div><!-- /.span --> 
-                </div>  
+                    </div><!-- /.span -->
+                </div>
             </div><!-- /.page-content -->
         </div>
     </div><!-- /.main-content -->
 
 
-<%- include('../elements/footer'); %> 
+<%- include('../elements/footer'); %>
