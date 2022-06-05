@@ -27,22 +27,6 @@ const getMaskedPaths = (key, value, maskedPaths = [], path = '') => {
   }
 };
 
-const formatData = (data) => {
-  const maskedPaths = [];
-
-  getMaskedPaths(null, data, maskedPaths);
-
-  _.each(maskedPaths, (path) => {
-    _.set(data, path, StringHelper.mask(_.get(data, path), {
-      unmaskedStartCharacters: 5,
-      unmaskedEndCharacters: 0,
-      maskLength: 10
-    }));
-  });
-
-  return data;
-};
-
 const logAudit = (request, response, responseCode) => {
   const method = _.get(request, 'method');
 
@@ -59,12 +43,12 @@ const logAudit = (request, response, responseCode) => {
     const headers = _.get(request, 'headers');
 
     const data = `${method}\t'${url}'\t'${currentUser}'\t'${JSON.stringify({
-      headers: formatData(headers),
+      headers,
       query,
       params,
-      body: formatData(body),
+      body,
       responseCode,
-      response: formatData(response)
+      response
     })}'`;
 
     winston.loggers.get('auditLog').info(data);
