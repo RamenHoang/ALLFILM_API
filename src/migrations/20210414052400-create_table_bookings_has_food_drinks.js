@@ -15,6 +15,9 @@ module.exports = {
       allowNull: false,
       primaryKey: true
     }
+  }, {
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci'
   }),
 
   down: (queryInterface) => queryInterface.dropTable('bookings_has_food_drinks')
