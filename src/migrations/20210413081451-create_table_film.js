@@ -52,6 +52,9 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE
     }
+  }, {
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci'
   }),
 
   down: (queryInterface) => queryInterface.dropTable('films')

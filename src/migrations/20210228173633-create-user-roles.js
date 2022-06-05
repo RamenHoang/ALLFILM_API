@@ -11,6 +11,9 @@ module.exports = {
       primaryKey: true,
       allowNull: false
     }
+  }, {
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci'
   }),
   down: (queryInterface) => queryInterface.dropTable('user_roles')
 };
