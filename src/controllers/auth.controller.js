@@ -2,6 +2,7 @@ const { get } = require('lodash');
 const { authService, mailService } = require('../services');
 const { ok } = require('../helpers/response.helper');
 const { BadRequestError } = require('../errors');
+const { frontEndUrl } = require('../config/app');
 
 const AuthController = module.exports;
 
@@ -49,7 +50,8 @@ AuthController.activateAccount = async(req, res, next) => {
     const dataToRender = {
       activateAccountPageTitle: t('activate_account_page_title'),
       activateAccountMessage: '',
-      activationAccountComeHome: t('activate_account_come_home')
+      activationAccountComeHome: t('activate_account_come_home'),
+      frontEndUrl
     };
 
     if (activatingResult) {
