@@ -10,6 +10,7 @@ const {
 const { ok } = require('../helpers/response.helper');
 const objectHelper = require('../helpers/object.helper');
 const vnpayConfig = require('../config/vnpay');
+const { frontEndUrl } = require('../config/app');
 const { VNPAY_ERROR_CODE } = require('../constants');
 const { bookingMapper } = require('../mapper');
 const { Booking } = require('../models');
@@ -144,12 +145,14 @@ BookingController.getReturn = async(req, res, next) => {
 
       res.render('vnpay/transaction_status', {
         code: '00',
-        message: VNPAY_ERROR_CODE['00']
+        message: VNPAY_ERROR_CODE['00'],
+        frontEndUrl
       });
     } else {
       res.render('vnpay/transaction_status', {
         code: vnpayResponseCode,
-        message: VNPAY_ERROR_CODE[vnpayResponseCode]
+        message: VNPAY_ERROR_CODE[vnpayResponseCode],
+        frontEndUrl
       });
     }
   } catch (e) {

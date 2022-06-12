@@ -7,5 +7,6 @@ module.exports = {
   logLevel: process.env.LOG_LEVEL || 'debug',
   url: process.env.APP_URL,
   env: process.env.APP_ENV || 'local',
-  saltRound: +process.env.SALT_ROUND || 10
+  saltRound: +process.env.SALT_ROUND || 10,
+  frontEndUrl: process.env.FRONT_END_URL
 };
