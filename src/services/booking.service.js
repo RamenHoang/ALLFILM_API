@@ -224,6 +224,12 @@ BookingService.listByUserAndDate = (userId, dateOption) => {
             attributes: ['name', 'subName', 'poster']
           }
         ]
+      },
+      {
+        model: FoodDrink,
+        through: {
+          attributes: ['count']
+        }
       }
     ],
     attributes: ['fee', 'seats']
