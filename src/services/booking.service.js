@@ -14,7 +14,8 @@ const {
   Film,
   User,
   masterDB,
-  FoodDrink
+  FoodDrink,
+  BookingRefund
 } = require('../models');
 
 const BookingService = module.exports;
@@ -230,6 +231,10 @@ BookingService.listByUserAndDate = (userId, dateOption) => {
         through: {
           attributes: ['count']
         }
+      },
+      {
+        model: BookingRefund,
+        required: false,
       }
     ],
     attributes: ['fee', 'seats']

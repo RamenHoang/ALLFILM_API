@@ -58,3 +58,9 @@ Constants.VNPAY_ERROR_CODE = Object.freeze({
   97: 'Chữ ký không hợp lệ',
   99: 'Các lỗi khác',
 });
+
+Constants.REFUND_STATUES = Object.freeze({
+  REQUESTED: 'R',
+  SUCCESSED: 'S',
+  FAILED: 'F',
+});

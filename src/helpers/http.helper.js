@@ -14,3 +14,13 @@ HttpHelper.request = async(urlOptions, data) => {
 
   return response;
 };
+
+HttpHelper.get = async(url) => {
+  winston.debug(`[HTTP] Make request: ${url}`);
+
+  const response = await axios.get(url);
+
+  winston.debug('[HTTP] Data response', response.data);
+
+  return response;
+};

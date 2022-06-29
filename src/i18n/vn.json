@@ -32,5 +32,6 @@
   "mail_activate_account_title": "Kích hoạt tài khoản",
   "mail_activate_message": "Vui lòng nhấp link bên để kích hoạt tài khoản: ",
 
-  "username_existed": "Tên tài khoản đã tồn tại, vui lòng sử dụng tên khác."
+  "username_existed": "Tên tài khoản đã tồn tại, vui lòng sử dụng tên khác.",
+  "ticket_is_requested_for_refund": "Vé đã được yêu cầu hủy trước đó."
 }

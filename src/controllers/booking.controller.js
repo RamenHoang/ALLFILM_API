@@ -5,15 +5,16 @@ const querystring = require('qs');
 const {
   bookingService,
   mailService,
-  vnpayService
+  vnpayService,
+  bookingPaymentService
 } = require('../services');
 const { ok } = require('../helpers/response.helper');
 const objectHelper = require('../helpers/object.helper');
 const vnpayConfig = require('../config/vnpay');
 const { frontEndUrl } = require('../config/app');
-const { VNPAY_ERROR_CODE } = require('../constants');
+const { VNPAY_ERROR_CODE, REFUND_STATUES } = require('../constants');
 const { bookingMapper } = require('../mapper');
-const { Booking } = require('../models');
+const { Booking, BookingRefund } = require('../models');
 const { NotFoundError, BadRequestError } = require('../errors');
 
 // const { NotFoundError, ValidationError } = require('../errors');
@@ -52,13 +53,58 @@ BookingController.checkoutTicket = async(req, res, next) => {
     const bookingId = get(req.params, 'bookingId');
     const userId = get(req.currentUser, 'id');
     const ipAddress = req.headers['x-forwarded-for']
-    || req.connection.remoteAddress
-    || req.socket.remoteAddress
-    || req.connection.socket.remoteAddress;
+      || req.connection.remoteAddress
+      || req.socket.remoteAddress
+      || req.connection.socket.remoteAddress;
 
     const result = await vnpayService.createPaymentUrl(bookingId, userId, ipAddress);
 
     ok(req, res, result);
+  } catch (e) {
+    next(e);
+  }
+};
+
+BookingController.refundTicket = async(req, res, next) => {
+  try {
+    const bookingId = get(req.params, 'bookingId');
+
+    const booking = await Booking.findOne({
+      where: { id: bookingId },
+      include: {
+        model: BookingRefund,
+        required: false
+      }
+    });
+
+    if (isNil(booking)) {
+      throw new NotFoundError(
+        t('not_found'),
+        [{
+          field: 'bookingId',
+          type: 'any.not_found',
+          message: t('ticket_not_exist')
+        }]
+      );
+    }
+
+    if (!isNil(booking.BookingRefunds)) {
+      throw new BadRequestError(
+        t('bad_request'),
+        [{
+          field: 'bookingId',
+          type: 'any.failed',
+          message: t('ticket_is_requested_for_refund')
+        }]
+      );
+    }
+
+    const requestRefundResult = await BookingRefund.create({
+      bookingId,
+      refundStatus: REFUND_STATUES.REQUESTED
+    });
+
+    ok(req, res, requestRefundResult);
   } catch (e) {
     next(e);
   }
@@ -85,14 +131,16 @@ BookingController.getIpn = async(req, res, next) => {
       const bookingId = vnpParams.vnp_TxnRef.split('_')[0];
       // const rspCode = vnpParams.vnp_ResponseCode;
 
-      const checkedOutBookingInfo = await bookingService.checkout(
+      const checkedOutBookingInfo = bookingMapper.toBookingWithUser(await bookingService.checkout(
         bookingId,
         vnpParams
           .vnp_PayDate
           .replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3 $4:$5:$6')
-      );
+      ));
 
-      await mailService.sendMailBookTicketSuccesfully(
+      bookingPaymentService.createBookingPayment(bookingId, vnpParams);
+
+      mailService.sendMailBookTicketSuccesfully(
         checkedOutBookingInfo.User.email,
         checkedOutBookingInfo
       );
@@ -128,21 +176,6 @@ BookingController.getReturn = async(req, res, next) => {
     const vnpayResponseCode = vnpParams.vnp_ResponseCode;
 
     if (secureHash === checkSum && vnpayResponseCode === '00') {
-      const bookingId = vnpParams.vnp_TxnRef.split('_')[0];
-      // const rspCode = vnpParams.vnp_ResponseCode;
-
-      const checkedOutBookingInfo = bookingMapper.toBookingWithUser(await bookingService.checkout(
-        bookingId,
-        vnpParams
-          .vnp_PayDate
-          .replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3 $4:$5:$6')
-      ));
-
-      await mailService.sendMailBookTicketSuccesfully(
-        checkedOutBookingInfo.User.email,
-        checkedOutBookingInfo
-      );
-
       res.render('vnpay/transaction_status', {
         code: '00',
         message: VNPAY_ERROR_CODE['00'],

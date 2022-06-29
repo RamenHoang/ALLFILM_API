@@ -4,9 +4,10 @@ const _ = require('lodash');
 const dateFormat = require('dateformat');
 
 const { NotFoundError } = require('../errors');
-const { Booking } = require('../models');
+const { Booking, BookingPayment } = require('../models');
 const vnpayConfig = require('../config/vnpay');
 const objectHelper = require('../helpers/object.helper');
+const httpHeler = require('../helpers/http.helper');
 
 const VNPayService = module.exports;
 
@@ -75,4 +76,58 @@ VNPayService.createPaymentUrl = async(bookingId, userId, ipAddress) => {
     code: '00',
     data: vnpUrl
   };
+};
+
+VNPayService.makeRequestRefund = async(bookingId, ipAddress) => {
+  const booking = await Booking.findOne({
+    where: {
+      id: bookingId
+    },
+    include: {
+      model: BookingPayment
+    }
+  });
+
+  if (_.isNil(booking)) {
+    throw new NotFoundError(
+      t('not_found'),
+      [{
+        field: 'bookingId',
+        type: 'any.not_found',
+        message: 'Vé không tồn tại'
+      }]
+    );
+  }
+
+  const paymentPayload = JSON.parse(booking.BookingPayment.paymentPayload);
+
+  const date = new Date();
+  const createDate = dateFormat(date, 'yyyymmddHHMMss');
+  let vnpParams = {};
+
+  vnpParams.vnp_Version = '2';
+  vnpParams.vnp_Command = 'refund';
+  vnpParams.vnp_TmnCode = vnpayConfig.vnp_TmnCode;
+  vnpParams.vnp_TransactionType = '02';
+  vnpParams.vnp_TxnRef = paymentPayload.vnp_TxnRef;
+  vnpParams.vnp_Amount = booking.fee * 100;
+  vnpParams.vnp_OrderInfo = 'refund';
+  vnpParams.vnp_TransDate = dateFormat(booking.checkedOutAt, 'yyyymmddHHMMss');
+  vnpParams.vnp_TransactionNo = paymentPayload.vnp_TransactionNo;
+  vnpParams.vnp_CreateBy = vnpayConfig.vnp_MerchantUser;
+  vnpParams.vnp_CreateDate = createDate;
+  vnpParams.vnp_IpAddr = ipAddress;
+  vnpParams = objectHelper.sortObject(vnpParams);
+
+  const signData = vnpayConfig.vnp_HashSecret + querystring.stringify(vnpParams, { encode: false });
+
+  vnpParams.vnp_SecureHashType = 'SHA256';
+  vnpParams.vnp_SecureHash = sha256(signData);
+
+  const vpnRefundUrl = `${vnpayConfig.vnp_RefundUrl}?${querystring.stringify(vnpParams, { encode: true })}`;
+
+  const response = await httpHeler.get(vpnRefundUrl);
+  const data = querystring.parse(response.data);
+
+  return response;
 };
