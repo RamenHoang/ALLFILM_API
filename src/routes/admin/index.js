@@ -14,6 +14,7 @@ const cinemaRoute = require('./cinema-route');
 const roomRoute = require('./room-route');
 const sessionRoute = require('./session-route');
 const promotionRoute = require('./promotion-route');
+const bookingRoute = require('./booking-route');
 
 function route(app) {
   const router = express.Router();
@@ -33,6 +34,7 @@ function route(app) {
   router.use('/rooms/', adminAuth, roomRoute);
   router.use('/sessions/', adminAuth, sessionRoute);
   router.use('/promotions/', adminAuth, promotionRoute);
+  router.use('/bookings/', adminAuth, bookingRoute);
 
   app.use('/admin/', router);
 

@@ -95,7 +95,7 @@
 
 <script type="text/javascript">
     function bindClickForOptionItems() {
-        $(".option-item").unbind('click').bind('click', function() {
+        $(".option-item").unbind('mousedown').bind('mousedown', function() {
             const id = $(this).data('id');
             const name = $(this).data('name');
             const suggestedRoomName = $(this).data('suggested-room-name');

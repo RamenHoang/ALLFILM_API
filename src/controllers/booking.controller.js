@@ -129,14 +129,14 @@ BookingController.getIpn = async(req, res, next) => {
 
     if (secureHash === checkSum && vnpayResponseCode === '00') {
       const bookingId = vnpParams.vnp_TxnRef.split('_')[0];
-      // const rspCode = vnpParams.vnp_ResponseCode;
-
-      const checkedOutBookingInfo = bookingMapper.toBookingWithUser(await bookingService.checkout(
-        bookingId,
-        vnpParams
-          .vnp_PayDate
-          .replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3 $4:$5:$6')
-      ));
+      const checkedOutBookingInfo = bookingMapper.toBookingWithUser(
+        await bookingService.checkout(
+          bookingId,
+          vnpParams
+            .vnp_PayDate
+            .replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3 $4:$5:$6')
+        )
+      );
 
       bookingPaymentService.createBookingPayment(bookingId, vnpParams);
 

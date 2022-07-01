@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const {
-  Room, Cinema, Session, Film
+  Room, Cinema, Session, Film, Booking
 } = require('../../models');
 
 const SessionController = module.exports;
@@ -232,7 +232,16 @@ SessionController.deleteById = async(req, res) => {
   try {
     const sessionId = req.params.id;
 
-    await Room.destroy({
+    const bookingSessions = await Booking.findOne({ sessionId });
+
+    if (bookingSessions) {
+      req.flash('error', 'Không thể xóa Suất chiếu vì đã có vé được đặt');
+      res.redirect(`/admin/${controller}/list`);
+
+      return;
+    }
+
+    await Session.destroy({
       where: { id: sessionId }
     });
 

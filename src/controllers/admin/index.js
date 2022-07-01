@@ -10,3 +10,4 @@ Controllers.cinema = require('./cinema.controller');
 Controllers.room = require('./room.controller');
 Controllers.session = require('./session.controller');
 Controllers.promotion = require('./promotion.controller');
+Controllers.booking = require('./booking.controller');

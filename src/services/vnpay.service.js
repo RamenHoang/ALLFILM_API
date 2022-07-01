@@ -8,6 +8,7 @@ const { Booking, BookingPayment } = require('../models');
 const vnpayConfig = require('../config/vnpay');
 const objectHelper = require('../helpers/object.helper');
 const httpHeler = require('../helpers/http.helper');
+const { BOOKING_PAYMENT, VNPAY_ERROR_CODE } = require('../constants');
 
 const VNPayService = module.exports;
 
@@ -84,7 +85,10 @@ VNPayService.makeRequestRefund = async(bookingId, ipAddress) => {
       id: bookingId
     },
     include: {
-      model: BookingPayment
+      model: BookingPayment,
+      where: {
+        status: BOOKING_PAYMENT.PAID
+      }
     }
   });
 
@@ -99,7 +103,7 @@ VNPayService.makeRequestRefund = async(bookingId, ipAddress) => {
     );
   }
 
-  const paymentPayload = JSON.parse(booking.BookingPayment.paymentPayload);
+  const paymentPayload = JSON.parse(booking.BookingPayments[0].paymentPayload);
 
   const date = new Date();
   const createDate = dateFormat(date, 'yyyymmddHHMMss');
@@ -127,7 +131,11 @@ VNPayService.makeRequestRefund = async(bookingId, ipAddress) => {
   const vpnRefundUrl = `${vnpayConfig.vnp_RefundUrl}?${querystring.stringify(vnpParams, { encode: true })}`;
 
   const response = await httpHeler.get(vpnRefundUrl);
-  const data = querystring.parse(response.data);
+  const refundPayload = querystring.parse(response.data);
 
-  return response;
+  if (refundPayload.vnp_ResponseCode === VNPAY_ERROR_CODE['00']) {
+    return true;
+  }
+
+  return false;
 };

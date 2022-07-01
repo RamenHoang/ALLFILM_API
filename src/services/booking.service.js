@@ -15,14 +15,18 @@ const {
   User,
   masterDB,
   FoodDrink,
-  BookingRefund
+  BookingPayment
 } = require('../models');
+const {
+  BOOKING_PAYMENT
+} = require('../constants');
+const datetimeHelper = require('../helpers/datetime.helper');
 
 const BookingService = module.exports;
 
 function arrangeSeatOfSession(session, bookingSeats, type = 'add') {
-  let emptySeatsInSession = session.emptySeats.split(',');
-  let bookedSeatsInSession = session.bookedSeats.split(',');
+  let emptySeatsInSession = isNil(session.emptySeats) ? [] : session.emptySeats.split(',');
+  let bookedSeatsInSession = isNil(session.bookedSeats) ? [] : session.bookedSeats.split(',');
   const bookingSeatsArray = bookingSeats.split(',');
 
   switch (type) {
@@ -80,69 +84,123 @@ async function clearBookingAndItsRelationshipWithTransaction(sessionId, bookings
   return Promise.all(promises);
 }
 
+async function returnSeatsForSession(sessionId, booking, transaction) {
+  const session = await Session.findByPk(sessionId);
+
+  arrangeSeatOfSession(session, booking.seats, 'remove');
+
+  return Session.update(
+    {
+      emptySeats: session.emptySeats,
+      bookedSeats: session.bookedSeats
+    },
+    { where: { id: session.id } },
+    { transaction }
+  );
+}
+
 BookingService.bookTicket = async(userId, bookingOption) => {
-  const newBooking = await Booking.create({
-    userId,
-    ...pick(bookingOption, ['bookingTime', 'keepingTime', 'seats', 'fee', 'sessionId', 'sessionRoomId'])
-  });
+  let bookingId = null;
 
-  const sessionToUpdate = await Session.findByPk(bookingOption.sessionId);
-
-  const canBookSeats = validateBookingSeats(sessionToUpdate.bookedSeats, bookingOption.seats);
-
-  if (!canBookSeats) {
-    throw new ValidationError(
-      t('validation_error'),
-      [{
-        field: 'seats',
-        type: 'any.duplicated',
-        message: t('seats_is_booked')
-      }]
-    );
-  }
-
-  arrangeSeatOfSession(sessionToUpdate, bookingOption.seats);
-
-  await sessionToUpdate.save();
-
-  const rawBookFoodDrinkRecord = map(bookingOption.foodDrinks, (item) => ({
-    bookingId: newBooking.id,
-    bookingUserId: userId,
-    foodDrinkId: item.id,
-    count: item.count
-  }));
-
-  await BookFoodDrink.bulkCreate(rawBookFoodDrinkRecord);
-
-  return Booking.findByPk(newBooking.id, {
-    include: [
+  await masterDB.transaction(async(t) => {
+    const newBooking = await Booking.create(
       {
-        model: Session,
-        attributes: ['startTime', 'price'],
-        include: [
-          {
-            model: Cinema,
-            attributes: ['name', 'address']
-          },
-          {
-            model: Room,
-            attributes: ['name']
-          },
-          {
-            model: Film,
-            attributes: ['name', 'subName']
-          }
-        ]
+        userId,
+        ...pick(
+          bookingOption,
+          [
+            'bookingTime', 'keepingTime', 'seats', 'fee', 'sessionId', 'sessionRoomId'
+          ]
+        )
+      }, {
+        transaction: t
+      }
+    );
+
+    const sessionToUpdate = await Session.findByPk(bookingOption.sessionId);
+
+    const canBookSeats = isNil(sessionToUpdate.bookedSeats)
+      ? true
+      : validateBookingSeats(sessionToUpdate.bookedSeats, bookingOption.seats);
+
+    if (!canBookSeats) {
+      throw new ValidationError(
+        t('validation_error'),
+        [{
+          field: 'seats',
+          type: 'any.duplicated',
+          message: t('seats_is_booked')
+        }]
+      );
+    }
+
+    arrangeSeatOfSession(sessionToUpdate, bookingOption.seats);
+
+    await sessionToUpdate.save({ transaction: t });
+
+    const rawBookFoodDrinkRecord = map(
+      bookingOption.foodDrinks,
+      (item) => ({
+        bookingId: newBooking.id,
+        bookingUserId: userId,
+        foodDrinkId: item.id,
+        count: item.count
+      })
+    );
+
+    await BookFoodDrink.bulkCreate(
+      rawBookFoodDrinkRecord,
+      {
+        transaction: t
+      }
+    );
+
+    await BookingPayment.create(
+      {
+        bookingId: newBooking.id,
+        paymentPayload: null,
+        status: BOOKING_PAYMENT.NOT_PAID
       },
       {
-        model: FoodDrink,
-        attributes: ['name', 'price'],
-        through: {
-          attributes: ['count']
-        }
+        transaction: t
       }
-    ]
+    );
+
+    bookingId = newBooking.id;
   });
+
+  return Booking.findByPk(
+    bookingId,
+    {
+      include: [
+        {
+          model: Session,
+          attributes: ['startTime', 'price'],
+          include: [
+            {
+              model: Cinema,
+              attributes: ['name', 'address']
+            },
+            {
+              model: Room,
+              attributes: ['name']
+            },
+            {
+              model: Film,
+              attributes: ['name', 'subName']
+            }
+          ]
+        },
+        {
+          model: FoodDrink,
+          attributes: ['name', 'price'],
+          through: {
+            attributes: ['count']
+          }
+        }
+      ]
+    }
+  );
 };
 
 BookingService.checkout = async(bookingId, payDate) => {
@@ -233,18 +291,17 @@ BookingService.listByUserAndDate = (userId, dateOption) => {
         }
       },
       {
-        model: BookingRefund,
-        required: false,
+        model: BookingPayment
       }
     ],
     attributes: ['fee', 'seats']
   };
 
   if (isObject(dateOption)) {
-    queryOption.where.checkedOutAt = {
+    queryOption.where.createdAt = {
       [Op.between]: [
-        dateOption.fromDate,
-        dateOption.toDate
+        datetimeHelper.startOfDate(dateOption.fromDate),
+        datetimeHelper.endOfDate(dateOption.toDate)
       ]
     };
   }
@@ -294,6 +351,52 @@ BookingService.removeAfterFifteen = async() => {
     });
 
     return null;
+  } catch (e) {
+    return e;
+  }
+};
+
+BookingService.returnPurchasedSeats = async(bookingId) => {
+  try {
+    let processStatus = false;
+
+    await masterDB.transaction(async(t) => {
+      const booking = await Booking.findAll({
+        where: {
+          id: bookingId
+        },
+        attributes: ['id', 'sessionId', 'seats'],
+        raw: true
+      });
+
+      if (isNil(booking)) {
+        throw new Error();
+      }
+
+      const returnSeatsStatus = await returnSeatsForSession(booking.sessionId, booking, t);
+
+      if (isNil(returnSeatsStatus)) {
+        throw new Error();
+      }
+
+      const bookingPaymentResolvedRefund = await BookingPayment.create(
+        {
+          bookingId,
+          status: BOOKING_PAYMENT.RESOVLED_REFUND
+        },
+        {
+          transaction: t
+        }
+      );
+
+      if (isNil(bookingPaymentResolvedRefund)) {
+        throw new Error();
+      }
+
+      processStatus = true;
+    });
+
+    return processStatus;
   } catch (e) {
     return e;
   }

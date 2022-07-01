@@ -198,7 +198,7 @@
     }
 
     function bindClickForOptionItems() {
-        $(".option-item").unbind('click').bind('click', function() {
+        $(".option-item").unbind('mousedown').bind('mousedown', function() {
             const entity = $(this).parent().data('entity');
             const id = $(this).data('id');
             const name = $(this).data('name');

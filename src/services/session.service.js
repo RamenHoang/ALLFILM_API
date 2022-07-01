@@ -1,9 +1,11 @@
 const _ = require('lodash');
+const { Op } = require('sequelize');
 const {
   Cinema,
   Session,
   Room
 } = require('../models');
+const datetimeHelper = require('../helpers/datetime.helper');
 
 const SessionService = module.exports;
 
@@ -34,6 +36,10 @@ SessionService.list = (queryOption) => {
     }
     option.include.where.date = queryOption.date;
   }
+
+  option.include.where.startTime = {
+    [Op.gt]: datetimeHelper.now()
+  };
 
   option.include.attributes = ['id', 'date', 'startTime'];
 

@@ -1,3 +1,5 @@
+const { BOOKING_PAYMENT } = require('../constants');
+
 module.exports = (sequelize, DataTypes) => {
   const BookingPayment = sequelize.define('BookingPayment', {
     id: {
@@ -12,11 +14,27 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    paymentPayload: DataTypes.TEXT
+    paymentPayload: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    status: {
+      type: DataTypes.CHAR(1),
+      validate: {
+        isIn: [
+          [
+            BOOKING_PAYMENT.PAID,
+            BOOKING_PAYMENT.NOT_PAID,
+            BOOKING_PAYMENT.REQUESTED_REFUND,
+            BOOKING_PAYMENT.RESOVLED_REFUND,
+          ]
+        ]
+      }
+    }
   }, {
     tablename: 'booking_payments',
     underscored: true,
-    timestamps: false
+    timestamps: true
   });
 
   BookingPayment.associate = (models) => {

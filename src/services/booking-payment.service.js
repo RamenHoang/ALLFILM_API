@@ -1,5 +1,6 @@
 const { pick } = require('lodash');
 const { BookingPayment } = require('../models');
+const { BOOKING_PAYMENT } = require('../constants');
 
 const BookingPaymentService = module.exports;
 
@@ -24,6 +25,7 @@ BookingPaymentService.createBookingPayment = async(bookingId, paymentPayload) =>
 
   return BookingPayment.create({
     bookingId,
-    paymentPayload
+    paymentPayload,
+    status: BOOKING_PAYMENT.PAID
   });
 };

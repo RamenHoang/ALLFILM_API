@@ -64,3 +64,10 @@ Constants.REFUND_STATUES = Object.freeze({
   SUCCESSED: 'S',
   FAILED: 'F',
 });
+
+Constants.BOOKING_PAYMENT = Object.freeze({
+  PAID: 'P',
+  NOT_PAID: 'O',
+  REQUESTED_REFUND: 'R',
+  RESOVLED_REFUND: 'S'
+});

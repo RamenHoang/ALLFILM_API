@@ -180,6 +180,21 @@
             </ul>
         </li>
 
+        <li class="<%= controller == 'bookings' ? 'open' : '' %>">
+            <a href="#" class="dropdown-toggle">
+                <i class=" menu-icon fa fa-list-alt"></i>
+                <span class="menu-text"> Vé đã bán </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="<%= controller == 'bookings' && action == 'list' ? 'active' : '' %>">
+                    <a href="/admin/bookings/list"> <i class="menu-icon fa fa-caret-right"></i> Tất cả </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+
         <li class="<%= controller == 'promotions' ? 'open' : '' %>">
             <a href="#" class="dropdown-toggle">
                 <i class=" menu-icon fa fa-ticket"></i>
