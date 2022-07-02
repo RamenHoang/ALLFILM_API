@@ -123,10 +123,25 @@ BookingController.refund = async(req, res) => {
       || req.socket.remoteAddress
       || req.connection.socket.remoteAddress;
 
-    const refundStatus = await vnpayService.makeRequestRefund(bookingId, ipAddress);
+    const refundPayload = await vnpayService.makeRequestRefund(bookingId, ipAddress);
 
-    if (isNil(refundStatus)) {
+    if (!refundPayload) {
       req.flash('error', 'Có lỗi xảy ra trong quá trình hoàn tiền');
+      res.redirect(`/admin/${controller}/list`);
+
+      return;
+    }
+
+    const newBookingPaymentResolvedRefund = await BookingPayment.create(
+      {
+        bookingId,
+        status: BOOKING_PAYMENT.RESOVLED_REFUND,
+        paymentPayload: JSON.stringify(refundPayload)
+      }
+    );
+
+    if (isNil(newBookingPaymentResolvedRefund)) {
+      req.flash('error', 'Có lỗi xảy ra trong quá trình tạo mục hoàn tiền thành công');
       res.redirect(`/admin/${controller}/list`);
 
       return;

@@ -1,7 +1,7 @@
-const { get, isNil } = require('lodash');
+const { get, isNil, isSet } = require('lodash');
 const sha256 = require('sha256');
 const querystring = require('qs');
-
+const { Op } = require('sequelize');
 const {
   bookingService,
   mailService,
@@ -10,14 +10,23 @@ const {
 } = require('../services');
 const { ok } = require('../helpers/response.helper');
 const objectHelper = require('../helpers/object.helper');
+const datetimeHelper = require('../helpers/datetime.helper');
 const vnpayConfig = require('../config/vnpay');
-const { frontEndUrl } = require('../config/app');
-const { VNPAY_ERROR_CODE, REFUND_STATUES } = require('../constants');
+const {
+  frontEndUrl,
+  refundBeforeSession
+} = require('../config/app');
+const {
+  VNPAY_ERROR_CODE_MESSAGES,
+  BOOKING_PAYMENT
+} = require('../constants');
 const { bookingMapper } = require('../mapper');
-const { Booking, BookingRefund } = require('../models');
+const {
+  Booking,
+  BookingPayment,
+  Session
+} = require('../models');
 const { NotFoundError, BadRequestError } = require('../errors');
-
-// const { NotFoundError, ValidationError } = require('../errors');
 
 const BookingController = module.exports;
 
@@ -65,16 +74,29 @@ BookingController.checkoutTicket = async(req, res, next) => {
   }
 };
 
-BookingController.refundTicket = async(req, res, next) => {
+BookingController.requestRefund = async(req, res, next) => {
   try {
     const bookingId = get(req.params, 'bookingId');
 
     const booking = await Booking.findOne({
       where: { id: bookingId },
-      include: {
-        model: BookingRefund,
-        required: false
-      }
+      include: [
+        {
+          model: BookingPayment,
+          where: {
+            status: BOOKING_PAYMENT.REQUESTED_REFUND
+          },
+          required: false
+        },
+        {
+          model: Session,
+          where: {
+            startTime: {
+              [Op.gt]: datetimeHelper.beforeFromNow(refundBeforeSession)
+            }
+          }
+        }
+      ]
     });
 
     if (isNil(booking)) {
@@ -88,7 +110,7 @@ BookingController.refundTicket = async(req, res, next) => {
       );
     }
 
-    if (!isNil(booking.BookingRefunds)) {
+    if (isSet(bookingId.BookingPayments) && bookingId.BookingPayments.length) {
       throw new BadRequestError(
         t('bad_request'),
         [{
@@ -99,9 +121,9 @@ BookingController.refundTicket = async(req, res, next) => {
       );
     }
 
-    const requestRefundResult = await BookingRefund.create({
+    const requestRefundResult = await BookingPayment.create({
       bookingId,
-      refundStatus: REFUND_STATUES.REQUESTED
+      status: BOOKING_PAYMENT.REQUESTED_REFUND
     });
 
     ok(req, res, requestRefundResult);
@@ -147,12 +169,12 @@ BookingController.getIpn = async(req, res, next) => {
 
       res.status(200).json({
         RspCode: '00',
-        Message: VNPAY_ERROR_CODE['00']
+        Message: VNPAY_ERROR_CODE_MESSAGES['00']
       });
     } else {
       res.status(200).json({
         RspCode: vnpayResponseCode,
-        Message: VNPAY_ERROR_CODE[vnpayResponseCode]
+        Message: VNPAY_ERROR_CODE_MESSAGES[vnpayResponseCode]
       });
     }
   } catch (e) {
@@ -178,13 +200,13 @@ BookingController.getReturn = async(req, res, next) => {
     if (secureHash === checkSum && vnpayResponseCode === '00') {
       res.render('vnpay/transaction_status', {
         code: '00',
-        message: VNPAY_ERROR_CODE['00'],
+        message: VNPAY_ERROR_CODE_MESSAGES['00'],
         frontEndUrl
       });
     } else {
       res.render('vnpay/transaction_status', {
         code: vnpayResponseCode,
-        message: VNPAY_ERROR_CODE[vnpayResponseCode],
+        message: VNPAY_ERROR_CODE_MESSAGES[vnpayResponseCode],
         frontEndUrl
       });
     }

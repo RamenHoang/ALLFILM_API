@@ -8,5 +8,6 @@ module.exports = {
   url: process.env.APP_URL,
   env: process.env.APP_ENV || 'local',
   saltRound: +process.env.SALT_ROUND || 10,
-  frontEndUrl: process.env.FRONT_END_URL
+  frontEndUrl: process.env.FRONT_END_URL,
+  refundBeforeSession: process.env.REFUND_BEFORE_SESSION,
 };

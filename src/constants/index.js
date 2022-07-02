@@ -35,7 +35,7 @@ Constants.REGEX = Object.freeze({
   PHONE_NUMBER: /^0(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/
 });
 
-Constants.VNPAY_ERROR_CODE = Object.freeze({
+Constants.VNPAY_ERROR_CODE_MESSAGES = Object.freeze({
   '00': 'Giao dịch thành công',
   '01': 'Giao dịch đã tồn tại',
   '02': 'Merchant không hợp lẹ',
@@ -59,10 +59,8 @@ Constants.VNPAY_ERROR_CODE = Object.freeze({
   99: 'Các lỗi khác',
 });
 
-Constants.REFUND_STATUES = Object.freeze({
-  REQUESTED: 'R',
-  SUCCESSED: 'S',
-  FAILED: 'F',
+Constants.VNPAY_ERROR_CODE = Object.freeze({
+  TRANSACTION_SUCCESS: '00'
 });
 
 Constants.BOOKING_PAYMENT = Object.freeze({

@@ -133,8 +133,8 @@ VNPayService.makeRequestRefund = async(bookingId, ipAddress) => {
   const response = await httpHeler.get(vpnRefundUrl);
   const refundPayload = querystring.parse(response.data);
 
-  if (refundPayload.vnp_ResponseCode === VNPAY_ERROR_CODE['00']) {
-    return true;
+  if (refundPayload.vnp_ResponseCode === VNPAY_ERROR_CODE.TRANSACTION_SUCCESS) {
+    return refundPayload;
   }
 
   return false;

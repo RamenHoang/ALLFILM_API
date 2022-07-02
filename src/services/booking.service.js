@@ -361,7 +361,7 @@ BookingService.returnPurchasedSeats = async(bookingId) => {
     let processStatus = false;
 
     await masterDB.transaction(async(t) => {
-      const booking = await Booking.findAll({
+      const booking = await Booking.findOne({
         where: {
           id: bookingId
         },
@@ -376,20 +376,6 @@ BookingService.returnPurchasedSeats = async(bookingId) => {
       const returnSeatsStatus = await returnSeatsForSession(booking.sessionId, booking, t);
 
       if (isNil(returnSeatsStatus)) {
-        throw new Error();
-      }
-
-      const bookingPaymentResolvedRefund = await BookingPayment.create(
-        {
-          bookingId,
-          status: BOOKING_PAYMENT.RESOVLED_REFUND
-        },
-        {
-          transaction: t
-        }
-      );
-
-      if (isNil(bookingPaymentResolvedRefund)) {
         throw new Error();
       }
 

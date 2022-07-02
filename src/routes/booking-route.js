@@ -8,7 +8,7 @@ route.post('', auth, booking.bookTicket);
 
 route.post('/checkout/:bookingId', auth, booking.checkoutTicket);
 
-route.post('/refund/:bookingId', auth, booking.refundTicket);
+route.post('/refund/:bookingId', auth, booking.requestRefund);
 
 route.get('/ipn', booking.getIpn);
 
