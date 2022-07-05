@@ -11,3 +11,7 @@ DatetimeHelper.beforeFromNow = (beforeDays) => moment()
   .subtract(beforeDays, 'days')
   .endOf('day')
   .format('YYYY-MM-DD HH:mm:ss');
+
+DatetimeHelper.afterFromNow = (afterDays) => moment()
+  .add(afterDays, 'days')
+  .format('YYYY-MM-DD HH:mm:ss');

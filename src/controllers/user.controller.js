@@ -2,6 +2,8 @@ const { get, isNil, toInteger } = require('lodash');
 const { NotFoundError } = require('../errors');
 const { userService, bookingService } = require('../services');
 const { ok } = require('../helpers/response.helper');
+const datetimeHelper = require('../helpers/datetime.helper');
+const appConfig = require('../config/app');
 
 const UserController = module.exports;
 
@@ -101,7 +103,17 @@ UserController.listBooking = async(req, res, next) => {
     const userId = req.currentUser.id;
     const { fromDate, toDate } = req.query;
 
-    const bookings = await bookingService.listByUserAndDate(userId, { fromDate, toDate });
+    let bookings = await bookingService.listByUserAndDate(userId, { fromDate, toDate });
+
+    bookings = bookings.map((booking) => {
+      if (booking.Session.startTime > datetimeHelper.afterFromNow(appConfig.refundBeforeSession)) {
+        booking.dataValues.canCancel = true;
+      } else {
+        booking.dataValues.canCancel = false;
+      }
+
+      return booking;
+    });
 
     ok(req, res, bookings);
   } catch (e) {

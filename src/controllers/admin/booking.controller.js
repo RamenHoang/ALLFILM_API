@@ -53,7 +53,10 @@ BookingController.list = async(req, res) => {
           model: BookingPayment
         }
       ],
-      attributes: ['id', 'fee', 'seats']
+      attributes: ['id', 'fee', 'seats', 'createdAt'],
+      order: [
+        ['createdAt', 'DESC']
+      ]
     };
 
     // if (isObject(dateOption)) {

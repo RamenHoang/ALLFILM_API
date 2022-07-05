@@ -92,7 +92,7 @@ BookingController.requestRefund = async(req, res, next) => {
           model: Session,
           where: {
             startTime: {
-              [Op.gt]: datetimeHelper.beforeFromNow(refundBeforeSession)
+              [Op.gt]: datetimeHelper.afterFromNow(refundBeforeSession)
             }
           }
         }

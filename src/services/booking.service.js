@@ -294,7 +294,10 @@ BookingService.listByUserAndDate = (userId, dateOption) => {
         model: BookingPayment
       }
     ],
-    attributes: ['fee', 'seats']
+    attributes: ['id', 'fee', 'seats', 'createdAt'],
+    order: [
+      ['createdAt', 'DESC']
+    ]
   };
 
   if (isObject(dateOption)) {
