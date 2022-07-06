@@ -59,7 +59,7 @@ MailService.sendMailBookTicketSuccesfully = async(toEmail, ticketInfo) => {
       }, ''),
       qrCode: await qrHelper.toFile(
         `${__dirname}/../../public/qr/${v4()}.png`,
-        `${appConfig.url}/api/v1/booking/${ticketInfo.id}/close`
+        `Ticket ID: ${ticketInfo.id}`
       )
     }
   );

@@ -15,6 +15,7 @@ const app = express();
 
 const routes = require('./src/routes');
 const adminRoutes = require('./src/routes/admin');
+const ticketInspectorRoutes = require('./src/routes/ticket-inspector');
 const { masterDB } = require('./src/database');
 const errorHandler = require('./src/middlewares/error-handler');
 const setupWinston = require('./winston-setup');
@@ -40,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 function addRoutes(callback) {
   routes(app);
   adminRoutes(app);
+  ticketInspectorRoutes(app);
   app.use(errorHandler);
   callback();
 }
