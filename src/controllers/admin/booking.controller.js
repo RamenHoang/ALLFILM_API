@@ -68,7 +68,22 @@ BookingController.list = async(req, res) => {
     //   };
     // }
 
-    const bookings = await Booking.findAll(queryOption);
+    let bookings = await Booking.findAll(queryOption);
+
+    bookings = bookings.map((booking) => {
+      booking.dataValues.fee = new Intl
+        .NumberFormat(
+          'vi-VN',
+          {
+            style: 'currency',
+            currency: 'VND'
+          }
+        )
+        .format(booking.dataValues.fee);
+
+      return booking;
+    });
+
     const action = 'list';
     const errorData = {};
 

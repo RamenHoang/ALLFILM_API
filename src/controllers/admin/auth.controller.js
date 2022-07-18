@@ -167,6 +167,16 @@ AuthController.dashboard = async(req, res, next) => {
       });
     }
 
+    data.totalMoney = new Intl
+      .NumberFormat(
+        'vi-VN',
+        {
+          style: 'currency',
+          currency: 'VND'
+        }
+      )
+      .format(data.totalMoney);
+
     const loginUser = req.currentUser;
     const errorData = {};
 
