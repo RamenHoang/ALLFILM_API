@@ -70,7 +70,7 @@ cron.schedule('*/3  * * * *', () => {
   job()
     .then((result) => {
       if (result === null) {
-        winston.info('15 minutes job success');
+        winston.info('3 minutes job success');
       } else {
         winston.error(winston.error(result.message));
       }

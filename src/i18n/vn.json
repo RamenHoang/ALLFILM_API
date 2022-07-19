@@ -33,5 +33,6 @@
   "mail_activate_message": "Vui lòng nhấp link bên để kích hoạt tài khoản: ",
 
   "username_existed": "Tên tài khoản đã tồn tại, vui lòng sử dụng tên khác.",
-  "ticket_is_requested_for_refund": "Vé đã được yêu cầu hủy trước đó."
+  "ticket_is_requested_for_refund": "Vé đã được yêu cầu hủy trước đó.",
+  "mail_booking_success_title": "Đặt vẽ thành công"
 }
