@@ -32,12 +32,21 @@ function arrangeSeatOfSession(session, bookingSeats, type = 'add') {
   switch (type) {
     case 'add':
       emptySeatsInSession = emptySeatsInSession.filter((seat) => !bookingSeatsArray.includes(seat));
-      session.bookedSeats += `,${bookingSeats}`;
+      if (session.bookedSeats) {
+        session.bookedSeats += `,${bookingSeats}`;
+      } else {
+        session.bookedSeats = `${bookingSeats}`;
+      }
       session.emptySeats = emptySeatsInSession.join(',');
       break;
     case 'remove':
       bookedSeatsInSession = bookedSeatsInSession.filter((seat) => !bookingSeatsArray.includes(seat));
-      session.emptySeats += `,${bookingSeats}`;
+      if (session.emptySeats) {
+        session.emptySeats += `,${bookingSeats}`;
+      } else {
+        session.emptySeats = `${bookingSeats}`;
+      }
+
       session.bookedSeats = bookedSeatsInSession.join(',');
       break;
     default:

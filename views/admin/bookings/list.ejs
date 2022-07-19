@@ -86,7 +86,7 @@
                                                     <div class="action-buttons">
                                                         <% if (data[i].BookingPayments) { %>
                                                             <% if (data[i].BookingPayments[data[i].BookingPayments.length - 1].status == 'R') { %>
-                                                                <a class="green" href="/admin/<%=controller%>/refund/<%=data[i].id%>"> Hoàn tiền </a>
+                                                                <a class="green refund-ticket-btn" href="/admin/<%=controller%>/refund/<%=data[i].id%>"> Hoàn tiền </a>
                                                             <% } %>
                                                         <% } %>
                                                     </div>
@@ -120,6 +120,12 @@
 
 <script type="text/javascript">
     jQuery(function($) {
+        $('.refund-ticket-btn').on('click', function(e){
+            if (confirm('Bạn có chắc chắn muốn hủy vé này?') == false) {
+                e.preventDefault();
+            }
+        })
+
         $(window).resize(function() {
             myTable.draw()
         })

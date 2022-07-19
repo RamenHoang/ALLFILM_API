@@ -45,6 +45,9 @@ BookingController.verifyTicket = async(req, res) => {
                   [Op.gte]: datetimeHelper.now()
                 }
               }
+            },
+            {
+              model: BookingPayment
             }
           ]
         }
@@ -55,6 +58,20 @@ BookingController.verifyTicket = async(req, res) => {
         res.redirect('/ticket-inspector/verify-booking');
 
         return;
+      }
+
+      switch (booking.BookingPayments[booking.BookingPayments.length - 1].status) {
+        case BOOKING_PAYMENT.UNPAID:
+          req.flash('error', 'Vé chưa được thanh toán.');
+          res.redirect('/ticket-inspector/verify-booking');
+
+          return;
+        case BOOKING_PAYMENT.RESOVLED_REFUND:
+          req.flash('error', 'Vé đã bị hủy.');
+          res.redirect('/ticket-inspector/verify-booking');
+
+          return;
+        default:
       }
 
       const result = await Booking.update(

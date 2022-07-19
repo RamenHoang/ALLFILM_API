@@ -41,6 +41,8 @@ SessionService.list = (queryOption) => {
     [Op.gt]: datetimeHelper.now()
   };
 
+  option.order = [[Session, 'startTime', 'ASC']];
+
   option.include.attributes = ['id', 'date', 'startTime'];
 
   return Cinema.findAll(option);

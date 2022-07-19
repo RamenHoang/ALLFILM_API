@@ -66,7 +66,7 @@ setupWinston();
 
 start();
 
-cron.schedule('*/15  * * * *', () => {
+cron.schedule('*/3  * * * *', () => {
   job()
     .then((result) => {
       if (result === null) {

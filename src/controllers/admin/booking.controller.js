@@ -1,6 +1,8 @@
 const { isNil } = require('lodash');
 const _ = require('lodash');
+const { Op } = require('sequelize');
 const { BOOKING_PAYMENT } = require('../../constants');
+const dateTimeHelper = require('../../helpers/datetime.helper');
 
 const {
   Room,
@@ -131,6 +133,29 @@ BookingController.refund = async(req, res) => {
 
     if (bookingPaymentResolvedRefund) {
       req.flash('error', 'Vé này đã được hủy và hoàn tiền cho người mua');
+      res.redirect(`/admin/${controller}/list`);
+
+      return;
+    }
+
+    const passedBookingSession = await Booking.findOne(
+      {
+        where: {
+          id: bookingId,
+          '$Session.start_time$': {
+            [Op.lt]: dateTimeHelper.now()
+          }
+        },
+        include: [
+          {
+            model: Session
+          }
+        ]
+      }
+    );
+
+    if (passedBookingSession) {
+      req.flash('error', 'Xuất chiếu đã diễn ra. Không thể hủy vé này.');
       res.redirect(`/admin/${controller}/list`);
 
       return;
