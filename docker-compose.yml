@@ -1,6 +1,6 @@
 version: "3"
 
-services: 
+services:
   masterdb:
     platform: linux/amd64
     image: mysql:5.7.34
@@ -17,18 +17,16 @@ services:
       - ./docker/mysql/mysql.cnf:/etc/mysql/conf.d/custom.cnf
     networks:
       - default
-
-  redis:
-    platform: linux/amd64
-    image: "redis:6.0.9-alpine"
-    command: redis-server
+  allfilm_api:
+    image: ramenhoang/allfilm_api
     ports:
-      - 6379:6379
+      - 5000:5000
+    env_file:
+      - .env
+    depends_on:
+      - "masterdb"
     volumes:
-      - ./docker/redis/redis-data:/data
-      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
-    environment:
-      - REDIS_REPLICATION_MODE=master
+      - ./logs:/usr/src/app/logs
     networks:
       - default
 
