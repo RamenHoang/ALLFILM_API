@@ -24,3 +24,21 @@ HttpHelper.get = async(url) => {
 
   return response;
 };
+
+HttpHelper.post = async(url, data) => {
+  winston.debug(`[HTTP] Make request: ${url}`);
+
+  const response = await axios.post(
+    url,
+    data,
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+
+  winston.debug('[HTTP] Data response', response.data);
+
+  return response;
+};

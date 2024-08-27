@@ -2,9 +2,7 @@ const CookieHelper = module.exports;
 
 CookieHelper.storeData = (response, dataToStore) => {
   Object.keys(dataToStore).forEach((key) => {
-    response.cookie(key, dataToStore[key], {
-      httpOnly: true
-    });
+    response.cookie(key, dataToStore[key]);
   });
 };
 

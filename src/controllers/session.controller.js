@@ -11,7 +11,7 @@ SessionController.list = async(req, res, next) => {
     const date = get(req.query, 'date');
     const offset = toInteger(get(req, 'query.offset'));
     const limit = toInteger(get(req, 'query.limit'));
-    const sortBy = get(req, 'query.sort_by', '+startTime');
+    const sortBy = get(req, 'query.sort_by', '-startTime');
 
     const sessions = await sessionService.list({
       cinemaId,

@@ -27,15 +27,7 @@ function sessionMapper(session) {
 
   return {
     id: session.id,
-    price: new Intl
-      .NumberFormat(
-        'vi-VN',
-        {
-          style: 'currency',
-          currency: 'VND'
-        }
-      )
-      .format(session.price),
+    price: session.price,
     date: session.date,
     startTime: timeMapper(session.startTime),
     endTime: timeMapper(session.endTime),

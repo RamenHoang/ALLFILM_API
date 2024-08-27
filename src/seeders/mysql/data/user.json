@@ -2,7 +2,7 @@
   {
     "id": 1,
     "username": "ramenhoang",
-    "password_hash": "$2b$05$0fKICtrg4L9foQ3pbhWmQOuCqxCfRUjA9UA7J1L1X.Uoj.Ss5FsZ.",
+    "password_hash": "$2b$05$QTVXxq.i1XLuYZpl/jkcWuYTudXEsZzNCfr.DVS.aQpZSVMVBGM8S",
     "name": "Nguyễn Hoàng Anh",
     "fullname": "Nguyễn Hoàng Anh",
     "register_verifying_token": null,
@@ -14,7 +14,7 @@
   {
     "id": 2,
     "username": "lieule99",
-    "password_hash": "$2b$05$0fKICtrg4L9foQ3pbhWmQOuCqxCfRUjA9UA7J1L1X.Uoj.Ss5FsZ.",
+    "password_hash": "$2b$05$QTVXxq.i1XLuYZpl/jkcWuYTudXEsZzNCfr.DVS.aQpZSVMVBGM8S",
     "name": "Lê Thị Liễu",
     "fullname": "Lê Thị Liễu",
     "phone": "0123456789",
@@ -26,7 +26,7 @@
   {
     "id": 3,
     "username": "quangluu99",
-    "password_hash": "$2b$05$0fKICtrg4L9foQ3pbhWmQOuCqxCfRUjA9UA7J1L1X.Uoj.Ss5FsZ.",
+    "password_hash": "$2b$05$QTVXxq.i1XLuYZpl/jkcWuYTudXEsZzNCfr.DVS.aQpZSVMVBGM8S",
     "name": "Võ Quang Lưu",
     "fullname": "Võ Quang Lưu",
     "phone": "0123456789",

@@ -4,7 +4,7 @@
         .booking-status {
             text-align: center;
             padding: 2px 5px;
-        }    
+        }
     </style>
     <div class="main-content-inner">
 
@@ -43,7 +43,6 @@
                                         <th>Đồ ăn / Thức uống</th>
                                         <th style="width: 150px;">Trạng thái vé</th>
                                         <th>Tổng tiền (VNĐ)</th>
-                                        <th style="width: 7%;">Action</th>
                                     </tr>
                                 </thead>
 
@@ -73,24 +72,9 @@
                                                         <% if (data[i].BookingPayments[data[i].BookingPayments.length - 1].status == 'P') { %>
                                                             <div class="bg-success booking-status">Đã thanh toán</div>
                                                         <% } %>
-                                                        <% if (data[i].BookingPayments[data[i].BookingPayments.length - 1].status == 'R') { %>
-                                                            <div class="bg-info booking-status">Yêu cầu hủy vé</div>
-                                                        <% } %>
-                                                        <% if (data[i].BookingPayments[data[i].BookingPayments.length - 1].status == 'S') { %>
-                                                            <div class="bg-primary booking-status">Đã hủy và hoàn tiền</div>
-                                                        <% } %>
                                                     <% } %>
                                                 </td>
                                                 <td><%- data[i].fee %></td>
-                                                <td>
-                                                    <div class="action-buttons">
-                                                        <% if (data[i].BookingPayments) { %>
-                                                            <% if (data[i].BookingPayments[data[i].BookingPayments.length - 1].status == 'R') { %>
-                                                                <a class="green refund-ticket-btn" href="/admin/<%=controller%>/refund/<%=data[i].id%>"> Hoàn tiền </a>
-                                                            <% } %>
-                                                        <% } %>
-                                                    </div>
-                                                </td>
                                             </tr>
                                         <% } %>
                                     <% } else { %>
